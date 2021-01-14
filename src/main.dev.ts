@@ -14,7 +14,13 @@ import path from 'path';
 import { app, BrowserWindow, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
+
 import MenuBuilder from './menu';
+import {
+  getAuthenticationURL,
+  loadTokens,
+  refreshTokens,
+} from './services/auth-service';
 
 export default class AppUpdater {
   constructor() {
@@ -25,6 +31,7 @@ export default class AppUpdater {
 }
 
 let mainWindow: BrowserWindow | null = null;
+let authWindow: BrowserWindow | null = null;
 
 if (process.env.NODE_ENV === 'production') {
   const sourceMapSupport = require('source-map-support');
@@ -74,10 +81,16 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
+      enableRemoteModule: true,
+      contextIsolation: false,
     },
   });
 
   mainWindow.loadURL(`file://${__dirname}/index.html`);
+
+  if (authWindow) {
+    authWindow.close();
+  }
 
   // @TODO: Use 'ready-to-show' event
   //        https://github.com/electron/electron/blob/master/docs/api/browser-window.md#using-ready-to-show-event
@@ -111,6 +124,48 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
+// authentication
+function destroyAuthWin() {
+  if (!authWindow) return;
+  authWindow.close();
+  authWindow = null;
+}
+
+function createAuthWindow() {
+  destroyAuthWin();
+  authWindow = new BrowserWindow({
+    width: 1024,
+    height: 728,
+    webPreferences: {
+      nodeIntegration: false,
+      enableRemoteModule: false,
+    },
+  });
+
+  authWindow.loadURL(getAuthenticationURL(), { userAgent: 'Chrome' });
+  const {
+    session: { webRequest },
+  } = authWindow.webContents;
+
+  const filter = {
+    urls: ['http://localhost/callback*'],
+  };
+
+  webRequest.onBeforeRequest(filter, async ({ url }) => {
+    await loadTokens(url);
+    return createWindow();
+  });
+}
+
+async function showWindow() {
+  try {
+    await refreshTokens();
+    return createWindow();
+  } catch (err) {
+    return createAuthWindow();
+  }
+}
+
 /**
  * Add event listeners...
  */
@@ -123,10 +178,10 @@ app.on('window-all-closed', () => {
   }
 });
 
-app.whenReady().then(createWindow).catch(console.log);
+app.whenReady().then(showWindow).catch(console.log);
 
 app.on('activate', () => {
   // On macOS it's common to re-create a window in the app when the
   // dock icon is clicked and there are no other windows open.
-  if (mainWindow === null) createWindow();
+  if (mainWindow === null) showWindow();
 });

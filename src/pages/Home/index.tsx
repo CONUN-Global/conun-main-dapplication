@@ -1,8 +1,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
-import { Button, Flex, Stack, Text } from '@chakra-ui/react';
+
+import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 
 import CustomInput from '../../components/Form/Input';
+import UserBox from '../../components/Form/UserBox';
+
+import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
+import Form from '../../components/Chakra/Form';
+import Link from '../../components/Chakra/Link';
 
 type FormData = {
   search: string;
@@ -10,12 +16,14 @@ type FormData = {
 
 function Home() {
   const { register, handleSubmit, errors } = useForm<FormData>();
+
   const onSubmit = handleSubmit((data) => console.log(data));
+
   return (
     <Stack spacing="1rem">
-      <Text fontSize="2rem">Conun</Text>
-      <form onSubmit={onSubmit}>
-        <Flex>
+      <UserBox />
+      <Form onSubmit={onSubmit} mb="4rem">
+        <Flex width="80vw">
           <CustomInput
             name="search"
             placeholder="Search..."
@@ -27,11 +35,21 @@ function Home() {
             })}
             error={errors.search}
           />
-          <Button colorScheme="blue" type="submit" ml="0.5rem">
+          <Button colorScheme="yellow" type="submit" ml="0.5rem">
             Search
           </Button>
         </Flex>
-      </form>
+      </Form>
+      <Center>
+        <Link to="/wallet">
+          <Stack>
+            <Wallet style={{ width: 70, height: 70 }} />
+            <Text color="black" textAlign="center">
+              Wallet
+            </Text>
+          </Stack>
+        </Link>
+      </Center>
     </Stack>
   );
 }
