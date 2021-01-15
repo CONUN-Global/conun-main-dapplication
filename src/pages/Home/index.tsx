@@ -17,7 +17,7 @@ type FormData = {
 function Home() {
   const { register, handleSubmit, errors } = useForm<FormData>();
 
-  const onSubmit = handleSubmit((data) => console.log(data));
+  const onSubmit = handleSubmit((data) => {});
 
   return (
     <Stack spacing="1rem">
@@ -41,7 +41,7 @@ function Home() {
         </Flex>
       </Form>
       <Center>
-        <Link to="/wallet">
+        <Link to="/">
           <Stack>
             <Wallet style={{ width: 70, height: 70 }} />
             <Text color="black" textAlign="center">
