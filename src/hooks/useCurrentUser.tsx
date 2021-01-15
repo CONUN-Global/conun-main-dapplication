@@ -1,9 +1,23 @@
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
+import { useEffect, useState } from 'react';
 
-const authService = remote.require('./services/auth-service');
+type CurrentUser = {
+  name: string;
+  email: string;
+  picture: string;
+} | null;
 
 function useCurrentUser() {
-  const currentUser = authService.getProfile();
+  const [currentUser, setCurrentUser] = useState<CurrentUser>(null);
+
+  const getProfile = async () => {
+    const user = await ipcRenderer.invoke('get-profile');
+    setCurrentUser(user);
+  };
+
+  useEffect(() => {
+    getProfile();
+  }, []);
 
   return { currentUser };
 }

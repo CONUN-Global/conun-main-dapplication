@@ -11,14 +11,17 @@
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
 import path from 'path';
-import { app, BrowserWindow, shell } from 'electron';
+import { app, BrowserWindow, ipcMain, shell } from 'electron';
 import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 
 import MenuBuilder from './menu';
 import {
   getAuthenticationURL,
+  getLogOutUrl,
+  getProfile,
   loadTokens,
+  logout,
   refreshTokens,
 } from './services/auth-service';
 
@@ -172,6 +175,27 @@ app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
   }
+});
+
+ipcMain.handle('logout', async () => {
+  const logoutWindow = new BrowserWindow({
+    show: false,
+  });
+
+  logoutWindow.loadURL(getLogOutUrl());
+
+  logoutWindow.on('ready-to-show', async () => {
+    logoutWindow.close();
+    await logout();
+  });
+
+  if (mainWindow) {
+    mainWindow.close();
+  }
+});
+
+ipcMain.handle('get-profile', () => {
+  return getProfile();
 });
 
 app.whenReady().then(showWindow).catch(console.log);

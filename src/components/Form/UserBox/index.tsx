@@ -1,5 +1,5 @@
 import React from 'react';
-import { remote } from 'electron';
+import { ipcRenderer } from 'electron';
 import {
   Box,
   Button,
@@ -15,14 +15,11 @@ import {
 
 import useCurrentUser from '../../../hooks/useCurrentUser';
 
-const authService = remote.require('./services/auth-service');
-
 function UserBox() {
   const { currentUser } = useCurrentUser();
 
-  const handleLogout = () => {
-    authService.createLogoutWindow();
-    remote.getCurrentWindow().close();
+  const handleLogout = async () => {
+    await ipcRenderer.invoke('logout');
   };
 
   return (
@@ -60,9 +57,9 @@ function UserBox() {
               borderRadius="50%"
             />
             <Box textAlign="center" mb="1rem">
-              <Text>{currentUser.name}</Text>
+              <Text>{currentUser?.name}</Text>
               <Text fontSize="0.8rem" color="grey">
-                {currentUser.email}
+                {currentUser?.email}
               </Text>
             </Box>
             <Button

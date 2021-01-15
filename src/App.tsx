@@ -25,7 +25,7 @@ export default function App() {
         <Route path="/create-wallet-success" component={CreateSuccess} />
         <Route path="/wallet-confirm-backup" component={ConfirmBackup} />
         <Route path="/home" exact component={Home} />
-        <Route render={() => <Redirect to="/" />} />
+        <Route render={() => <Redirect to="/home" />} />
       </Switch>
     </Router>
   );
