@@ -1,10 +1,5 @@
 import React from 'react';
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from 'react-router-dom';
+import { HashRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { AppProvider } from './components/AppContext';
 
@@ -27,8 +22,7 @@ export default function App() {
           <Route path="/create-wallet" component={CreateWallet} />
           <Route path="/create-wallet-success" component={CreateSuccess} />
           <Route path="/wallet-confirm-backup" component={ConfirmBackup} />
-          <Route path="/home" exact component={Home} />
-          <Route render={() => <Redirect to="/" />} />
+          <Route path="/home" component={Home} />
         </Switch>
       </Router>
     </AppProvider>

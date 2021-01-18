@@ -25,7 +25,12 @@ import {
   logout,
   refreshTokens,
 } from './services/auth-service';
-import { createWallet } from './services/wallet-services';
+import {
+  createQrCode,
+  createWallet,
+  saveKeyStoreJson,
+  saveQrCode,
+} from './services/wallet-services';
 
 export default class AppUpdater {
   constructor() {
@@ -201,6 +206,21 @@ ipcMain.handle('get-profile', () => {
 ipcMain.handle('create-wallet', async (e, args) => {
   const data = await createWallet(args.password);
   return data;
+});
+
+ipcMain.handle('export-key-store', async (e, args) => {
+  const res = await saveKeyStoreJson(args.keyStore);
+  return res;
+});
+
+ipcMain.handle('create-qr-code', async (e, args) => {
+  const res = await createQrCode(args);
+  return res;
+});
+
+ipcMain.handle('download-qr-code', async (e, args) => {
+  const res = await saveQrCode(args.qrCode);
+  return res;
 });
 
 app.whenReady().then(showWindow).catch(console.log);

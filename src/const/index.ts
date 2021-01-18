@@ -14,6 +14,8 @@ export const API_URL_TOKEN = 'conun-api-url';
 
 export const KEY_STORE_TOKEN = 'conun-key-store';
 
+export const CONUN_PASS_TOKEN = 'conun-key-store';
+
 export const FcnTypes = {
   Transfer: 'Transfer',
   Init: 'Init',

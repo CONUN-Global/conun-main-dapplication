@@ -9,6 +9,7 @@ import Box from '../../../components/Box';
 import Form from '../../../components/Chakra/Form';
 import Input from '../../../components/Form/Input';
 import { useAppContext } from '../../../components/AppContext';
+import { setConunPass } from '../../../helpers/getConunPass';
 
 type FormData = {
   password: string;
@@ -30,6 +31,7 @@ function CreateWallet() {
       });
 
       handleWalletCreation(walletData);
+      setConunPass(password);
 
       history.push('/create-wallet-success');
     } catch (error) {
