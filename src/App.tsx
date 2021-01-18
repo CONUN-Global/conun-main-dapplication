@@ -6,6 +6,8 @@ import {
   Redirect,
 } from 'react-router-dom';
 
+import { AppProvider } from './components/AppContext';
+
 import Home from './pages/Home';
 import Introduction from './pages/IntroSteps/Introduction';
 import Terms from './pages/IntroSteps/Terms';
@@ -16,17 +18,19 @@ import WalletOptions from './pages/IntroSteps/Wallet/WalletOptions';
 
 export default function App() {
   return (
-    <Router basename="/">
-      <Switch>
-        <Route path="/" exact component={Introduction} />
-        <Route path="/terms" component={Terms} />
-        <Route path="/wallet-options" component={WalletOptions} />
-        <Route path="/create-wallet" component={CreateWallet} />
-        <Route path="/create-wallet-success" component={CreateSuccess} />
-        <Route path="/wallet-confirm-backup" component={ConfirmBackup} />
-        <Route path="/home" exact component={Home} />
-        <Route render={() => <Redirect to="/home" />} />
-      </Switch>
-    </Router>
+    <AppProvider>
+      <Router basename="/">
+        <Switch>
+          <Route path="/" exact component={Introduction} />
+          <Route path="/terms" component={Terms} />
+          <Route path="/wallet-options" component={WalletOptions} />
+          <Route path="/create-wallet" component={CreateWallet} />
+          <Route path="/create-wallet-success" component={CreateSuccess} />
+          <Route path="/wallet-confirm-backup" component={ConfirmBackup} />
+          <Route path="/home" exact component={Home} />
+          <Route render={() => <Redirect to="/" />} />
+        </Switch>
+      </Router>
+    </AppProvider>
   );
 }

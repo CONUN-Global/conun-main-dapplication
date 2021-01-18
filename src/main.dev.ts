@@ -16,6 +16,7 @@ import { autoUpdater } from 'electron-updater';
 import log from 'electron-log';
 
 import MenuBuilder from './menu';
+
 import {
   getAuthenticationURL,
   getLogOutUrl,
@@ -24,6 +25,7 @@ import {
   logout,
   refreshTokens,
 } from './services/auth-service';
+import { createWallet } from './services/wallet-services';
 
 export default class AppUpdater {
   constructor() {
@@ -84,8 +86,6 @@ const createWindow = async () => {
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
-      enableRemoteModule: true,
-      contextIsolation: false,
     },
   });
 
@@ -196,6 +196,11 @@ ipcMain.handle('logout', async () => {
 
 ipcMain.handle('get-profile', () => {
   return getProfile();
+});
+
+ipcMain.handle('create-wallet', async (e, args) => {
+  const data = await createWallet(args.password);
+  return data;
 });
 
 app.whenReady().then(showWindow).catch(console.log);

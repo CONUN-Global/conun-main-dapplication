@@ -1,5 +1,6 @@
 import React from 'react';
-import { Button, Stack, Text } from '@chakra-ui/react';
+import { Button, Stack, Text, useToast } from '@chakra-ui/react';
+import { ipcRenderer } from 'electron';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
@@ -7,6 +8,7 @@ import Box from '../../../components/Box';
 
 import Form from '../../../components/Chakra/Form';
 import Input from '../../../components/Form/Input';
+import { useAppContext } from '../../../components/AppContext';
 
 type FormData = {
   password: string;
@@ -14,12 +16,31 @@ type FormData = {
 };
 
 function CreateWallet() {
+  const { handleWalletCreation } = useAppContext();
   const { register, handleSubmit, errors, getValues } = useForm<FormData>();
 
   const history = useHistory();
 
-  const onSubmit: SubmitHandler<FormData> = (data) => {
-    history.push('/create-wallet-success');
+  const toast = useToast();
+
+  const onSubmit: SubmitHandler<FormData> = async ({ password }) => {
+    try {
+      const walletData = await ipcRenderer.invoke('create-wallet', {
+        password,
+      });
+
+      handleWalletCreation(walletData);
+
+      history.push('/create-wallet-success');
+    } catch (error) {
+      toast({
+        title: 'Back Confirmation',
+        description: 'Something went wrong please try again.',
+        status: 'error',
+        duration: 5000,
+        isClosable: true,
+      });
+    }
   };
 
   return (

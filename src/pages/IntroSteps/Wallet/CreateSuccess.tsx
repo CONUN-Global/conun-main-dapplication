@@ -9,6 +9,9 @@ import Box from '../../../components/Box';
 import Icon from '../../../components/Chakra/Icon';
 import Link from '../../../components/Chakra/Link';
 
+import getWalletAddress from '../../../helpers/getWalletAddress';
+import getWalletPrivateKey from '../../../helpers/getWalletPrivateKey';
+
 function CreateSuccess() {
   return (
     <Box>
@@ -22,13 +25,12 @@ function CreateSuccess() {
         </Text>
         <Stack bgColor="grey" p="1rem" borderRadius="5px">
           <HStack justifyContent="space-between">
-            <Text>WALLET ADDRESS</Text>{' '}
-            <Text>0x23432ed32d23nkl3hvsd2h2l3h2j2ccc4dfd343sd</Text>
+            <Text>WALLET ADDRESS</Text> <Text>{getWalletAddress()}</Text>
             <Icon icon={Copy} width={18} height={18} />
           </HStack>
           <HStack justifyContent="space-between">
             <Text>PRIVATE KEY</Text>
-            <Text>0x23432ed32d23nkl3hvsd2h2l3h2j2ccc4dfd343sd</Text>
+            <Text>{getWalletPrivateKey()}</Text>
             <Icon icon={Copy} width={18} height={18} />
           </HStack>
         </Stack>
