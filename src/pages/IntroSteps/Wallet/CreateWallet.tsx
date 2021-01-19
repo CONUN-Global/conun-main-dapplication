@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, Stack, Text, useToast } from '@chakra-ui/react';
+import { Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
 import { ipcRenderer } from 'electron';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -10,6 +10,7 @@ import Form from '../../../components/Chakra/Form';
 import Input from '../../../components/Form/Input';
 import { useAppContext } from '../../../components/AppContext';
 import { setConunPass } from '../../../helpers/getConunPass';
+import Link from '../../../components/Chakra/Link';
 
 type FormData = {
   password: string;
@@ -36,7 +37,7 @@ function CreateWallet() {
       history.push('/create-wallet-success');
     } catch (error) {
       toast({
-        title: 'Back Confirmation',
+        title: 'Backup Confirmation',
         description: 'Something went wrong please try again.',
         status: 'error',
         duration: 5000,
@@ -84,10 +85,21 @@ function CreateWallet() {
                 })}
                 error={errors.confirmPassword}
               />
-
-              <Button type="submit" colorScheme="yellow">
-                Save and Continue
-              </Button>
+              <HStack width="100%">
+                <Link flex="1" to="/wallet-options">
+                  <Button
+                    width="100%"
+                    type="button"
+                    variant="outline"
+                    colorScheme="yellow"
+                  >
+                    Back
+                  </Button>
+                </Link>
+                <Button flex="1" type="submit" colorScheme="yellow">
+                  Save and Continue
+                </Button>
+              </HStack>
             </Stack>
           </Form>
         </Stack>

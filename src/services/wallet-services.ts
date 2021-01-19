@@ -5,7 +5,9 @@ import crypto from 'crypto';
 import qrcode from 'qrcode';
 import { dialog } from 'electron';
 
-const web3 = new Web3('---');
+const web3 = new Web3(
+  'https://ropsten.infura.io/v3/2b1758a74cf249a598f13e357bb058dc'
+);
 
 export function createWallet(password: string) {
   const { privateKey, address } = web3.eth.accounts.create(password);
@@ -88,4 +90,15 @@ export async function saveQrCode(qrCodeURI: string) {
   } catch (error) {
     return { success: false, canceled: savePath.canceled };
   }
+}
+
+export async function validateKeystoreFile({
+  file,
+  password,
+}: {
+  file: any;
+  password: string;
+}) {
+  const { address, privateKey } = web3.eth.accounts.decrypt(file, password);
+  return { success: true, address, privateKey };
 }

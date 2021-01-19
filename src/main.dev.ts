@@ -30,6 +30,7 @@ import {
   createWallet,
   saveKeyStoreJson,
   saveQrCode,
+  validateKeystoreFile,
 } from './services/wallet-services';
 
 export default class AppUpdater {
@@ -203,24 +204,35 @@ ipcMain.handle('get-profile', () => {
   return getProfile();
 });
 
-ipcMain.handle('create-wallet', async (e, args) => {
+ipcMain.handle('create-wallet', async (_, args) => {
   const data = await createWallet(args.password);
   return data;
 });
 
-ipcMain.handle('export-key-store', async (e, args) => {
+ipcMain.handle('export-key-store', async (_, args) => {
   const res = await saveKeyStoreJson(args.keyStore);
   return res;
 });
 
-ipcMain.handle('create-qr-code', async (e, args) => {
+ipcMain.handle('create-qr-code', async (_, args) => {
   const res = await createQrCode(args);
   return res;
 });
 
-ipcMain.handle('download-qr-code', async (e, args) => {
+ipcMain.handle('download-qr-code', async (_, args) => {
   const res = await saveQrCode(args.qrCode);
   return res;
+});
+
+ipcMain.handle('validate-keystore-file', async (_, args) => {
+  try {
+    const res = await validateKeystoreFile(args);
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+    };
+  }
 });
 
 app.whenReady().then(showWindow).catch(console.log);
