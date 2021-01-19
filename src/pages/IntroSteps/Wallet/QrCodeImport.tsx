@@ -7,9 +7,11 @@ import { ipcRenderer } from 'electron';
 import Box from '../../../components/Box';
 import Input from '../../../components/Form/Input';
 import Form from '../../../components/Chakra/Form';
+import Link from '../../../components/Chakra/Link';
+
 import { useAppContext } from '../../../components/AppContext';
 
-import Link from '../../../components/Chakra/Link';
+import { setConunPass } from '../../../helpers/getConunPass';
 
 type FormData = {
   password: string;
@@ -41,7 +43,7 @@ function QrCodeImport() {
             address: res.address,
             privateKey: res.privateKey,
           });
-
+          setConunPass(password);
           history.replace('/home');
         } else {
           toast({

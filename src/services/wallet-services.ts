@@ -7,7 +7,9 @@ import { dialog } from 'electron';
 import jimp from 'jimp';
 import QRReader from 'qrcode-reader';
 
-const web3 = new Web3('----');
+import envVariables from '../../env-variables.json';
+
+const web3 = new Web3(envVariables.web3Url);
 
 export function createWallet(password: string) {
   const { privateKey, address } = web3.eth.accounts.create(password);
@@ -133,4 +135,12 @@ export async function validateQrCode({
     return { success: true, address, privateKey };
   }
   return { success: false };
+}
+
+export async function validatePrivateKey({
+  privateKey,
+}: {
+  privateKey: string;
+}) {
+  return privateKey;
 }

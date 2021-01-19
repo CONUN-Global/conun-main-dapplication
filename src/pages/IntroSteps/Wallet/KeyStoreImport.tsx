@@ -10,6 +10,8 @@ import Form from '../../../components/Chakra/Form';
 import { useAppContext } from '../../../components/AppContext';
 import Link from '../../../components/Chakra/Link';
 
+import { setConunPass } from '../../../helpers/getConunPass';
+
 type FormData = {
   password: string;
   file: any;
@@ -40,6 +42,7 @@ function KeyStoreImport() {
             privateKey: res.privateKey,
             keyStore: JSON.stringify(e.target.result),
           });
+          setConunPass(password);
 
           history.replace('/home');
         } else {

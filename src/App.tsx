@@ -10,6 +10,7 @@ import CreateSuccess from './pages/IntroSteps/Wallet/CreateSuccess';
 import CreateWallet from './pages/IntroSteps/Wallet/CreateWallet';
 import ImportWallet from './pages/IntroSteps/Wallet/ImportWallet';
 import KeyStoreImport from './pages/IntroSteps/Wallet/KeyStoreImport';
+import PrivateKeyImport from './pages/IntroSteps/Wallet/PrivateKeyImport';
 import QrCodeImport from './pages/IntroSteps/Wallet/QrCodeImport';
 import WalletOptions from './pages/IntroSteps/Wallet/WalletOptions';
 
@@ -25,6 +26,7 @@ export default function App() {
           <Route path="/import-wallet" component={ImportWallet} />
           <Route path="/import-keystore" component={KeyStoreImport} />
           <Route path="/import-qr-code" component={QrCodeImport} />
+          <Route path="/import-private-key" component={PrivateKeyImport} />
           <Route path="/create-wallet-success" component={CreateSuccess} />
           <Route path="/home" component={Home} />
         </Switch>

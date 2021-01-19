@@ -31,6 +31,7 @@ import {
   saveKeyStoreJson,
   saveQrCode,
   validateKeystoreFile,
+  validatePrivateKey,
   validateQrCode,
 } from './services/wallet-services';
 
@@ -239,6 +240,17 @@ ipcMain.handle('validate-keystore-file', async (_, args) => {
 ipcMain.handle('validate-qr-code', async (_, args) => {
   try {
     const res = await validateQrCode(args);
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+    };
+  }
+});
+
+ipcMain.handle('validate-private-key', async (_, args) => {
+  try {
+    const res = await validatePrivateKey(args);
     return res;
   } catch (error) {
     return {
