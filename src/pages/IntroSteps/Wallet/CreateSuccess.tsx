@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ipcRenderer } from 'electron';
+import { ipcRenderer, clipboard } from 'electron';
 import { Button, Flex, HStack, Stack, Text, useToast } from '@chakra-ui/react';
 
 import { ReactComponent as Download } from '../../../../assets/icons/download.svg';
@@ -8,7 +8,7 @@ import { ReactComponent as Copy } from '../../../../assets/icons/copy.svg';
 
 import Box from '../../../components/Box';
 import Icon from '../../../components/Chakra/Icon';
-import Link from '../../../components/Chakra/Link';
+import ConfirmModal from './ConfirmModal';
 
 import getWalletAddress from '../../../helpers/getWalletAddress';
 import getWalletPrivateKey from '../../../helpers/getWalletPrivateKey';
@@ -20,6 +20,7 @@ import getConunPass from '../../../helpers/getConunPass';
 function CreateSuccess() {
   const toast = useToast();
   const [qrCode, setQrCode] = useState(undefined);
+  const [confirmModal, setConfirmModal] = useState(false);
 
   const exportKeyStore = async () => {
     const res = await ipcRenderer.invoke('export-key-store', {
@@ -32,14 +33,16 @@ function CreateSuccess() {
         status: 'success',
         duration: 5000,
         isClosable: true,
+        position: 'top',
       });
-    } else {
+    } else if (!res.canceled) {
       toast({
         title: 'Something went wrong.',
         description: 'Please try again',
         status: 'error',
         duration: 5000,
         isClosable: true,
+        position: 'top',
       });
     }
   };
@@ -64,13 +67,44 @@ function CreateSuccess() {
         </Text>
         <Stack bgColor="grey" p="1rem" borderRadius="5px">
           <HStack justifyContent="space-between">
-            <Text>WALLET ADDRESS</Text> <Text>{getWalletAddress()}</Text>
-            <Icon icon={Copy} width={18} height={18} />
+            <Text fontSize="0.8rem">WALLET ADDRESS</Text>{' '}
+            <Text fontSize="0.9rem">{getWalletAddress()}</Text>
+            <Button
+              _hover={{ bgColor: 'transparent' }}
+              variant="ghost"
+              onClick={() => {
+                clipboard.writeText(getWalletAddress());
+                toast({
+                  title: 'Wallet address copied',
+                  status: 'success',
+                  duration: 5000,
+                  isClosable: true,
+                  position: 'top',
+                });
+              }}
+            >
+              <Icon icon={Copy} width={18} height={18} />
+            </Button>
           </HStack>
           <HStack justifyContent="space-between">
-            <Text>PRIVATE KEY</Text>
-            <Text>{getWalletPrivateKey()}</Text>
-            <Icon icon={Copy} width={18} height={18} />
+            <Text fontSize="0.8rem">PRIVATE KEY</Text>
+            <Text fontSize="0.9rem">{getWalletPrivateKey()}</Text>
+            <Button
+              _hover={{ bgColor: 'transparent' }}
+              variant="ghost"
+              onClick={() => {
+                clipboard.writeText(getWalletPrivateKey());
+                toast({
+                  title: 'Private key copied',
+                  status: 'success',
+                  duration: 5000,
+                  isClosable: true,
+                  position: 'top',
+                });
+              }}
+            >
+              <Icon icon={Copy} width={18} height={18} />
+            </Button>
           </HStack>
         </Stack>
         <Flex>
@@ -102,16 +136,24 @@ function CreateSuccess() {
             </Box>
           </Button>
         </Flex>
-        <Link to="/wallet-confirm-backup">
-          <Button type="button" width="100%" colorScheme="yellow">
-            Next
-          </Button>
-        </Link>
+
+        <Button
+          type="button"
+          width="100%"
+          onClick={() => setConfirmModal(true)}
+          colorScheme="yellow"
+        >
+          Next
+        </Button>
       </Stack>
       <QrCodeModal
         isOpen={!!qrCode}
         onClose={() => setQrCode(undefined)}
         qrCodeSrc={qrCode ?? ''}
+      />
+      <ConfirmModal
+        isOpen={confirmModal}
+        onClose={() => setConfirmModal(false)}
       />
     </Box>
   );

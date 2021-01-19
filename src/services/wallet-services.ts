@@ -17,7 +17,7 @@ export function createWallet(password: string) {
 export async function saveKeyStoreJson(keyStore: string) {
   const savePath = await dialog.showSaveDialog({
     title: 'Select the File Path to save',
-    defaultPath: path.join(__dirname, './keyStore.json'),
+    defaultPath: path.join(__dirname, './conun-key-store.json'),
     buttonLabel: 'Save',
     filters: [
       {
@@ -37,9 +37,9 @@ export async function saveKeyStoreJson(keyStore: string) {
       });
       return { success: true };
     }
-    return { success: false };
+    return { success: false, canceled: savePath.canceled };
   } catch (error) {
-    return { success: false };
+    return { success: false, canceled: savePath.canceled };
   }
 }
 
@@ -67,7 +67,7 @@ export async function createQrCode({
 export async function saveQrCode(qrCodeURI: string) {
   const savePath = await dialog.showSaveDialog({
     title: 'Save QR Code',
-    defaultPath: path.join(__dirname, './URI.png'),
+    defaultPath: path.join(__dirname, './conun-qr-code.png'),
     buttonLabel: 'Save',
     filters: [
       {
@@ -84,8 +84,8 @@ export async function saveQrCode(qrCodeURI: string) {
       fs.writeFileSync(savePath.filePath, Buffer.from(base64Data, 'base64'));
       return { success: true };
     }
-    return { success: false };
+    return { success: false, canceled: savePath.canceled };
   } catch (error) {
-    return { success: false };
+    return { success: false, canceled: savePath.canceled };
   }
 }
