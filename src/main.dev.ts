@@ -31,6 +31,7 @@ import {
   saveKeyStoreJson,
   saveQrCode,
   validateKeystoreFile,
+  validateQrCode,
 } from './services/wallet-services';
 
 export default class AppUpdater {
@@ -227,6 +228,17 @@ ipcMain.handle('download-qr-code', async (_, args) => {
 ipcMain.handle('validate-keystore-file', async (_, args) => {
   try {
     const res = await validateKeystoreFile(args);
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+    };
+  }
+});
+
+ipcMain.handle('validate-qr-code', async (_, args) => {
+  try {
+    const res = await validateQrCode(args);
     return res;
   } catch (error) {
     return {

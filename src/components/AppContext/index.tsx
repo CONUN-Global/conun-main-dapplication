@@ -20,7 +20,7 @@ import { AUTH_TOKEN } from '../../const';
 
 type WalletData = {
   address: string;
-  keyStore: string;
+  keyStore?: string;
   privateKey: string;
 };
 
@@ -72,8 +72,10 @@ function AppProvider({ children }: AppProviderProps) {
   const handleWalletCreation: State['handleWalletCreation'] = useCallback(
     ({ address, keyStore, privateKey }) => {
       setWalletAddress(address);
-      setKeyStore(keyStore);
       setWalletPrivateKey(privateKey);
+      if (keyStore) {
+        setKeyStore(keyStore);
+      }
     },
     []
   );

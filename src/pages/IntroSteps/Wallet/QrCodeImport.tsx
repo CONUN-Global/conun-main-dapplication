@@ -26,20 +26,20 @@ function QrCodeImport() {
   const toast = useToast();
 
   const onSubmit: SubmitHandler<FormData> = async ({ file, password }) => {
-    const jsonFile = file[0];
+    const image = file[0];
     const reader = new FileReader();
-    reader.readAsText(jsonFile, 'UTF-8');
+    reader.readAsDataURL(image);
     reader.onload = async (e) => {
       if (e?.target?.result) {
-        const res = await ipcRenderer.invoke('validate-keystore-file', {
-          file: e.target.result,
+        const res = await ipcRenderer.invoke('validate-qr-code', {
+          qrCode: e.target.result,
           password,
         });
+
         if (res.success) {
           handleWalletCreation({
             address: res.address,
             privateKey: res.privateKey,
-            keyStore: JSON.stringify(e.target.result),
           });
 
           history.replace('/home');

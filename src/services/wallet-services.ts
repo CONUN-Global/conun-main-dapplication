@@ -4,10 +4,10 @@ import path from 'path';
 import crypto from 'crypto';
 import qrcode from 'qrcode';
 import { dialog } from 'electron';
+import jimp from 'jimp';
+import QRReader from 'qrcode-reader';
 
-const web3 = new Web3(
-  'https://ropsten.infura.io/v3/2b1758a74cf249a598f13e357bb058dc'
-);
+const web3 = new Web3('----');
 
 export function createWallet(password: string) {
   const { privateKey, address } = web3.eth.accounts.create(password);
@@ -101,4 +101,36 @@ export async function validateKeystoreFile({
 }) {
   const { address, privateKey } = web3.eth.accounts.decrypt(file, password);
   return { success: true, address, privateKey };
+}
+
+export async function validateQrCode({
+  qrCode,
+  password,
+}: {
+  qrCode: any;
+  password: string;
+}) {
+  const base64Data = qrCode.replace(/^data:image\/png;base64,/, '');
+  const img = await jimp.read(Buffer.from(base64Data, 'base64'));
+
+  const qr = new QRReader();
+
+  const value: any = await new Promise((resolve, reject) => {
+    qr.callback = (err: any, v: any) =>
+      err != null ? reject(err) : resolve(v);
+    qr.decode(img.bitmap);
+  });
+
+  if (value?.result) {
+    const decipher = crypto.createDecipher('aes-128-cbc', password);
+
+    let plainText = decipher.update(value.result, 'base64', 'utf8');
+    plainText += decipher.final('utf8');
+
+    const { privateKey } = JSON.parse(plainText);
+    const { address } = web3.eth.accounts.privateKeyToAccount(privateKey);
+
+    return { success: true, address, privateKey };
+  }
+  return { success: false };
 }
