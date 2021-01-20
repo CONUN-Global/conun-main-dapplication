@@ -36,7 +36,7 @@ export default function App() {
           <IntroRoute path="/import-wallet">
             <ImportWallet />
           </IntroRoute>
-          <IntroRoute path="/import-key-store">
+          <IntroRoute path="/import-keystore">
             <KeyStoreImport />
           </IntroRoute>
           <IntroRoute path="/import-qr-code">

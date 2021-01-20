@@ -7,6 +7,7 @@ import { useAppContext } from '../../../components/AppContext';
 
 function ImportWallet() {
   const { isAlreadyUser } = useAppContext();
+
   return (
     <Box elevation={4} padding="2rem" minWidth="30rem">
       <Stack spacing="2rem">
@@ -36,16 +37,18 @@ function ImportWallet() {
             </Button>
           </Link>
         </Stack>
-        <Link to="/wallet-options">
-          <Button
-            width="100%"
-            type="button"
-            variant="outline"
-            colorScheme="yellow"
-          >
-            Back
-          </Button>
-        </Link>
+        {!isAlreadyUser && (
+          <Link to="/wallet-options">
+            <Button
+              width="100%"
+              type="button"
+              variant="outline"
+              colorScheme="yellow"
+            >
+              Back
+            </Button>
+          </Link>
+        )}
       </Stack>
     </Box>
   );

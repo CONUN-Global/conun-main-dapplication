@@ -7,14 +7,16 @@ import { useHistory } from 'react-router-dom';
 import Box from '../../../components/Box';
 import Input from '../../../components/Form/Input';
 import Form from '../../../components/Chakra/Form';
-import { useAppContext } from '../../../components/AppContext';
 import Link from '../../../components/Chakra/Link';
 
-import { setConunPass } from '../../../helpers/getConunPass';
+import { useAppContext } from '../../../components/AppContext';
 import useLogin from '../../../hooks/useLogin';
 import useCurrentUser from '../../../hooks/useCurrentUser';
-import getPublicKey from '../../../helpers/getPublicKey';
 import useKeyGenerator from '../../../hooks/useKeyGenerator';
+import useUserCheck from '../../../hooks/useUserCheck';
+
+import { setConunPass } from '../../../helpers/getConunPass';
+import getPublicKey from '../../../helpers/getPublicKey';
 
 type FormData = {
   password: string;
@@ -22,11 +24,13 @@ type FormData = {
 };
 
 function KeyStoreImport() {
-  const { handleWalletCreation, onLogin } = useAppContext();
+  const { handleWalletCreation, onLogin, isAlreadyUser } = useAppContext();
 
   const { login, loading } = useLogin();
 
   const { generate, isLoading: keysLoading } = useKeyGenerator();
+
+  const { walletAddress } = useUserCheck();
 
   const { currentUser } = useCurrentUser();
 
@@ -47,27 +51,46 @@ function KeyStoreImport() {
           password,
         });
         if (res.success) {
-          await generate();
+          if (isAlreadyUser && walletAddress !== res.address) {
+            toast({
+              title: 'Check Wallet',
+              description: 'You registered with different wallet in the past',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            });
+          } else {
+            await generate();
 
-          handleWalletCreation({
-            address: res.address,
-            privateKey: res.privateKey,
-            keyStore: JSON.stringify(e.target.result),
-          });
+            handleWalletCreation({
+              address: res.address,
+              privateKey: res.privateKey,
+              keyStore: JSON.stringify(e.target.result),
+            });
 
-          const loginResponse = await login({
-            email: currentUser?.email,
-            password,
-            key: getPublicKey(),
-          });
+            const loginResponse = await login({
+              email: currentUser?.email,
+              password,
+              key: getPublicKey(),
+            });
 
-          if (loginResponse?.status === 200) {
-            onLogin(
-              loginResponse?.data?.['x-auth-token'] ?? null,
-              loginResponse?.data?.user?.wallet_address
-            );
-            setConunPass('');
-            history.push('/create-wallet-success');
+            if (loginResponse?.status === 200) {
+              onLogin(
+                loginResponse?.data?.['x-auth-token'] ?? null,
+                loginResponse?.data?.user?.wallet_address
+              );
+              setConunPass('');
+              toast({
+                title: 'Import Successful',
+                description: 'Welcome back to your account',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+              });
+              history.push('/home');
+            }
           }
         } else {
           toast({

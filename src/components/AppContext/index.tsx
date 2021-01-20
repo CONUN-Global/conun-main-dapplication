@@ -5,10 +5,9 @@ import React, {
   useContext,
   useMemo,
 } from 'react';
-import { useQuery } from 'react-query';
 
 import useAppCurrentUser from '../../hooks/useAppCurrentUser';
-import useCurrentUser from '../../hooks/useCurrentUser';
+import useUserCheck from '../../hooks/useUserCheck';
 
 import removeAllTokens from '../../helpers/removeAllTokens';
 import getWalletAddress, {
@@ -21,7 +20,6 @@ import getKeyStore, { setKeyStore } from '../../helpers/getKeyStore';
 
 import { cache } from '../../react-query/config';
 import { AUTH_TOKEN } from '../../const';
-import instance from '../../axios/instance';
 
 type WalletData = {
   address: string;
@@ -51,16 +49,10 @@ const setAuthHeaderToken = (token: string) => {
   return localStorage.setItem(AUTH_TOKEN, token);
 };
 
-const checkUser = (currentUser: { email: string }) =>
-  instance.get(`/users/check/?email=${currentUser?.email}`);
-
 function AppProvider({ children }: AppProviderProps) {
   const { currentUser, refetch } = useAppCurrentUser();
-  const { currentUser: googleUser, loading } = useCurrentUser();
 
-  const { data } = useQuery('check-user', () => checkUser(googleUser), {
-    enabled: !loading && !!googleUser.email,
-  });
+  const { isUser } = useUserCheck();
 
   const handleLogout = useCallback(() => {
     removeAllTokens();
@@ -88,7 +80,7 @@ function AppProvider({ children }: AppProviderProps) {
   const value = useMemo(
     () => ({
       isAuthenticated: !!currentUser,
-      isAlreadyUser: !!data?.data?.message?.email,
+      isAlreadyUser: isUser,
       onLogin: handleLogin,
       onLogout: handleLogout,
       walletAddress: getWalletAddress(),
@@ -96,13 +88,7 @@ function AppProvider({ children }: AppProviderProps) {
       handleWalletCreation,
       keyStore: getKeyStore(),
     }),
-    [
-      handleLogin,
-      handleLogout,
-      handleWalletCreation,
-      currentUser,
-      data?.data?.message?.email,
-    ]
+    [handleLogin, handleLogout, handleWalletCreation, currentUser, isUser]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

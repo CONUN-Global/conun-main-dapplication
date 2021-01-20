@@ -16,6 +16,7 @@ import useLogin from '../../../hooks/useLogin';
 
 import getPublicKey from '../../../helpers/getPublicKey';
 import { setConunPass } from '../../../helpers/getConunPass';
+import useUserCheck from '../../../hooks/useUserCheck';
 
 type FormData = {
   password: string;
@@ -23,11 +24,13 @@ type FormData = {
 };
 
 function QrCodeImport() {
-  const { handleWalletCreation, onLogin } = useAppContext();
+  const { handleWalletCreation, onLogin, isAlreadyUser } = useAppContext();
 
   const { login, loading } = useLogin();
 
   const { generate, isLoading: keysLoading } = useKeyGenerator();
+
+  const { walletAddress } = useUserCheck();
 
   const { register, handleSubmit, errors } = useForm<FormData>();
 
@@ -49,26 +52,45 @@ function QrCodeImport() {
         });
 
         if (res.success) {
-          await generate();
+          if (isAlreadyUser && walletAddress !== res.address) {
+            toast({
+              title: 'Check Wallet',
+              description: 'You registered with different wallet in the past',
+              status: 'error',
+              duration: 5000,
+              isClosable: true,
+              position: 'top',
+            });
+          } else {
+            await generate();
 
-          handleWalletCreation({
-            address: res.address,
-            privateKey: res.privateKey,
-          });
+            handleWalletCreation({
+              address: res.address,
+              privateKey: res.privateKey,
+            });
 
-          const loginResponse = await login({
-            email: currentUser?.email,
-            password,
-            key: getPublicKey(),
-          });
+            const loginResponse = await login({
+              email: currentUser?.email,
+              password,
+              key: getPublicKey(),
+            });
 
-          if (loginResponse?.status === 200) {
-            onLogin(
-              loginResponse?.data?.['x-auth-token'] ?? null,
-              loginResponse?.data?.user?.wallet_address
-            );
-            setConunPass('');
-            history.push('/create-wallet-success');
+            if (loginResponse?.status === 200) {
+              onLogin(
+                loginResponse?.data?.['x-auth-token'] ?? null,
+                loginResponse?.data?.user?.wallet_address
+              );
+              setConunPass('');
+              toast({
+                title: 'Import Successful',
+                description: 'Welcome back to your account',
+                status: 'success',
+                duration: 5000,
+                isClosable: true,
+                position: 'top',
+              });
+              history.push('/home');
+            }
           }
         } else {
           toast({
