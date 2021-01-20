@@ -13,7 +13,7 @@ import {
   Text,
 } from '@chakra-ui/react';
 
-import useCurrentUser from '../../../hooks/useCurrentUser';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 function UserBox() {
   const { currentUser } = useCurrentUser();

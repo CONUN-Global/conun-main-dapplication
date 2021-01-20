@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 
 import CustomInput from '../../components/Form/Input';
-import UserBox from '../../components/Form/UserBox';
+import UserBox from '../../components/UserBox';
 
 import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
 import Form from '../../components/Chakra/Form';

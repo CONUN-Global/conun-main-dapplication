@@ -25,6 +25,7 @@ import {
   logout,
   refreshTokens,
 } from './services/auth-service';
+
 import {
   createQrCode,
   createWallet,
@@ -34,6 +35,8 @@ import {
   validatePrivateKey,
   validateQrCode,
 } from './services/wallet-services';
+
+import { generateApiPrivateKey } from './services/api-services';
 
 export default class AppUpdater {
   constructor() {
@@ -251,6 +254,17 @@ ipcMain.handle('validate-qr-code', async (_, args) => {
 ipcMain.handle('validate-private-key', async (_, args) => {
   try {
     const res = await validatePrivateKey(args);
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+    };
+  }
+});
+
+ipcMain.handle('generate-api-private-key', async () => {
+  try {
+    const res = await generateApiPrivateKey();
     return res;
   } catch (error) {
     return {

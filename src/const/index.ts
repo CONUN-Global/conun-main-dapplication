@@ -16,6 +16,8 @@ export const KEY_STORE_TOKEN = 'conun-key-store';
 
 export const CONUN_PASS_TOKEN = 'conun-pass';
 
+export const ORG_NAME = 'Org1';
+
 export const FcnTypes = {
   Transfer: 'Transfer',
   Init: 'Init',

@@ -37,7 +37,7 @@ function CreateWallet() {
       history.push('/create-wallet-success');
     } catch (error) {
       toast({
-        title: 'Backup Confirmation',
+        title: 'Error',
         description: 'Something went wrong please try again.',
         status: 'error',
         duration: 5000,
@@ -67,6 +67,10 @@ function CreateWallet() {
                 placeholder="Password"
                 formRef={register({
                   required: { value: true, message: 'Password is required' },
+                  minLength: {
+                    value: 5,
+                    message: 'Password must be at least 5 characters long',
+                  },
                 })}
                 error={errors.password}
               />
