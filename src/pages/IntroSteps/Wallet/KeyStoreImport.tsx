@@ -11,6 +11,10 @@ import { useAppContext } from '../../../components/AppContext';
 import Link from '../../../components/Chakra/Link';
 
 import { setConunPass } from '../../../helpers/getConunPass';
+import useLogin from '../../../hooks/useLogin';
+import useCurrentUser from '../../../hooks/useCurrentUser';
+import getPublicKey from '../../../helpers/getPublicKey';
+import useKeyGenerator from '../../../hooks/useKeyGenerator';
 
 type FormData = {
   password: string;
@@ -18,7 +22,13 @@ type FormData = {
 };
 
 function KeyStoreImport() {
-  const { handleWalletCreation } = useAppContext();
+  const { handleWalletCreation, onLogin } = useAppContext();
+
+  const { login, loading } = useLogin();
+
+  const { generate, isLoading: keysLoading } = useKeyGenerator();
+
+  const { currentUser } = useCurrentUser();
 
   const { register, handleSubmit, errors } = useForm<FormData>();
 
@@ -37,14 +47,28 @@ function KeyStoreImport() {
           password,
         });
         if (res.success) {
+          await generate();
+
           handleWalletCreation({
             address: res.address,
             privateKey: res.privateKey,
             keyStore: JSON.stringify(e.target.result),
           });
-          setConunPass(password);
 
-          history.replace('/home');
+          const loginResponse = await login({
+            email: currentUser?.email,
+            password,
+            key: getPublicKey(),
+          });
+
+          if (loginResponse?.status === 200) {
+            onLogin(
+              loginResponse?.data?.['x-auth-token'] ?? null,
+              loginResponse?.data?.user?.wallet_address
+            );
+            setConunPass('');
+            history.push('/create-wallet-success');
+          }
         } else {
           toast({
             title: 'An error ocurred',
@@ -99,7 +123,12 @@ function KeyStoreImport() {
                   Back
                 </Button>
               </Link>
-              <Button type="submit" flex="1" colorScheme="yellow">
+              <Button
+                type="submit"
+                isLoading={loading || keysLoading}
+                flex="1"
+                colorScheme="yellow"
+              >
                 Import Wallet
               </Button>
             </HStack>

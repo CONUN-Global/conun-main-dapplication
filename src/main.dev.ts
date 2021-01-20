@@ -74,6 +74,13 @@ const installExtensions = async () => {
     .catch(console.log);
 };
 
+// authentication
+function destroyAuthWin() {
+  if (!authWindow) return;
+  authWindow.close();
+  authWindow = null;
+}
+
 const createWindow = async () => {
   if (
     process.env.NODE_ENV === 'development' ||
@@ -108,11 +115,16 @@ const createWindow = async () => {
     if (!mainWindow) {
       throw new Error('"mainWindow" is not defined');
     }
+
     if (process.env.START_MINIMIZED) {
       mainWindow.minimize();
     } else {
       mainWindow.show();
       mainWindow.focus();
+
+      if (authWindow) {
+        destroyAuthWin();
+      }
     }
   });
 
@@ -134,15 +146,7 @@ const createWindow = async () => {
   new AppUpdater();
 };
 
-// authentication
-function destroyAuthWin() {
-  if (!authWindow) return;
-  authWindow.close();
-  authWindow = null;
-}
-
 function createAuthWindow() {
-  destroyAuthWin();
   authWindow = new BrowserWindow({
     width: 1024,
     height: 728,
@@ -153,6 +157,7 @@ function createAuthWindow() {
   });
 
   authWindow.loadURL(getAuthenticationURL(), { userAgent: 'Chrome' });
+
   const {
     session: { webRequest },
   } = authWindow.webContents;

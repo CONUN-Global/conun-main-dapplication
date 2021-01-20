@@ -1,4 +1,4 @@
-export const serverUrl = 'http://54.180.155.47:4000/api/v1';
+export const serverUrl = 'http://192.168.100.105:4000/api/v1';
 
 export const AUTH_TOKEN = 'conun-auth-token';
 

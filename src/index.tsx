@@ -1,13 +1,13 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { ChakraProvider } from '@chakra-ui/react';
-import { QueryClient, QueryClientProvider } from 'react-query';
+import { QueryClientProvider } from 'react-query';
 
 import App from './App';
 
-import './App.global.css';
+import { queryClient } from './react-query/config';
 
-const queryClient = new QueryClient();
+import './App.global.css';
 
 render(
   <QueryClientProvider client={queryClient}>

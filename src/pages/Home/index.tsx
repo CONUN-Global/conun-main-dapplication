@@ -5,10 +5,10 @@ import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 
 import CustomInput from '../../components/Form/Input';
 import UserBox from '../../components/UserBox';
-
-import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
 import Form from '../../components/Chakra/Form';
 import Link from '../../components/Chakra/Link';
+
+import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
 
 type FormData = {
   search: string;

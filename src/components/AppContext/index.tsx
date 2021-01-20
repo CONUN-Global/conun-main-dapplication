@@ -4,8 +4,11 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-  useState,
 } from 'react';
+import { useQuery } from 'react-query';
+
+import useAppCurrentUser from '../../hooks/useAppCurrentUser';
+import useCurrentUser from '../../hooks/useCurrentUser';
 
 import removeAllTokens from '../../helpers/removeAllTokens';
 import getWalletAddress, {
@@ -16,7 +19,9 @@ import getWalletPrivateKey, {
 } from '../../helpers/getWalletPrivateKey';
 import getKeyStore, { setKeyStore } from '../../helpers/getKeyStore';
 
+import { cache } from '../../react-query/config';
 import { AUTH_TOKEN } from '../../const';
+import instance from '../../axios/instance';
 
 type WalletData = {
   address: string;
@@ -29,6 +34,7 @@ type State = {
   onLogout: () => void;
   handleWalletCreation: (data: WalletData) => void;
   isAuthenticated: boolean;
+  isAlreadyUser: boolean;
   walletAddress: string;
   walletPrivateKey: string;
   keyStore: string;
@@ -37,36 +43,35 @@ type AppProviderProps = { children: ReactNode };
 
 const AppContext = createContext<State | undefined>(undefined);
 
-const getToken = () => {
-  return localStorage.getItem(AUTH_TOKEN);
-};
-
 const saveToken = (token: string) => {
   return localStorage.setItem(AUTH_TOKEN, token);
-};
-
-const restoreToken = () => {
-  return getToken();
 };
 
 const setAuthHeaderToken = (token: string) => {
   return localStorage.setItem(AUTH_TOKEN, token);
 };
 
+const checkUser = (currentUser: { email: string }) =>
+  instance.get(`/users/check/?email=${currentUser?.email}`);
+
 function AppProvider({ children }: AppProviderProps) {
-  const [authToken, setAuthToken] = useState<string | null>(restoreToken());
+  const { currentUser, refetch } = useAppCurrentUser();
+  const { currentUser: googleUser, loading } = useCurrentUser();
+
+  const { data } = useQuery('check-user', () => checkUser(googleUser), {
+    enabled: !loading && !!googleUser.email,
+  });
 
   const handleLogout = useCallback(() => {
     removeAllTokens();
-    setAuthToken(null);
-    // cache.clear();
+    cache.clear();
   }, []);
 
   const handleLogin: State['onLogin'] = useCallback((token, wallet) => {
     saveToken(token);
-    setAuthToken(token);
     setAuthHeaderToken(token);
     setWalletAddress(wallet);
+    refetch();
   }, []);
 
   const handleWalletCreation: State['handleWalletCreation'] = useCallback(
@@ -82,8 +87,8 @@ function AppProvider({ children }: AppProviderProps) {
 
   const value = useMemo(
     () => ({
-      authToken,
-      isAuthenticated: !!authToken,
+      isAuthenticated: !!currentUser,
+      isAlreadyUser: !!data?.data?.message?.email,
       onLogin: handleLogin,
       onLogout: handleLogout,
       walletAddress: getWalletAddress(),
@@ -91,7 +96,13 @@ function AppProvider({ children }: AppProviderProps) {
       handleWalletCreation,
       keyStore: getKeyStore(),
     }),
-    [authToken, handleLogin, handleLogout, handleWalletCreation]
+    [
+      handleLogin,
+      handleLogout,
+      handleWalletCreation,
+      currentUser,
+      data?.data?.message?.email,
+    ]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

@@ -3,18 +3,21 @@ import { Button, Stack, Text } from '@chakra-ui/react';
 
 import Box from '../../../components/Box';
 import Link from '../../../components/Chakra/Link';
+import { useAppContext } from '../../../components/AppContext';
 
 function ImportWallet() {
+  const { isAlreadyUser } = useAppContext();
   return (
     <Box elevation={4} padding="2rem" minWidth="30rem">
       <Stack spacing="2rem">
         <Text textAlign="center" fontSize="2rem">
-          Choose Access Method
+          {isAlreadyUser ? 'Welcome Back' : 'Choose Access Method'}
         </Text>
         <Text textAlign="center">
-          Access your existing Ethereum-based wallet.
+          {isAlreadyUser
+            ? "Let's restore your previous wallet "
+            : 'Access your existing Ethereum-based wallet.'}
           <br />
-          Choose from method options below.
         </Text>
         <Stack spacing="1rem" mb="1rem">
           <Link to="/import-keystore" width="100%">

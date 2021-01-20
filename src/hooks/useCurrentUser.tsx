@@ -5,13 +5,20 @@ type CurrentUser = {
   name: string;
   email: string;
   picture: string;
-} | null;
+};
 
 function useCurrentUser() {
-  const [currentUser, setCurrentUser] = useState<CurrentUser>(null);
+  const [currentUser, setCurrentUser] = useState<CurrentUser>({
+    name: '',
+    email: '',
+    picture: '',
+  });
+  const [loading, setLoading] = useState(false);
 
   const getProfile = async () => {
+    setLoading(true);
     const user = await ipcRenderer.invoke('get-profile');
+    setLoading(false);
     setCurrentUser(user);
   };
 
@@ -19,7 +26,7 @@ function useCurrentUser() {
     getProfile();
   }, []);
 
-  return { currentUser };
+  return { currentUser, loading };
 }
 
 export default useCurrentUser;

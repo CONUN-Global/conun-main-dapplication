@@ -88,7 +88,7 @@ function ConfirmModal({ isOpen, onClose }: ConfirmModalProps) {
           isAdmin: false,
         });
 
-        if (signupResponse?.status === 200) {
+        if (signupResponse?.status === 201) {
           const loginResponse = await login({
             email: currentUser?.email,
             password: getConunPass(),

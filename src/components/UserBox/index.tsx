@@ -14,11 +14,14 @@ import {
 } from '@chakra-ui/react';
 
 import useCurrentUser from '../../hooks/useCurrentUser';
+import { useAppContext } from '../AppContext';
 
 function UserBox() {
   const { currentUser } = useCurrentUser();
+  const { onLogout } = useAppContext();
 
   const handleLogout = async () => {
+    await onLogout();
     await ipcRenderer.invoke('logout');
   };
 
