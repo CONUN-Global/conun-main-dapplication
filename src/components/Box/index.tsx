@@ -17,6 +17,7 @@ function Box({
   if (noStyle) {
     <ChakraBox {...props}>{children}</ChakraBox>;
   }
+
   return (
     <ChakraBox boxShadow={elevations[elevation]} borderRadius={5} {...props}>
       {children}

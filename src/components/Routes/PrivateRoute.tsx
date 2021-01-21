@@ -1,5 +1,8 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
+
+import UserBox from '../UserBox';
+
 import { useAppContext } from '../AppContext';
 
 interface PrivateRouteProps extends RouteProps {
@@ -12,7 +15,12 @@ function PrivateRoute({ children, ...props }: PrivateRouteProps) {
   if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
-  return <Route {...props}>{children}</Route>;
+  return (
+    <Route {...props}>
+      <UserBox />
+      {children}
+    </Route>
+  );
 }
 
 export default PrivateRoute;

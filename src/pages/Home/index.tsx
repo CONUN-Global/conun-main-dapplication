@@ -4,7 +4,6 @@ import { useForm } from 'react-hook-form';
 import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 
 import CustomInput from '../../components/Form/Input';
-import UserBox from '../../components/UserBox';
 import Form from '../../components/Chakra/Form';
 import Link from '../../components/Chakra/Link';
 
@@ -21,7 +20,6 @@ function Home() {
 
   return (
     <Stack spacing="1rem">
-      <UserBox />
       <Form onSubmit={onSubmit} mb="4rem">
         <Flex width="80vw">
           <CustomInput
@@ -41,7 +39,7 @@ function Home() {
         </Flex>
       </Form>
       <Center>
-        <Link to="/">
+        <Link to="/wallet">
           <Stack>
             <Wallet style={{ width: 70, height: 70 }} />
             <Text color="black" textAlign="center">

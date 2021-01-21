@@ -29,6 +29,8 @@ import {
 import {
   createQrCode,
   createWallet,
+  getConunBalance,
+  getEthBalance,
   saveKeyStoreJson,
   saveQrCode,
   validateKeystoreFile,
@@ -270,6 +272,28 @@ ipcMain.handle('validate-private-key', async (_, args) => {
 ipcMain.handle('generate-api-private-key', async () => {
   try {
     const res = await generateApiPrivateKey();
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+    };
+  }
+});
+
+ipcMain.handle('get-eth-balance', async (_, args) => {
+  try {
+    const res = await getEthBalance(args.address);
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+    };
+  }
+});
+
+ipcMain.handle('get-con-balance', async (_, args) => {
+  try {
+    const res = await getConunBalance(args.address);
     return res;
   } catch (error) {
     return {

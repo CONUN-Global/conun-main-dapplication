@@ -3,6 +3,8 @@ import { HashRouter as Router, Switch } from 'react-router-dom';
 
 import { AppProvider } from './components/AppContext';
 
+import IntroRoute from './components/Routes/IntroRoute';
+import PrivateRoute from './components/Routes/PrivateRoute';
 import Home from './pages/Home';
 import Introduction from './pages/IntroSteps/Introduction';
 import Terms from './pages/IntroSteps/Terms';
@@ -13,8 +15,7 @@ import KeyStoreImport from './pages/IntroSteps/Wallet/KeyStoreImport';
 import PrivateKeyImport from './pages/IntroSteps/Wallet/PrivateKeyImport';
 import QrCodeImport from './pages/IntroSteps/Wallet/QrCodeImport';
 import WalletOptions from './pages/IntroSteps/Wallet/WalletOptions';
-import IntroRoute from './components/Routes/IntroRoute';
-import PrivateRoute from './components/Routes/PrivateRoute';
+import Wallet from './pages/Wallet';
 
 export default function App() {
   return (
@@ -50,6 +51,9 @@ export default function App() {
           </IntroRoute>
           <PrivateRoute path="/home">
             <Home />
+          </PrivateRoute>
+          <PrivateRoute path="/wallet">
+            <Wallet />
           </PrivateRoute>
         </Switch>
       </Router>

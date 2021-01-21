@@ -4,10 +4,16 @@
  */
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@300&display=swap');
 
-body {
-  position: relative;
-  height: 100vh;
+* {
   font-family: 'Roboto Mono', monospace;
+  padding: 0;
+  margin: 0;
+}
+
+#root {
+  position: relative;
+  min-height: 100vh;
+  min-width: 100vw;
   overflow-y: hidden;
   display: flex;
   justify-content: center;

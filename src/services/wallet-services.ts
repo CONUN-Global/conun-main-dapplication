@@ -144,3 +144,21 @@ export async function validatePrivateKey({
 }) {
   return privateKey;
 }
+
+export async function getEthBalance(address: string) {
+  const wei = await web3.eth.getBalance(address);
+  return web3.utils.fromWei(wei, 'ether');
+}
+
+export async function getConunBalance(address: string) {
+  const contract = new web3.eth.Contract(
+    envVariables.abi,
+    envVariables.contractAddress
+  );
+
+  const data = await contract.methods.balanceOf(address).call();
+
+  const balance = await web3.utils.fromWei(data);
+
+  return balance;
+}

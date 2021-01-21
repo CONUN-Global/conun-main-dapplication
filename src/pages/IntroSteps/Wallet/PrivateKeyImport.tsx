@@ -27,6 +27,7 @@ function PrivateKeyImport() {
   const onSubmit: SubmitHandler<FormData> = async ({ privateKey }) => {
     console.log(privateKey);
   };
+
   return (
     <Box elevation={4} padding="2rem" minWidth="30rem">
       <Stack spacing="2rem">
