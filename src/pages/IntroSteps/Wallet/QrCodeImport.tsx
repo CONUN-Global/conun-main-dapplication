@@ -13,10 +13,13 @@ import { useAppContext } from '../../../components/AppContext';
 import useCurrentUser from '../../../hooks/useCurrentUser';
 import useKeyGenerator from '../../../hooks/useKeyGenerator';
 import useLogin from '../../../hooks/useLogin';
+import useUserCheck from '../../../hooks/useUserCheck';
+import useSignup from '../../../hooks/useSignup';
 
 import getPublicKey from '../../../helpers/getPublicKey';
 import { setConunPass } from '../../../helpers/getConunPass';
-import useUserCheck from '../../../hooks/useUserCheck';
+
+import { ORG_NAME } from '../../../const';
 
 type FormData = {
   password: string;
@@ -27,6 +30,8 @@ function QrCodeImport() {
   const { handleWalletCreation, onLogin, isAlreadyUser } = useAppContext();
 
   const { login, loading } = useLogin();
+
+  const { signup, loading: signupLoading } = useSignup();
 
   const { generate, isLoading: keysLoading } = useKeyGenerator();
 
@@ -69,27 +74,44 @@ function QrCodeImport() {
               privateKey: res.privateKey,
             });
 
-            const loginResponse = await login({
-              email: currentUser?.email,
-              password,
-              key: getPublicKey(),
-            });
+            let signupResponse;
 
-            if (loginResponse?.status === 200) {
-              onLogin(
-                loginResponse?.data?.['x-auth-token'] ?? null,
-                loginResponse?.data?.user?.wallet_address
-              );
-              setConunPass('');
-              toast({
-                title: 'Import Successful',
-                description: 'Welcome back to your account',
-                status: 'success',
-                duration: 5000,
-                isClosable: true,
-                position: 'top',
+            if (!isAlreadyUser) {
+              signupResponse = await signup({
+                email: currentUser?.email,
+                password,
+                name: currentUser?.name,
+                wallet_address: res.address,
+                orgName: ORG_NAME,
+                isAdmin: false,
               });
-              history.push('/home');
+            }
+
+            if (isAlreadyUser || signupResponse?.status === 201) {
+              const loginResponse = await login({
+                email: currentUser?.email,
+                password,
+                key: getPublicKey(),
+              });
+
+              if (loginResponse?.status === 200) {
+                onLogin(
+                  loginResponse?.data?.['x-auth-token'] ?? null,
+                  loginResponse?.data?.user?.wallet_address
+                );
+                setConunPass('');
+                toast({
+                  title: 'Import Successful',
+                  description: isAlreadyUser
+                    ? 'Welcome back to your account'
+                    : 'Account Created',
+                  status: 'success',
+                  duration: 5000,
+                  isClosable: true,
+                  position: 'top',
+                });
+                history.push('/home');
+              }
             }
           }
         } else {
@@ -149,7 +171,7 @@ function QrCodeImport() {
               <Button
                 type="submit"
                 flex="1"
-                isLoading={loading || keysLoading}
+                isLoading={loading || signupLoading || keysLoading}
                 colorScheme="yellow"
               >
                 Import Wallet

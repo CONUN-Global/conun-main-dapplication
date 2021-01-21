@@ -9,7 +9,6 @@ import {
   Text,
   useToast,
 } from '@chakra-ui/react';
-import { useMutation } from 'react-query';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 
@@ -21,11 +20,12 @@ import { useAppContext } from '../../../components/AppContext';
 
 import useCurrentUser from '../../../hooks/useCurrentUser';
 import useKeyGenerator from '../../../hooks/useKeyGenerator';
+import useSignup from '../../../hooks/useSignup';
+import useLogin from '../../../hooks/useLogin';
 
 import getConunPass, { setConunPass } from '../../../helpers/getConunPass';
 import getWalletAddress from '../../../helpers/getWalletAddress';
 
-import instance from '../../../axios/instance';
 import { ORG_NAME } from '../../../const';
 
 type FormData = {
@@ -51,15 +51,9 @@ function ConfirmModal({ isOpen, onClose }: ConfirmModalProps) {
 
   const { generate, isLoading: keysLoading } = useKeyGenerator();
 
-  const {
-    mutateAsync: signup,
-    isLoading: signupLoading,
-  } = useMutation((signupData: any) => instance.post('/users', signupData));
+  const { signup, loading: signupLoading } = useSignup();
 
-  const {
-    mutateAsync: login,
-    isLoading: loginLoading,
-  } = useMutation((loginData: any) => instance.post('/auth', loginData));
+  const { login, loading: loginLoading } = useLogin();
 
   const history = useHistory();
 
