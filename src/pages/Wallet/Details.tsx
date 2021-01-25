@@ -5,13 +5,7 @@ import Box from '../../components/Box';
 
 function Details() {
   return (
-    <Box
-      elevation={2}
-      padding="25px"
-      bgColor="#25b0e8"
-      color="#fff"
-      width="300px"
-    >
+    <Box elevation={2} padding="25px" bgColor="#25b0e8" color="#fff">
       <Stack
         alignItems="flex-start"
         height="100%"

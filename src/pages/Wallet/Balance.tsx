@@ -25,13 +25,7 @@ function Balance() {
     )
   );
   return (
-    <Box
-      elevation={2}
-      padding="25px"
-      bgColor="#5a78f0"
-      color="#fff"
-      width="300px"
-    >
+    <Box elevation={2} padding="25px" bgColor="#5a78f0" color="#fff">
       <Stack
         alignItems="flex-start"
         height="100%"

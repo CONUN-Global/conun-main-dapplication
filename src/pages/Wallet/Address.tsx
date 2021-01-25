@@ -1,8 +1,9 @@
 import React from 'react';
-import { Stack, Button, Text, Icon, useToast } from '@chakra-ui/react';
+import { Stack, Button, Text, useToast } from '@chakra-ui/react';
 import { clipboard } from 'electron';
 
 import Box from '../../components/Box';
+import Icon from '../../components/Chakra/Icon';
 
 import useAppCurrentUser from '../../hooks/useAppCurrentUser';
 
@@ -12,13 +13,7 @@ function Address() {
   const { currentUser } = useAppCurrentUser();
   const toast = useToast();
   return (
-    <Box
-      elevation={2}
-      padding="25px"
-      bgColor="#7070e3"
-      color="#fff"
-      width="300px"
-    >
+    <Box elevation={2} padding="25px" bgColor="#7070e3" color="#fff">
       <Stack
         alignItems="flex-start"
         height="100%"

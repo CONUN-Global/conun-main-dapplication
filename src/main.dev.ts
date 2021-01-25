@@ -29,6 +29,7 @@ import {
 import {
   createQrCode,
   createWallet,
+  estimateGas,
   getConunBalance,
   getEthBalance,
   saveKeyStoreJson,
@@ -298,6 +299,18 @@ ipcMain.handle('get-con-balance', async (_, args) => {
   } catch (error) {
     return {
       success: false,
+    };
+  }
+});
+
+ipcMain.handle('get-gas-estimate', async (_, args) => {
+  try {
+    const res = await estimateGas(args);
+    return { ...res, success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error,
     };
   }
 });

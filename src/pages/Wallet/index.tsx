@@ -6,6 +6,7 @@ import Box from '../../components/Box';
 import Address from './Address';
 import Balance from './Balance';
 import Details from './Details';
+import Transfer from './Transfer';
 
 function Wallet() {
   return (
@@ -18,11 +19,12 @@ function Wallet() {
       <Grid
         templateColumns={['1fr', '1fr 1fr', 'repeat(3, 1fr)']}
         gap={4}
-        justifyItems="center"
+        justifyItems="stretch"
       >
         <Address />
         <Balance />
         <Details />
+        <Transfer />
       </Grid>
     </Box>
   );

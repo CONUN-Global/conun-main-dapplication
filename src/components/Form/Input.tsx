@@ -23,7 +23,11 @@ function Input({ formRef, error, icon, label, ...props }: CustomInputProps) {
   const Icon = icon;
   return (
     <Container width="100%" padding="0" maxWidth="auto">
-      {label && <FormLabel fontWeight="bold">{label}</FormLabel>}
+      {label && (
+        <FormLabel fontWeight="bold" mb={0}>
+          {label}
+        </FormLabel>
+      )}
       <InputGroup>
         {icon && (
           <InputLeftElement pointerEvents="none">

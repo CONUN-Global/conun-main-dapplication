@@ -162,3 +162,32 @@ export async function getConunBalance(address: string) {
 
   return balance;
 }
+
+export async function estimateGas({ from, to }: { from: string; to: string }) {
+  const gasLimit = await web3.eth.estimateGas({
+    from,
+    to: to || from,
+  });
+
+  const gasPrice = await web3.eth.getGasPrice();
+
+  const gweiGasPrice = await web3.utils.fromWei(gasPrice, 'gwei');
+
+  return {
+    slow: {
+      gasPrice: String(gasPrice),
+      gasLimit,
+      total: (+gweiGasPrice * gasLimit) / 1000000000,
+    },
+    average: {
+      gasPrice: String(2 * +gweiGasPrice),
+      gasLimit,
+      total: (+gweiGasPrice * 2 * gasLimit) / 1000000000,
+    },
+    fast: {
+      gasPrice: String(3 * +gweiGasPrice),
+      gasLimit,
+      total: (+gweiGasPrice * 3 * gasLimit) / 1000000000,
+    },
+  };
+}

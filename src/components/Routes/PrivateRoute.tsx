@@ -15,6 +15,7 @@ function PrivateRoute({ children, ...props }: PrivateRouteProps) {
   if (!isAuthenticated) {
     return <Redirect to="/" />;
   }
+
   return (
     <Route {...props}>
       <UserBox />
