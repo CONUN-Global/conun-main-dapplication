@@ -34,12 +34,16 @@ import {
   getEthBalance,
   saveKeyStoreJson,
   saveQrCode,
+  transferCoin,
+  transferCon,
+  transferEth,
   validateKeystoreFile,
   validatePrivateKey,
   validateQrCode,
 } from './services/wallet-services';
 
 import { generateApiPrivateKey } from './services/api-services';
+import signGenerator from './services/sign-generator';
 
 export default class AppUpdater {
   constructor() {
@@ -307,6 +311,42 @@ ipcMain.handle('get-gas-estimate', async (_, args) => {
   try {
     const res = await estimateGas(args);
     return { ...res, success: true };
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+});
+
+ipcMain.handle('transfer', async (_, args) => {
+  try {
+    if (args.type === 'ETH') {
+      const res = await transferEth(args);
+      return { ...res, success: true };
+    }
+
+    if (args.type === 'CON') {
+      const res = await transferCon(args);
+      return { ...res, success: true };
+    }
+
+    const res = await transferCoin(args);
+
+    return res;
+  } catch (error) {
+    return {
+      success: false,
+      error,
+    };
+  }
+});
+
+ipcMain.handle('generate-sign', async (_, args) => {
+  try {
+    const res = await signGenerator(args);
+
+    return res;
   } catch (error) {
     return {
       success: false,

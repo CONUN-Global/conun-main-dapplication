@@ -59,9 +59,19 @@ function Transfer() {
       ? values.gasPrice * values.gasLimit
       : data?.[values.fee]?.total;
 
+    const gasLimit = values.isAdvanced
+      ? values.gasLimit
+      : data?.[values.fee]?.gasLimit;
+
+    const gasPrice = values.isAdvanced
+      ? values.gasLimit
+      : data?.[values.fee]?.gasPrice;
+
     setConfirmModal({
       ...values,
       fee,
+      gasLimit,
+      gasPrice,
     });
   };
 

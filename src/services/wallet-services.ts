@@ -6,8 +6,12 @@ import qrcode from 'qrcode';
 import { dialog } from 'electron';
 import jimp from 'jimp';
 import QRReader from 'qrcode-reader';
+import { Transaction as Tx } from 'ethereumjs-tx';
 
 import envVariables from '../../env-variables.json';
+import signGenerator from './sign-generator';
+import { FcnTypes, ORG_NAME } from '../const';
+import instance from '../axios/instance';
 
 const web3 = new Web3(envVariables.web3Url);
 
@@ -190,4 +194,99 @@ export async function estimateGas({ from, to }: { from: string; to: string }) {
       total: (+gweiGasPrice * 3 * gasLimit) / 1000000000,
     },
   };
+}
+
+export async function transferEth(args: {
+  privateKey: any;
+  from: string;
+  to: string;
+  amount: string;
+  gasLimit: string;
+  gasPrice: string;
+}) {
+  web3.eth.defaultAccount = args.from;
+  let formattedPrivateKey = args.privateKey;
+
+  if (formattedPrivateKey.includes('0x')) {
+    formattedPrivateKey = formattedPrivateKey.slice(
+      2,
+      formattedPrivateKey.length
+    );
+  }
+
+  formattedPrivateKey = await Buffer.from(formattedPrivateKey, 'hex');
+
+  const txCount = await web3.eth.getTransactionCount(args.from);
+
+  const txObject = {
+    nonce: web3.utils.toHex(txCount),
+    to: args.to,
+    value: web3.utils.toHex(web3.utils.toWei(args.amount)),
+    gasLimit: web3.utils.toHex(args.gasLimit),
+    gasPrice: web3.utils.toHex(web3.utils.toWei(args.gasPrice, 'gwei')),
+  };
+
+  const tx = new Tx(txObject, { chain: 'ropsten' });
+
+  tx.sign(formattedPrivateKey);
+
+  const serializedTx = tx.serialize();
+  const raw = `0x${serializedTx.toString('hex')}`;
+
+  const sentTx = await web3.eth.sendSignedTransaction(raw);
+
+  return sentTx;
+}
+
+export async function transferCon(args: {
+  privateKey: any;
+  from: string;
+  to: string;
+  amount: string;
+  gasLimit: string;
+  gasPrice: string;
+}) {
+  const { contractAddress, abi } = envVariables;
+  web3.eth.defaultAccount = args.from;
+  let formattedPrivateKey = args.privateKey;
+
+  if (formattedPrivateKey.includes('0x')) {
+    formattedPrivateKey = formattedPrivateKey.slice(
+      2,
+      formattedPrivateKey.length
+    );
+  }
+
+  formattedPrivateKey = await Buffer.from(formattedPrivateKey, 'hex');
+
+  const contract = new web3.eth.Contract(abi, contractAddress, {
+    from: args.from,
+  });
+
+  const data = contract.methods
+    .transfer(args.to, web3.utils.toWei(args.amount))
+    .encodeABI();
+
+  const txCount = await web3.eth.getTransactionCount(args.from);
+
+  const txObject = {
+    from: args.from,
+    to: contractAddress,
+    nonce: web3.utils.toHex(txCount),
+    value: '0x0',
+    gasLimit: web3.utils.toHex(args.gasLimit),
+    gasPrice: web3.utils.toHex(args.gasPrice),
+    data,
+  };
+
+  const tx = new Tx(txObject, { chain: 'ropsten' });
+
+  tx.sign(formattedPrivateKey);
+
+  const serializedTx = tx.serialize();
+  const raw = `0x${serializedTx.toString('hex')}`;
+
+  const sentTx = await web3.eth.sendSignedTransaction(raw);
+
+  return sentTx;
 }

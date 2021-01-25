@@ -12,6 +12,7 @@ import { ReactComponent as Copy } from '../../../assets/icons/copy.svg';
 function Address() {
   const { currentUser } = useAppCurrentUser();
   const toast = useToast();
+
   return (
     <Box elevation={2} padding="25px" bgColor="#7070e3" color="#fff">
       <Stack
