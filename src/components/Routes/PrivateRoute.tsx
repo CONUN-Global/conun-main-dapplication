@@ -1,7 +1,7 @@
 import React from 'react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
-import UserBox from '../UserBox';
+import Navbar from '../Navbar';
 
 import { useAppContext } from '../AppContext';
 
@@ -18,7 +18,7 @@ function PrivateRoute({ children, ...props }: PrivateRouteProps) {
 
   return (
     <Route {...props}>
-      <UserBox />
+      <Navbar />
       {children}
     </Route>
   );

@@ -11,7 +11,7 @@ const getConBalance = async (address: string) => {
 function useGetConBalance() {
   const { currentUser } = useAppCurrentUser();
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, refetch } = useQuery(
     'get-con-balance',
     () => getConBalance(currentUser.wallet_address),
     {
@@ -19,7 +19,7 @@ function useGetConBalance() {
     }
   );
 
-  return { balance: data, loading: isLoading };
+  return { balance: data, loading: isLoading, refetch };
 }
 
 export default useGetConBalance;

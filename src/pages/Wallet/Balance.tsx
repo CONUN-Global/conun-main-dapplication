@@ -15,11 +15,11 @@ import { ReactComponent as Refresh } from '../../../assets/icons/refresh.svg';
 
 function Balance() {
   const { currentUser } = useAppCurrentUser();
-  const { balance } = useGetEthBalance();
 
-  const { balance: conBalance } = useGetConBalance();
+  const { balance, refetch: refetchEth } = useGetEthBalance();
+  const { balance: conBalance, refetch: refetchCon } = useGetConBalance();
 
-  const { data, isLoading, refetch, remove } = useQuery('balance', () =>
+  const { data, isLoading, refetch } = useQuery('balance', () =>
     instance.get(
       `/con-token/channels/mychannel/chaincodes/coin?wallet_address=${currentUser.wallet_address}&orgName=Org1&fcn=BalanceOf`
     )
@@ -80,8 +80,9 @@ function Balance() {
           _hover={{ bgColor: 'transparent' }}
           width="auto"
           onClick={async () => {
-            await remove();
-            refetch();
+            await refetch();
+            await refetchEth();
+            await refetchCon();
           }}
         >
           {isLoading ? (

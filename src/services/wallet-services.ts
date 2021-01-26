@@ -167,19 +167,53 @@ export async function getConunBalance(address: string) {
   return balance;
 }
 
-export async function estimateGas({ from, to }: { from: string; to: string }) {
-  const gasLimit = await web3.eth.estimateGas({
-    from,
-    to: to || from,
-  });
+export async function estimateGas({
+  from,
+  to,
+  token,
+  amount,
+}: {
+  from: string;
+  to: string;
+  token: string;
+  amount: string;
+}) {
+  const { contractAddress, abi } = envVariables;
+
+  let gasLimit;
 
   const gasPrice = await web3.eth.getGasPrice();
+
+  if (token === 'ETH') {
+    gasLimit = await web3.eth.estimateGas({
+      from,
+      to: to || from,
+    });
+  } else if (to && amount) {
+    const contract = new web3.eth.Contract(abi, contractAddress, {
+      from,
+    });
+
+    const data = contract.methods
+      .transfer(to, web3.utils.toWei(amount))
+      .encodeABI();
+
+    gasLimit = await web3.eth.estimateGas({
+      from,
+      to: contractAddress,
+      data,
+    });
+  } else {
+    gasLimit = await web3.eth.estimateGas({
+      from,
+    });
+  }
 
   const gweiGasPrice = await web3.utils.fromWei(gasPrice, 'gwei');
 
   return {
     slow: {
-      gasPrice: String(gasPrice),
+      gasPrice: String(gweiGasPrice),
       gasLimit,
       total: (+gweiGasPrice * gasLimit) / 1000000000,
     },
@@ -275,12 +309,11 @@ export async function transferCon(args: {
     nonce: web3.utils.toHex(txCount),
     value: '0x0',
     gasLimit: web3.utils.toHex(args.gasLimit),
-    gasPrice: web3.utils.toHex(args.gasPrice),
+    gasPrice: web3.utils.toHex(web3.utils.toWei(args.gasPrice, 'gwei')),
     data,
   };
 
   const tx = new Tx(txObject, { chain: 'ropsten' });
-
   tx.sign(formattedPrivateKey);
 
   const serializedTx = tx.serialize();

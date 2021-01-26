@@ -28,17 +28,11 @@ function UserBox() {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button
-          variant="link"
-          position="absolute"
-          top="1%"
-          right="1%"
-          _focus={{ outline: 0 }}
-        >
+        <Button variant="link" _focus={{ outline: 0 }}>
           <Image
             src={currentUser?.picture}
-            height={50}
-            width={50}
+            height={35}
+            width={35}
             borderRadius="50%"
           />
         </Button>

@@ -29,7 +29,7 @@ type Values = {
   type: string;
   amount: number;
   to: string;
-  fee: number;
+  fee: string;
   gasPrice: number;
   gasLimit: number;
   isAdvanced: boolean;
@@ -38,15 +38,14 @@ type Values = {
 type LocalTx = {
   Func: {
     Amount: number;
-    From: string;
-    To: string;
+    From?: string;
+    To?: string;
   };
-  Success: boolean;
-  Timestamp: {
+  Success?: boolean;
+  Timestamp?: {
     nanos: number;
     seconds: number;
   };
-
   TxID: string;
 } | null;
 
@@ -92,7 +91,23 @@ function ConfirmTransferModal({
   const sendTransaction = async () => {
     if (values?.type !== 'COIN') {
       const res = await transfer(values);
-      return res;
+
+      if (res.success && values?.amount) {
+        return setSuccessModal({
+          TxID: res?.transactionHash,
+          Func: {
+            Amount: values?.amount,
+          },
+        });
+      }
+      return toast({
+        title: 'An error occurred.',
+        description: 'Unable to complete transaction',
+        position: 'top',
+        status: 'error',
+        duration: 9000,
+        isClosable: true,
+      });
     }
 
     const signedData = await getSignature({
@@ -153,8 +168,8 @@ function ConfirmTransferModal({
         <Stack spacing="1rem">
           <Icon
             icon={Checkmark}
-            w={8}
-            h={8}
+            w={20}
+            h={20}
             color="green.500"
             alignSelf="center"
           />
@@ -164,14 +179,16 @@ function ConfirmTransferModal({
           <Text>
             Amount: <strong>{successModal?.Func?.Amount}</strong>
           </Text>
-          <Text>
-            Timestamp:{' '}
-            <strong>
-              {new Date(
-                successModal?.Timestamp?.seconds * 1000
-              ).toLocaleString()}
-            </strong>
-          </Text>
+          {successModal?.Timestamp?.seconds && (
+            <Text>
+              Timestamp:{' '}
+              <strong>
+                {new Date(
+                  successModal?.Timestamp?.seconds * 1000
+                ).toLocaleString()}
+              </strong>
+            </Text>
+          )}
         </Stack>
         <ModalFooter justifyContent="center">
           <Button

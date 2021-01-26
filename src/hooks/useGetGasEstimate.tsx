@@ -5,21 +5,34 @@ import useAppCurrentUser from './useAppCurrentUser';
 
 interface UseGetGasEstimateProps {
   to: string;
+  token: string;
+  amount: number;
 }
 
-const getGasEstimate = async (from: string, to: string) => {
-  const data = await ipcRenderer.invoke('get-gas-estimate', { from, to });
+const getGasEstimate = async (
+  from: string,
+  to: string,
+  token: string,
+  amount: number
+) => {
+  const data = await ipcRenderer.invoke('get-gas-estimate', {
+    from,
+    to,
+    token,
+    amount,
+  });
   return data;
 };
 
-function useGetGasEstimate({ to }: UseGetGasEstimateProps) {
+function useGetGasEstimate({ to, token, amount }: UseGetGasEstimateProps) {
   const { currentUser } = useAppCurrentUser();
   const { data, isLoading } = useQuery(
-    ['get-gas-estimate', to],
-    () => getGasEstimate(currentUser.wallet_address, to),
+    ['get-gas-estimate', to, token, amount],
+    () => getGasEstimate(currentUser.wallet_address, to, token, amount),
     {
       enabled: !!currentUser.wallet_address && (!to?.length || to.length > 41),
       refetchOnMount: true,
+      cacheTime: 0,
     }
   );
 

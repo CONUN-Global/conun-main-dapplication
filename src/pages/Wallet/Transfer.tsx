@@ -49,9 +49,12 @@ function Transfer() {
   const watchType = watch('type');
   const watchIsAdvanced = watch('isAdvanced');
   const watchGasFee = watch(['gasLimit', 'gasPrice']);
+  const watchAmount = watch('amount', 0);
 
   const { data, loading } = useGetGasEstimate({
     to: watchTo,
+    token: watchType,
+    amount: watchAmount,
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
@@ -93,6 +96,8 @@ function Transfer() {
                 <Input
                   name="amount"
                   type="number"
+                  step="0.0001"
+                  min={0}
                   placeholder="Amount"
                   formRef={register({
                     required: {
@@ -147,7 +152,7 @@ function Transfer() {
                         </FormLabel>
                         <InputGroup>
                           <InputLeftElement pointerEvents="none">
-                            <Text color="gray.300">ETH</Text>
+                            <Text color="gray.300">{watchType}</Text>
                           </InputLeftElement>
                           <ChakraInput
                             id="calculatedFee"
@@ -173,7 +178,7 @@ function Transfer() {
                             onChange={() => onChange('slow')}
                           >
                             Slow ({data?.slow?.total?.toFixed(6) ?? '0.000059'}{' '}
-                            ETH)
+                            {watchType})
                           </Checkbox>
                           <Checkbox
                             isChecked={value === 'average'}
@@ -181,14 +186,14 @@ function Transfer() {
                           >
                             Average (
                             {data?.average?.total?.toFixed(6) ?? '0.000069'}{' '}
-                            ETH)
+                            {watchType})
                           </Checkbox>
                           <Checkbox
                             isChecked={value === 'fast'}
                             onChange={() => onChange('fast')}
                           >
                             Fast ({data?.fast?.total?.toFixed(6) ?? '0.000073'}{' '}
-                            ETH)
+                            {watchType})
                           </Checkbox>
                         </HStack>
                       )}

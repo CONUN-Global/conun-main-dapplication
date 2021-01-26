@@ -6,6 +6,7 @@ import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 import CustomInput from '../../components/Form/Input';
 import Form from '../../components/Chakra/Form';
 import Link from '../../components/Chakra/Link';
+import Icon from '../../components/Chakra/Icon';
 
 import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
 
@@ -33,7 +34,7 @@ function Home() {
             })}
             error={errors.search}
           />
-          <Button colorScheme="yellow" type="submit" ml="0.5rem">
+          <Button bgColor="#AF9A3C" type="submit" ml="0.5rem">
             Search
           </Button>
         </Flex>
@@ -41,10 +42,8 @@ function Home() {
       <Center>
         <Link to="/wallet">
           <Stack>
-            <Wallet style={{ width: 70, height: 70 }} />
-            <Text color="black" textAlign="center">
-              Wallet
-            </Text>
+            <Icon icon={Wallet} width={70} height={70} />
+            <Text textAlign="center">Wallet</Text>
           </Stack>
         </Link>
       </Center>
