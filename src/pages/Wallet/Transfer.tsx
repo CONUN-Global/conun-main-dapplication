@@ -40,7 +40,7 @@ function Transfer() {
       type: 'ETH',
       fee: 'average',
       isAdvanced: false,
-      gasLimit: 2100,
+      gasLimit: 21000,
       gasPrice: 36,
     },
   });
@@ -59,7 +59,7 @@ function Transfer() {
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const fee = values.isAdvanced
-      ? values.gasPrice * values.gasLimit
+      ? (values.gasPrice * values.gasLimit) / 1000000000
       : data?.[values.fee]?.total;
 
     const gasLimit = values.isAdvanced

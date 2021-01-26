@@ -100,9 +100,10 @@ function ConfirmTransferModal({
           },
         });
       }
+
       return toast({
         title: 'An error occurred.',
-        description: 'Unable to complete transaction',
+        description: String(res.error),
         position: 'top',
         status: 'error',
         duration: 9000,
