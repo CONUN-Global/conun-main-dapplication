@@ -141,7 +141,7 @@ function QrCodeImport() {
               name="file"
               render={({ onChange }) => (
                 <>
-                  <DragnDropInput onDrop={onChange} />
+                  <DragnDropInput accept="image/*" onDrop={onChange} />
                   {errors?.file?.message && (
                     <Text
                       fontSize="0.8rem"

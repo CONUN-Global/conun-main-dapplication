@@ -9,15 +9,16 @@ interface DragnDropInputProps {
     fileRejections: FileRejection[],
     event: DropEvent
   ) => void;
+  accept?: string;
 }
 
-function DragnDropInput({ onDrop }: DragnDropInputProps) {
+function DragnDropInput({ onDrop, accept = '' }: DragnDropInputProps) {
   const {
     getRootProps,
     getInputProps,
     isDragActive,
     acceptedFiles,
-  } = useDropzone({ onDrop, maxFiles: 1, multiple: false });
+  } = useDropzone({ onDrop, maxFiles: 1, multiple: false, accept });
 
   const acceptedFile = acceptedFiles[0];
   return (

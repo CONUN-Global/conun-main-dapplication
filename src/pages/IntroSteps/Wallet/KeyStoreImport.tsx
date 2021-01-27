@@ -141,7 +141,7 @@ function KeyStoreImport() {
               name="file"
               render={({ onChange }) => (
                 <>
-                  <DragnDropInput onDrop={onChange} />
+                  <DragnDropInput accept=".json" onDrop={onChange} />
                   {errors?.file?.message && (
                     <Text
                       fontSize="0.8rem"

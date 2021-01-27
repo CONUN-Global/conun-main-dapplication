@@ -7,6 +7,9 @@ const styles: Styles = {
     ...theme.styles.global,
     margin: 0,
     padding: 0,
+    select: {
+      borderColor: '#CBD5E0 !important',
+    },
     input: {
       borderColor: '#CBD5E0 !important',
     },
