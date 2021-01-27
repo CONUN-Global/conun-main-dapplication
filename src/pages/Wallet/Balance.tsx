@@ -1,5 +1,4 @@
 import React from 'react';
-import { useQuery } from 'react-query';
 import { Button, Spinner, Stack, Text } from '@chakra-ui/react';
 
 import Box from '../../components/Box';
@@ -7,23 +6,15 @@ import Icon from '../../components/Chakra/Icon';
 
 import useGetConBalance from '../../hooks/useGetConBalance';
 import useGetEthBalance from '../../hooks/useGetEthBalance';
-import useAppCurrentUser from '../../hooks/useAppCurrentUser';
-
-import instance from '../../axios/instance';
+import useGetLocalConBalance from '../../hooks/useLocalConBalance';
 
 import { ReactComponent as Refresh } from '../../../assets/icons/refresh.svg';
 
 function Balance() {
-  const { currentUser } = useAppCurrentUser();
-
   const { balance, refetch: refetchEth } = useGetEthBalance();
   const { balance: conBalance, refetch: refetchCon } = useGetConBalance();
 
-  const { data, isLoading, refetch } = useQuery('balance', () =>
-    instance.get(
-      `/con-token/channels/mychannel/chaincodes/coin?wallet_address=${currentUser.wallet_address}&orgName=Org1&fcn=BalanceOf`
-    )
-  );
+  const { balance: localBalance, loading, refetch } = useGetLocalConBalance();
   return (
     <Box elevation={2} padding="25px" bgColor="#5a78f0" color="#fff">
       <Stack
@@ -41,7 +32,7 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{data?.data?.result ?? 0}</Text>
+          <Text>{localBalance ?? 0}</Text>
           <Text as="span" fontSize="18px">
             COIN
           </Text>
@@ -85,7 +76,7 @@ function Balance() {
             await refetchCon();
           }}
         >
-          {isLoading ? (
+          {loading ? (
             <Spinner />
           ) : (
             <Icon icon={Refresh} fill="#fff" width="18px" height="18px" />

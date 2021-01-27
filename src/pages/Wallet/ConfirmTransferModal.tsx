@@ -5,6 +5,7 @@ import {
   Button,
   Divider,
   HStack,
+  Link,
   ModalFooter,
   Stack,
   Text,
@@ -12,18 +13,22 @@ import {
 } from '@chakra-ui/react';
 
 import Modal from '../../components/Modal';
+import Icon from '../../components/Chakra/Icon';
+
+import useAppCurrentUser from '../../hooks/useAppCurrentUser';
+import useGetLocalConBalance from '../../hooks/useLocalConBalance';
+import useGetEthBalance from '../../hooks/useGetEthBalance';
+import useGetConBalance from '../../hooks/useGetConBalance';
+import useSignature from '../../hooks/useSignature';
 
 import getWalletPrivateKey from '../../helpers/getWalletPrivateKey';
 import getWalletAddress from '../../helpers/getWalletAddress';
 import getPrivateKey from '../../helpers/getPrivateKey';
-import useSignature from '../../hooks/useSignature';
 
 import instance from '../../axios/instance';
 import { FcnTypes, ORG_NAME } from '../../const';
-import useAppCurrentUser from '../../hooks/useAppCurrentUser';
 
 import { ReactComponent as Checkmark } from '../../../assets/icons/check.svg';
-import Icon from '../../components/Chakra/Icon';
 
 type Values = {
   type: string;
@@ -73,6 +78,10 @@ function ConfirmTransferModal({
 
   const { currentUser } = useAppCurrentUser();
 
+  const { refetch } = useGetLocalConBalance();
+  const { refetch: refetchEth } = useGetEthBalance();
+  const { refetch: refetchCon } = useGetConBalance();
+
   const {
     mutateAsync: transfer,
     isLoading,
@@ -93,12 +102,17 @@ function ConfirmTransferModal({
       const res = await transfer(values);
 
       if (res.success && values?.amount) {
-        return setSuccessModal({
+        setSuccessModal({
           TxID: res?.transactionHash,
           Func: {
             Amount: values?.amount,
           },
         });
+
+        if (values.type === 'ETH') {
+          return refetchEth();
+        }
+        return refetchCon();
       }
 
       return toast({
@@ -127,7 +141,8 @@ function ConfirmTransferModal({
       });
 
       if (res?.data?.result?.Success) {
-        return setSuccessModal(res?.data?.result);
+        setSuccessModal(res?.data?.result);
+        return refetch();
       }
 
       return toast({
@@ -175,7 +190,13 @@ function ConfirmTransferModal({
             alignSelf="center"
           />
           <Text>
-            Transaction ID: <strong>{successModal?.TxID}</strong>
+            Transaction ID:{' '}
+            <Link
+              href={`https://ropsten.etherscan.io/tx/${successModal?.TxID}`}
+              isExternal
+            >
+              <strong>{successModal?.TxID}</strong>
+            </Link>
           </Text>
           <Text>
             Amount: <strong>{successModal?.Func?.Amount}</strong>
