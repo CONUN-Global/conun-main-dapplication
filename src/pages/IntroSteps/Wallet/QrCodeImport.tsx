@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 
@@ -8,6 +8,7 @@ import Box from '../../../components/Box';
 import Input from '../../../components/Form/Input';
 import Form from '../../../components/Chakra/Form';
 import Link from '../../../components/Chakra/Link';
+import DragnDropInput from '../../../components/DropFile';
 
 import { useAppContext } from '../../../components/AppContext';
 import useCurrentUser from '../../../hooks/useCurrentUser';
@@ -37,7 +38,7 @@ function QrCodeImport() {
 
   const { walletAddress } = useUserCheck();
 
-  const { register, handleSubmit, errors } = useForm<FormData>();
+  const { register, handleSubmit, errors, control } = useForm<FormData>();
 
   const { currentUser } = useCurrentUser();
 
@@ -135,17 +136,31 @@ function QrCodeImport() {
         </Text>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing="1rem">
-            <Input
+            <Controller
+              control={control}
               name="file"
-              type="file"
-              accept="image/png"
-              formRef={register({
+              render={({ onChange }) => (
+                <>
+                  <DragnDropInput onDrop={onChange} />
+                  {errors?.file?.message && (
+                    <Text
+                      fontSize="0.8rem"
+                      marginTop="0rem !important"
+                      color="red.600"
+                      textAlign="right"
+                    >
+                      {errors?.file?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+              rules={{
                 required: {
                   value: true,
-                  message: 'Please upload an image',
+                  message: 'Please upload the keystore file',
                 },
-              })}
-              error={errors.file}
+              }}
+              defaultValue=""
             />
             <Input
               placeholder="Password"

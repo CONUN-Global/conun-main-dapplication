@@ -13,8 +13,8 @@ import { ReactComponent as Refresh } from '../../../assets/icons/refresh.svg';
 function Balance() {
   const { balance, refetch: refetchEth } = useGetEthBalance();
   const { balance: conBalance, refetch: refetchCon } = useGetConBalance();
-
   const { balance: localBalance, loading, refetch } = useGetLocalConBalance();
+
   return (
     <Box elevation={2} padding="25px" bgColor="#5a78f0" color="#fff">
       <Stack

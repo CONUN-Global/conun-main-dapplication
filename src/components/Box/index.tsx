@@ -19,7 +19,12 @@ function Box({
   }
 
   return (
-    <ChakraBox boxShadow={elevations[elevation]} borderRadius={5} {...props}>
+    <ChakraBox
+      boxShadow={elevations[elevation]}
+      borderRadius={5}
+      bgColor="white"
+      {...props}
+    >
       {children}
     </ChakraBox>
   );

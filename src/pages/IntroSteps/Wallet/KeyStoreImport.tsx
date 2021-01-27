@@ -1,6 +1,6 @@
 import React from 'react';
 import { Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
-import { SubmitHandler, useForm } from 'react-hook-form';
+import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { ipcRenderer } from 'electron';
 import { useHistory } from 'react-router-dom';
 
@@ -8,6 +8,7 @@ import Box from '../../../components/Box';
 import Input from '../../../components/Form/Input';
 import Form from '../../../components/Chakra/Form';
 import Link from '../../../components/Chakra/Link';
+import DragnDropInput from '../../../components/DropFile';
 
 import { useAppContext } from '../../../components/AppContext';
 import useLogin from '../../../hooks/useLogin';
@@ -39,7 +40,7 @@ function KeyStoreImport() {
 
   const { currentUser } = useCurrentUser();
 
-  const { register, handleSubmit, errors } = useForm<FormData>();
+  const { register, handleSubmit, errors, control } = useForm<FormData>();
 
   const history = useHistory();
 
@@ -135,17 +136,31 @@ function KeyStoreImport() {
         </Text>
         <Form onSubmit={handleSubmit(onSubmit)}>
           <Stack spacing="1rem">
-            <Input
+            <Controller
+              control={control}
               name="file"
-              type="file"
-              accept=".json"
-              formRef={register({
+              render={({ onChange }) => (
+                <>
+                  <DragnDropInput onDrop={onChange} />
+                  {errors?.file?.message && (
+                    <Text
+                      fontSize="0.8rem"
+                      marginTop="0rem !important"
+                      color="red.600"
+                      textAlign="right"
+                    >
+                      {errors?.file?.message}
+                    </Text>
+                  )}
+                </>
+              )}
+              rules={{
                 required: {
                   value: true,
                   message: 'Please upload the keystore file',
                 },
-              })}
-              error={errors.file}
+              }}
+              defaultValue=""
             />
             <Input
               placeholder="Password"
