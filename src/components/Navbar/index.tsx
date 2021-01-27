@@ -1,7 +1,11 @@
 import React from 'react';
-import { HStack, Text } from '@chakra-ui/react';
+import { HStack } from '@chakra-ui/react';
 
 import UserBox from '../UserBox';
+import Link from '../Chakra/Link';
+import Icon from '../Chakra/Icon';
+
+import { ReactComponent as Home } from '../../../assets/icons/home.svg';
 
 function Navbar() {
   return (
@@ -15,7 +19,9 @@ function Navbar() {
       boxShadow="0 2px 4px 0 rgba(0,0,0,0.15)"
       bgColor="#f4f4f4"
     >
-      <Text fontWeight="bold">CONUN</Text>
+      <Link to="/">
+        <Icon height={6} width={6} icon={Home} />
+      </Link>
       <UserBox />
     </HStack>
   );

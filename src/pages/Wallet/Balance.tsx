@@ -32,7 +32,7 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{localBalance ?? 0}</Text>
+          <Text>{+Number(localBalance)?.toFixed(6) ?? 0}</Text>
           <Text as="span" fontSize="18px">
             COIN
           </Text>
@@ -44,7 +44,7 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{balance ?? 0}</Text>
+          <Text>{+Number(balance)?.toFixed(6) ?? 0}</Text>
           <Text as="span" fontSize="18px">
             ETH
           </Text>
@@ -56,7 +56,7 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{conBalance ?? 0}</Text>
+          <Text>{+Number(conBalance)?.toFixed(6) ?? 0}</Text>
           <Text as="span" fontSize="18px">
             CON
           </Text>
