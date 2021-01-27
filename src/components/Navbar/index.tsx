@@ -13,6 +13,7 @@ function Navbar() {
       top="0"
       padding="0.5rem 1rem"
       boxShadow="0 2px 4px 0 rgba(0,0,0,0.15)"
+      bgColor="#f4f4f4"
     >
       <Text fontWeight="bold">CONUN</Text>
       <UserBox />

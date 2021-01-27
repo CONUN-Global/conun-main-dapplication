@@ -6,12 +6,13 @@ import { QueryClientProvider } from 'react-query';
 import App from './App';
 
 import { queryClient } from './react-query/config';
+import customTheme from './theme';
 
 import './App.global.css';
 
 render(
   <QueryClientProvider client={queryClient}>
-    <ChakraProvider>
+    <ChakraProvider theme={customTheme}>
       <App />
     </ChakraProvider>
   </QueryClientProvider>,

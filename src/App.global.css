@@ -6,25 +6,4 @@
 
 * {
   font-family: 'Roboto Mono', monospace;
-  padding: 0;
-  margin: 0;
-}
-
-body {
-  background-color: aliceblue;
-  min-width: 100vw;
-  position: relative;
-}
-
-#root {
-  min-height: calc(100vh - 51px - 4rem);
-  overflow-y: hidden;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-}
-
-.chakra-checkbox__control {
-  color: black;
 }

@@ -34,7 +34,6 @@ import {
   getEthBalance,
   saveKeyStoreJson,
   saveQrCode,
-  transferCoin,
   transferCon,
   transferEth,
   validateKeystoreFile,
@@ -106,8 +105,8 @@ const createWindow = async () => {
 
   mainWindow = new BrowserWindow({
     show: false,
-    width: 1024,
-    height: 728,
+    width: 1200,
+    height: 800,
     icon: getAssetPath('icon.png'),
     webPreferences: {
       nodeIntegration: true,
@@ -326,14 +325,8 @@ ipcMain.handle('transfer', async (_, args) => {
       return { ...res, success: true };
     }
 
-    if (args.type === 'CON') {
-      const res = await transferCon(args);
-      return { ...res, success: true };
-    }
-
-    const res = await transferCoin(args);
-
-    return res;
+    const res = await transferCon(args);
+    return { ...res, success: true };
   } catch (error) {
     return {
       success: false,

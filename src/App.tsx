@@ -2,6 +2,7 @@ import React from 'react';
 import { HashRouter as Router, Switch } from 'react-router-dom';
 
 import { AppProvider } from './components/AppContext';
+import Layout from './components/Layout';
 
 import IntroRoute from './components/Routes/IntroRoute';
 import PrivateRoute from './components/Routes/PrivateRoute';
@@ -20,43 +21,45 @@ import Wallet from './pages/Wallet';
 export default function App() {
   return (
     <AppProvider>
-      <Router basename="/">
-        <Switch>
-          <IntroRoute path="/" exact>
-            <Introduction />
-          </IntroRoute>
-          <IntroRoute path="/terms">
-            <Terms />
-          </IntroRoute>
-          <IntroRoute path="/wallet-options">
-            <WalletOptions />
-          </IntroRoute>
-          <IntroRoute path="/create-wallet">
-            <CreateWallet />
-          </IntroRoute>
-          <IntroRoute path="/import-wallet">
-            <ImportWallet />
-          </IntroRoute>
-          <IntroRoute path="/import-keystore">
-            <KeyStoreImport />
-          </IntroRoute>
-          <IntroRoute path="/import-qr-code">
-            <QrCodeImport />
-          </IntroRoute>
-          <IntroRoute path="/import-private-key">
-            <PrivateKeyImport />
-          </IntroRoute>
-          <IntroRoute path="/create-wallet-success">
-            <CreateSuccess />
-          </IntroRoute>
-          <PrivateRoute path="/home">
-            <Home />
-          </PrivateRoute>
-          <PrivateRoute path="/wallet">
-            <Wallet />
-          </PrivateRoute>
-        </Switch>
-      </Router>
+      <Layout>
+        <Router basename="/">
+          <Switch>
+            <IntroRoute path="/" exact>
+              <Introduction />
+            </IntroRoute>
+            <IntroRoute path="/terms">
+              <Terms />
+            </IntroRoute>
+            <IntroRoute path="/wallet-options">
+              <WalletOptions />
+            </IntroRoute>
+            <IntroRoute path="/create-wallet">
+              <CreateWallet />
+            </IntroRoute>
+            <IntroRoute path="/import-wallet">
+              <ImportWallet />
+            </IntroRoute>
+            <IntroRoute path="/import-keystore">
+              <KeyStoreImport />
+            </IntroRoute>
+            <IntroRoute path="/import-qr-code">
+              <QrCodeImport />
+            </IntroRoute>
+            <IntroRoute path="/import-private-key">
+              <PrivateKeyImport />
+            </IntroRoute>
+            <IntroRoute path="/create-wallet-success">
+              <CreateSuccess />
+            </IntroRoute>
+            <PrivateRoute path="/home">
+              <Home />
+            </PrivateRoute>
+            <PrivateRoute path="/wallet">
+              <Wallet />
+            </PrivateRoute>
+          </Switch>
+        </Router>
+      </Layout>
     </AppProvider>
   );
 }

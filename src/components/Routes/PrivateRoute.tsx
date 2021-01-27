@@ -1,4 +1,5 @@
 import React from 'react';
+import { Flex } from '@chakra-ui/react';
 import { Redirect, Route, RouteProps } from 'react-router-dom';
 
 import Navbar from '../Navbar';
@@ -19,7 +20,14 @@ function PrivateRoute({ children, ...props }: PrivateRouteProps) {
   return (
     <Route {...props}>
       <Navbar />
-      {children}
+      <Flex
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        maxHeight="calc(100vh - 51px)"
+      >
+        {children}
+      </Flex>
     </Route>
   );
 }

@@ -39,9 +39,9 @@ function UserBox() {
       </PopoverTrigger>
       <PopoverContent
         boxShadow="0 2px 10px rgba(0,0,0,.2)"
-        mr="0.5rem"
-        mt="-1rem"
+        mr="1rem"
         padding="1rem"
+        border="none"
         _focus={{ outline: 0 }}
       >
         <PopoverArrow />
