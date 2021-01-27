@@ -28,6 +28,8 @@ import getWalletAddress from '../../../helpers/getWalletAddress';
 
 import { ORG_NAME } from '../../../const';
 
+import styles from '../../../styles/overrides.module.css';
+
 type FormData = {
   jsonFile: boolean;
   qrCode: boolean;
@@ -130,7 +132,7 @@ function ConfirmModal({ isOpen, onClose }: ConfirmModalProps) {
               Please check the boxes below to confirm.
             </Text>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Stack mb="2rem">
+              <Stack mb="2rem" className={styles.CheckboxesContainer}>
                 <Checkbox name="jsonFile" ref={register}>
                   I exported my KeysStoreFile.json
                 </Checkbox>

@@ -1,5 +1,6 @@
 import React from 'react';
 import { Redirect, Route, RouteProps, useLocation } from 'react-router-dom';
+import { Flex } from '@chakra-ui/react';
 
 import { useAppContext } from '../AppContext';
 
@@ -22,7 +23,18 @@ function IntroRoute({ children, ...props }: PrivateRouteProps) {
     return <Redirect to="/import-wallet" />;
   }
 
-  return <Route {...props}>{children}</Route>;
+  return (
+    <Route {...props}>
+      <Flex
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        padding={['1rem', '3rem', '5rem']}
+      >
+        {children}
+      </Flex>
+    </Route>
+  );
 }
 
 export default IntroRoute;

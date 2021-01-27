@@ -47,7 +47,7 @@ function CreateWallet() {
   };
 
   return (
-    <Box>
+    <Box elevation={2} padding="2rem">
       <Stack spacing="2rem">
         <Text textAlign="center" fontSize="2rem">
           Set up a Password

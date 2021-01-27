@@ -8,7 +8,9 @@ function Terms() {
   return (
     <Box elevation={2} padding="2rem">
       <Stack spacing="2rem">
-        <Text textAlign="center">Terms and Conditions</Text>
+        <Text textAlign="center" fontSize="1.5rem">
+          Terms and Conditions
+        </Text>
         <Text textAlign="justify">
           To create new CONUN Manager Account, Read and agree Terms and
           Conditions below.

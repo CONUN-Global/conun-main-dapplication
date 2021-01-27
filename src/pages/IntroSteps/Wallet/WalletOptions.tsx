@@ -6,7 +6,7 @@ import Link from '../../../components/Chakra/Link';
 
 function WalletOptions() {
   return (
-    <Box>
+    <Box elevation={2} padding="2rem">
       <Stack spacing="2rem">
         <Text textAlign="center" fontSize="2rem">
           Wallet

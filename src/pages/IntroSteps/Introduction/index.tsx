@@ -8,7 +8,7 @@ function Introduction() {
   return (
     <Box elevation={2} padding="2rem">
       <Stack spacing="2rem">
-        <Text textAlign="center">
+        <Text textAlign="center" fontSize="1.5rem">
           CONUN DISTRIBUTED SUPERCOMPUTING PLATFORM
         </Text>
         <Text textAlign="justify">

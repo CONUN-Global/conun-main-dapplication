@@ -56,7 +56,7 @@ function CreateSuccess() {
   };
 
   return (
-    <Box>
+    <Box elevation={2} padding="2rem">
       <Stack spacing="2rem">
         <Text textAlign="center" fontSize="2rem">
           Account Created Successfully
@@ -68,7 +68,7 @@ function CreateSuccess() {
         <Stack bgColor="grey" p="1rem" borderRadius="5px">
           <HStack justifyContent="space-between">
             <Text fontSize="0.8rem">WALLET ADDRESS</Text>{' '}
-            <Text fontSize="0.9rem">{getWalletAddress()}</Text>
+            <Text fontSize="0.8rem">{getWalletAddress()}</Text>
             <Button
               _hover={{ bgColor: 'transparent' }}
               variant="ghost"
@@ -88,7 +88,7 @@ function CreateSuccess() {
           </HStack>
           <HStack justifyContent="space-between">
             <Text fontSize="0.8rem">PRIVATE KEY</Text>
-            <Text fontSize="0.9rem">{getWalletPrivateKey()}</Text>
+            <Text fontSize="0.8rem">{getWalletPrivateKey()}</Text>
             <Button
               _hover={{ bgColor: 'transparent' }}
               variant="ghost"

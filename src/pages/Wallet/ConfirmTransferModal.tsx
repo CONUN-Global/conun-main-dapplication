@@ -189,7 +189,7 @@ function ConfirmTransferModal({
             color="green.500"
             alignSelf="center"
           />
-          <Text>
+          <Text wordBreak="break-word">
             Transaction ID:{' '}
             <Link
               href={`https://ropsten.etherscan.io/tx/${successModal?.TxID}`}
