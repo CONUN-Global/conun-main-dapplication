@@ -34,7 +34,13 @@ function Home() {
             })}
             error={errors.search}
           />
-          <Button bgColor="#AF9A3C" type="submit" ml="0.5rem">
+          <Button
+            bgColor="#5a78f0"
+            type="submit"
+            color="white"
+            ml="0.5rem"
+            _hover={{ bgColor: '#7c94f3' }}
+          >
             Search
           </Button>
         </Flex>
