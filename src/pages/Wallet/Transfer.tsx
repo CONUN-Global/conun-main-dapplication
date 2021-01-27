@@ -23,6 +23,8 @@ import Input from '../../components/Form/Input';
 import useGetGasEstimate from '../../hooks/useGetGasEstimate';
 import ConfirmTransferModal from './ConfirmTransferModal';
 
+import styles from '../../styles/overrides.module.css';
+
 type FormData = {
   type: string;
   amount: number;
@@ -80,7 +82,7 @@ function Transfer() {
 
   return (
     <GridItem colSpan={3}>
-      <Box elevation={2} bgColor="#fff" width="100%" padding="25px">
+      <Box elevation={2} width="100%" padding="25px" bgColor="#f5f5f5">
         <Stack spacing="2rem">
           <Text fontWeight="bold" fontSize="22px">
             Send Transaction
@@ -172,7 +174,10 @@ function Transfer() {
                       control={control}
                       name="fee"
                       render={({ onChange, value }) => (
-                        <HStack justifyContent="space-between">
+                        <HStack
+                          justifyContent="space-between"
+                          className={styles.CheckboxesContainer}
+                        >
                           <Checkbox
                             isChecked={value === 'slow'}
                             onChange={() => onChange('slow')}

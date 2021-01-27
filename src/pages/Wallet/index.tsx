@@ -10,13 +10,7 @@ import Transfer from './Transfer';
 
 function Wallet() {
   return (
-    <Box
-      elevation={2}
-      p="1rem"
-      width={['98vw', '95vw', '90vw']}
-      bgColor="#f2f4fa"
-      height="100%"
-    >
+    <Box elevation={2} p="1rem" width={['98vw', '95vw', '90vw']} height="100%">
       <Grid
         templateColumns={['1fr', '1fr 1fr', 'repeat(3, 1fr)']}
         gap={4}
