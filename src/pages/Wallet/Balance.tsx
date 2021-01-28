@@ -3,6 +3,7 @@ import { Button, Spinner, Stack, Text } from '@chakra-ui/react';
 
 import Box from '../../components/Box';
 import Icon from '../../components/Chakra/Icon';
+import FormattedBalance from '../../components/FormattedBalance';
 
 import useGetConBalance from '../../hooks/useGetConBalance';
 import useGetEthBalance from '../../hooks/useGetEthBalance';
@@ -32,7 +33,9 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{+Number(localBalance)?.toFixed(6) ?? 0}</Text>
+          <Text>
+            <FormattedBalance balance={localBalance} />
+          </Text>
           <Text as="span" fontSize="18px">
             COIN
           </Text>
@@ -44,7 +47,9 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{+Number(balance)?.toFixed(6) ?? 0}</Text>
+          <Text>
+            <FormattedBalance balance={balance} />
+          </Text>
           <Text as="span" fontSize="18px">
             ETH
           </Text>
@@ -56,7 +61,9 @@ function Balance() {
           width="100%"
           fontSize="18px"
         >
-          <Text>{+Number(conBalance)?.toFixed(6) ?? 0}</Text>
+          <Text>
+            <FormattedBalance balance={conBalance} />
+          </Text>
           <Text as="span" fontSize="18px">
             CON
           </Text>

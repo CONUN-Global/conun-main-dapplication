@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
+import { AnimatePresence } from 'framer-motion';
 import {
   Button,
   Checkbox,
@@ -19,9 +20,10 @@ import {
 import Box from '../../components/Box';
 import Form from '../../components/Chakra/Form';
 import Input from '../../components/Form/Input';
+import MotionWrapper from '../../components/MotionWrapper';
+import ConfirmTransferModal from './ConfirmTransferModal';
 
 import useGetGasEstimate from '../../hooks/useGetGasEstimate';
-import ConfirmTransferModal from './ConfirmTransferModal';
 
 import styles from '../../styles/overrides.module.css';
 
@@ -125,102 +127,150 @@ function Transfer() {
                     : { type: 'validate', message: 'Address not valid' }
                 }
               />
-              {watchType !== 'COIN' && (
-                <>
-                  <Text fontWeight={700}>Transaction Fee</Text>
-                  {watchIsAdvanced ? (
-                    <HStack>
-                      <Input
-                        name="gasPrice"
-                        type="number"
-                        formRef={register}
-                        label="Gas Price"
-                        error={errors.gasPrice}
-                      />
-                      <Input
-                        name="gasLimit"
-                        type="number"
-                        formRef={register}
-                        label="Gas Limit"
-                        error={errors.gasLimit}
-                      />
-                      <FormControl>
-                        <FormLabel
-                          htmlFor="calculatedFee"
-                          fontWeight="bold"
-                          mb={0}
-                        >
-                          Fee
-                        </FormLabel>
-                        <InputGroup>
-                          <InputLeftElement pointerEvents="none">
-                            <Text color="gray.300">{watchType}</Text>
-                          </InputLeftElement>
-                          <ChakraInput
-                            id="calculatedFee"
-                            label="Fee"
-                            isReadOnly
-                            type="number"
-                            value={
-                              (watchGasFee.gasPrice * watchGasFee.gasLimit) /
-                              1000000000
-                            }
-                          />
-                        </InputGroup>
-                      </FormControl>
-                    </HStack>
-                  ) : (
-                    <Controller
-                      control={control}
-                      name="fee"
-                      render={({ onChange, value }) => (
-                        <HStack
-                          justifyContent="space-between"
-                          className={styles.CheckboxesContainer}
-                        >
-                          <Checkbox
-                            isChecked={value === 'slow'}
-                            onChange={() => onChange('slow')}
-                          >
-                            Slow ({data?.slow?.total?.toFixed(6) ?? '0.000059'}{' '}
-                            {watchType})
-                          </Checkbox>
-                          <Checkbox
-                            isChecked={value === 'average'}
-                            onChange={() => onChange('average')}
-                          >
-                            Average (
-                            {data?.average?.total?.toFixed(6) ?? '0.000069'}{' '}
-                            {watchType})
-                          </Checkbox>
-                          <Checkbox
-                            isChecked={value === 'fast'}
-                            onChange={() => onChange('fast')}
-                          >
-                            Fast ({data?.fast?.total?.toFixed(6) ?? '0.000073'}{' '}
-                            {watchType})
-                          </Checkbox>
-                        </HStack>
-                      )}
-                    />
-                  )}
-
-                  <FormControl
-                    display="flex"
-                    alignItems="center"
-                    alignSelf="flex-end"
-                    width="auto"
+              <AnimatePresence>
+                {watchType !== 'COIN' && (
+                  <MotionWrapper
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{
+                      height: watchIsAdvanced ? 184 : 144,
+                      opacity: 1,
+                    }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{
+                      duration: 0.5,
+                      damping: 12,
+                      stiffness: 100,
+                    }}
                   >
-                    <FormLabel htmlFor="isAdvanced">Advanced Options</FormLabel>
-                    <Switch
-                      id="isAdvanced"
-                      name="isAdvanced"
-                      colorScheme="green"
-                      ref={register}
-                    />
-                  </FormControl>
-                </>
-              )}
+                    <Stack spacing="2rem">
+                      <Text fontWeight={700}>Transaction Fee</Text>
+                      <AnimatePresence>
+                        {watchIsAdvanced ? (
+                          <MotionWrapper
+                            initial={{ y: 64, opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: 64, opacity: 0 }}
+                            transition={{
+                              duration: 0.5,
+                              damping: 12,
+                              stiffness: 100,
+                            }}
+                          >
+                            <HStack>
+                              <Input
+                                name="gasPrice"
+                                type="number"
+                                formRef={register}
+                                label="Gas Price"
+                                error={errors.gasPrice}
+                              />
+                              <Input
+                                name="gasLimit"
+                                type="number"
+                                formRef={register}
+                                label="Gas Limit"
+                                error={errors.gasLimit}
+                              />
+                              <FormControl>
+                                <FormLabel
+                                  htmlFor="calculatedFee"
+                                  fontWeight="bold"
+                                  mb={0}
+                                >
+                                  Fee
+                                </FormLabel>
+                                <InputGroup>
+                                  <InputLeftElement pointerEvents="none">
+                                    <Text color="gray.300">{watchType}</Text>
+                                  </InputLeftElement>
+                                  <ChakraInput
+                                    id="calculatedFee"
+                                    label="Fee"
+                                    isReadOnly
+                                    type="number"
+                                    value={
+                                      (watchGasFee.gasPrice *
+                                        watchGasFee.gasLimit) /
+                                      1000000000
+                                    }
+                                  />
+                                </InputGroup>
+                              </FormControl>
+                            </HStack>
+                          </MotionWrapper>
+                        ) : (
+                          <Controller
+                            control={control}
+                            name="fee"
+                            render={({ onChange, value }) => (
+                              <MotionWrapper
+                                initial={{ y: -24, opacity: 0 }}
+                                animate={{ y: 0, opacity: 1 }}
+                                exit={{ y: -24, opacity: 0 }}
+                                transition={{
+                                  duration: 0.5,
+                                  damping: 12,
+                                  stiffness: 100,
+                                }}
+                              >
+                                <HStack
+                                  justifyContent="space-between"
+                                  className={styles.CheckboxesContainer}
+                                >
+                                  <Checkbox
+                                    isChecked={value === 'slow'}
+                                    onChange={() => onChange('slow')}
+                                  >
+                                    Slow (
+                                    {data?.slow?.total?.toFixed(6) ??
+                                      '0.000059'}{' '}
+                                    {watchType})
+                                  </Checkbox>
+                                  <Checkbox
+                                    isChecked={value === 'average'}
+                                    onChange={() => onChange('average')}
+                                  >
+                                    Average (
+                                    {data?.average?.total?.toFixed(6) ??
+                                      '0.000069'}{' '}
+                                    {watchType})
+                                  </Checkbox>
+                                  <Checkbox
+                                    isChecked={value === 'fast'}
+                                    onChange={() => onChange('fast')}
+                                  >
+                                    Fast (
+                                    {data?.fast?.total?.toFixed(6) ??
+                                      '0.000073'}{' '}
+                                    {watchType})
+                                  </Checkbox>
+                                </HStack>
+                              </MotionWrapper>
+                            )}
+                          />
+                        )}
+                      </AnimatePresence>
+
+                      <FormControl
+                        display="flex"
+                        alignItems="center"
+                        alignSelf="flex-end"
+                        width="auto"
+                      >
+                        <FormLabel htmlFor="isAdvanced">
+                          Advanced Options
+                        </FormLabel>
+                        <Switch
+                          id="isAdvanced"
+                          name="isAdvanced"
+                          colorScheme="green"
+                          ref={register}
+                        />
+                      </FormControl>
+                    </Stack>
+                  </MotionWrapper>
+                )}
+              </AnimatePresence>
               <Button type="submit" backgroundColor="#05c0a5">
                 Send Transaction
               </Button>
