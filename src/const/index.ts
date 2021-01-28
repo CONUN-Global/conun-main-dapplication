@@ -25,3 +25,19 @@ export const FcnTypes = {
   Burn: 'Burn',
   GetDetails: 'GetDetails',
 };
+
+export const introVariants = {
+  hidden: {
+    opacity: 0,
+    x: 400,
+  },
+  visible: {
+    opacity: 1,
+    x: 0,
+  },
+  exit: {
+    x: -400,
+
+    transition: { ease: 'easeInOut' },
+  },
+};

@@ -1,5 +1,6 @@
+import { AnimatePresence } from 'framer-motion';
 import React from 'react';
-import { HashRouter as Router, Switch } from 'react-router-dom';
+import { Switch, useLocation } from 'react-router-dom';
 
 import { AppProvider } from './components/AppContext';
 import Layout from './components/Layout';
@@ -19,11 +20,12 @@ import WalletOptions from './pages/IntroSteps/Wallet/WalletOptions';
 import Wallet from './pages/Wallet';
 
 export default function App() {
+  const location = useLocation();
   return (
     <AppProvider>
       <Layout>
-        <Router basename="/">
-          <Switch>
+        <AnimatePresence exitBeforeEnter>
+          <Switch location={location} key={location.key}>
             <IntroRoute path="/" exact>
               <Introduction />
             </IntroRoute>
@@ -58,7 +60,7 @@ export default function App() {
               <Wallet />
             </PrivateRoute>
           </Switch>
-        </Router>
+        </AnimatePresence>
       </Layout>
     </AppProvider>
   );

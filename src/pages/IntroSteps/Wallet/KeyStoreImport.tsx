@@ -9,6 +9,7 @@ import Input from '../../../components/Form/Input';
 import Form from '../../../components/Chakra/Form';
 import Link from '../../../components/Chakra/Link';
 import DragnDropInput from '../../../components/DropFile';
+import MotionWrapper from '../../../components/MotionWrapper';
 
 import { useAppContext } from '../../../components/AppContext';
 import useLogin from '../../../hooks/useLogin';
@@ -20,7 +21,7 @@ import useSignup from '../../../hooks/useSignup';
 import { setConunPass } from '../../../helpers/getConunPass';
 import getPublicKey from '../../../helpers/getPublicKey';
 
-import { ORG_NAME } from '../../../const';
+import { introVariants, ORG_NAME } from '../../../const';
 
 type FormData = {
   password: string;
@@ -129,73 +130,81 @@ function KeyStoreImport() {
     };
   };
   return (
-    <Box elevation={4} padding="2rem" minWidth="30rem">
-      <Stack spacing="2rem">
-        <Text textAlign="center" fontSize="2rem">
-          Import with KeyStore.json file
-        </Text>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing="1rem">
-            <Controller
-              control={control}
-              name="file"
-              render={({ onChange }) => (
-                <>
-                  <DragnDropInput accept=".json" onDrop={onChange} />
-                  {errors?.file?.message && (
-                    <Text
-                      fontSize="0.8rem"
-                      marginTop="0rem !important"
-                      color="red.600"
-                      textAlign="right"
-                    >
-                      {errors?.file?.message}
-                    </Text>
-                  )}
-                </>
-              )}
-              rules={{
-                required: {
-                  value: true,
-                  message: 'Please upload the keystore file',
-                },
-              }}
-              defaultValue=""
-            />
-            <Input
-              placeholder="Password"
-              name="password"
-              type="password"
-              formRef={register({
-                required: { value: true, message: 'A password is required' },
-              })}
-              filter={['json']}
-              error={errors.password}
-            />
-            <HStack width="100%" justifyContent="space-between">
-              <Link flex="1" to="/import-wallet">
+    <MotionWrapper
+      variants={introVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      transition={{ duration: 1, type: 'spring' }}
+    >
+      <Box elevation={4} padding="2rem" minWidth="30rem">
+        <Stack spacing="2rem">
+          <Text textAlign="center" fontSize="2rem">
+            Import with KeyStore.json file
+          </Text>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing="1rem">
+              <Controller
+                control={control}
+                name="file"
+                render={({ onChange }) => (
+                  <>
+                    <DragnDropInput accept=".json" onDrop={onChange} />
+                    {errors?.file?.message && (
+                      <Text
+                        fontSize="0.8rem"
+                        marginTop="0rem !important"
+                        color="red.600"
+                        textAlign="right"
+                      >
+                        {errors?.file?.message}
+                      </Text>
+                    )}
+                  </>
+                )}
+                rules={{
+                  required: {
+                    value: true,
+                    message: 'Please upload the keystore file',
+                  },
+                }}
+                defaultValue=""
+              />
+              <Input
+                placeholder="Password"
+                name="password"
+                type="password"
+                formRef={register({
+                  required: { value: true, message: 'A password is required' },
+                })}
+                filter={['json']}
+                error={errors.password}
+              />
+              <HStack width="100%" justifyContent="space-between">
+                <Link flex="1" to="/import-wallet">
+                  <Button
+                    width="100%"
+                    type="button"
+                    variant="outline"
+                    colorScheme="yellow"
+                  >
+                    Back
+                  </Button>
+                </Link>
                 <Button
-                  width="100%"
-                  type="button"
-                  variant="outline"
+                  type="submit"
+                  isLoading={loading || keysLoading || signupLoading}
+                  flex="1"
                   colorScheme="yellow"
                 >
-                  Back
+                  Import Wallet
                 </Button>
-              </Link>
-              <Button
-                type="submit"
-                isLoading={loading || keysLoading || signupLoading}
-                flex="1"
-                colorScheme="yellow"
-              >
-                Import Wallet
-              </Button>
-            </HStack>
-          </Stack>
-        </Form>
-      </Stack>
-    </Box>
+              </HStack>
+            </Stack>
+          </Form>
+        </Stack>
+      </Box>
+    </MotionWrapper>
   );
 }
 

@@ -7,9 +7,12 @@ import { ipcRenderer } from 'electron';
 import Box from '../../../components/Box';
 import Input from '../../../components/Form/Input';
 import Form from '../../../components/Chakra/Form';
+import MotionWrapper from '../../../components/MotionWrapper';
+import Link from '../../../components/Chakra/Link';
+
 import { useAppContext } from '../../../components/AppContext';
 
-import Link from '../../../components/Chakra/Link';
+import { introVariants } from '../../../const';
 
 type FormData = {
   privateKey: string;
@@ -29,41 +32,52 @@ function PrivateKeyImport() {
   };
 
   return (
-    <Box elevation={4} padding="2rem" minWidth="30rem">
-      <Stack spacing="2rem">
-        <Text textAlign="center" fontSize="2rem">
-          Import with Private Key
-        </Text>
-        <Form onSubmit={handleSubmit(onSubmit)}>
-          <Stack spacing="1rem">
-            <Input
-              placeholder="Private Key"
-              name="privateKey"
-              formRef={register({
-                required: { value: true, message: 'A private key is required' },
-              })}
-              filter={['json']}
-              error={errors.privateKey}
-            />
-            <HStack width="100%" justifyContent="space-between">
-              <Link flex="1" to="/import-wallet">
-                <Button
-                  width="100%"
-                  type="button"
-                  variant="outline"
-                  colorScheme="yellow"
-                >
-                  Back
+    <MotionWrapper
+      variants={introVariants}
+      initial="hidden"
+      animate="visible"
+      exit="exit"
+      transition={{ duration: 1, type: 'spring' }}
+    >
+      <Box elevation={4} padding="2rem" minWidth="30rem">
+        <Stack spacing="2rem">
+          <Text textAlign="center" fontSize="2rem">
+            Import with Private Key
+          </Text>
+          <Form onSubmit={handleSubmit(onSubmit)}>
+            <Stack spacing="1rem">
+              <Input
+                placeholder="Private Key"
+                name="privateKey"
+                formRef={register({
+                  required: {
+                    value: true,
+                    message: 'A private key is required',
+                  },
+                })}
+                filter={['json']}
+                error={errors.privateKey}
+              />
+              <HStack width="100%" justifyContent="space-between">
+                <Link flex="1" to="/import-wallet">
+                  <Button
+                    width="100%"
+                    type="button"
+                    variant="outline"
+                    colorScheme="yellow"
+                  >
+                    Back
+                  </Button>
+                </Link>
+                <Button type="submit" flex="1" colorScheme="yellow">
+                  Import Wallet
                 </Button>
-              </Link>
-              <Button type="submit" flex="1" colorScheme="yellow">
-                Import Wallet
-              </Button>
-            </HStack>
-          </Stack>
-        </Form>
-      </Stack>
-    </Box>
+              </HStack>
+            </Stack>
+          </Form>
+        </Stack>
+      </Box>
+    </MotionWrapper>
   );
 }
 
