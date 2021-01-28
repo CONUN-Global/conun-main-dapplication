@@ -22,7 +22,7 @@ interface CustomInputProps extends InputProps {
 function Input({ formRef, error, icon, label, ...props }: CustomInputProps) {
   const Icon = icon;
   return (
-    <Container width="100%" padding="0" maxWidth="auto">
+    <Container width="100%" padding="0" maxWidth="auto" position="relative">
       {label && (
         <FormLabel fontWeight="bold" mb={0}>
           {label}
@@ -37,7 +37,13 @@ function Input({ formRef, error, icon, label, ...props }: CustomInputProps) {
         <ChakraInput ref={formRef} {...props} />
       </InputGroup>
       {error?.message && (
-        <Text fontSize="0.8rem" color="red.600" textAlign="right">
+        <Text
+          position="absolute"
+          fontSize="0.8rem"
+          color="red.600"
+          textAlign="right"
+          right={0}
+        >
           {error.message}
         </Text>
       )}
