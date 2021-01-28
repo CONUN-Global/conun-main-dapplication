@@ -25,6 +25,8 @@ function PrivateRoute({ children, ...props }: PrivateRouteProps) {
         justifyContent="center"
         alignItems="center"
         maxHeight="calc(100vh - 51px)"
+        marginTop="51px"
+        padding="1rem 0"
       >
         {children}
       </Flex>
