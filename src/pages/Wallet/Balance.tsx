@@ -12,9 +12,17 @@ import useGetLocalConBalance from '../../hooks/useLocalConBalance';
 import { ReactComponent as Refresh } from '../../../assets/icons/refresh.svg';
 
 function Balance() {
-  const { balance, refetch: refetchEth } = useGetEthBalance();
-  const { balance: conBalance, refetch: refetchCon } = useGetConBalance();
-  const { balance: localBalance, loading, refetch } = useGetLocalConBalance();
+  const { balance, refetch: refetchEth, isFetching } = useGetEthBalance();
+  const {
+    balance: conBalance,
+    refetch: refetchCon,
+    isFetching: isFetchingCon,
+  } = useGetConBalance();
+  const {
+    balance: localBalance,
+    refetch,
+    isFetching: isFetchingLocal,
+  } = useGetLocalConBalance();
 
   return (
     <Box elevation={2} padding="25px" bgColor="#5a78f0" color="#fff">
@@ -83,7 +91,7 @@ function Balance() {
             await refetchCon();
           }}
         >
-          {loading ? (
+          {isFetchingLocal || isFetchingCon || isFetching ? (
             <Spinner />
           ) : (
             <Icon icon={Refresh} fill="#fff" width="18px" height="18px" />

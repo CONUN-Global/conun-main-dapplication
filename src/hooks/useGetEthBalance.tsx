@@ -11,7 +11,7 @@ const getEthBalance = async (address: string) => {
 function useGetEthBalance() {
   const { currentUser } = useAppCurrentUser();
 
-  const { data, isLoading, refetch } = useQuery(
+  const { data, isLoading, refetch, isFetching } = useQuery(
     'get-eth-balance',
     () => getEthBalance(currentUser.wallet_address),
     {
@@ -19,7 +19,7 @@ function useGetEthBalance() {
     }
   );
 
-  return { balance: data, loading: isLoading, refetch };
+  return { balance: data, loading: isLoading, refetch, isFetching };
 }
 
 export default useGetEthBalance;
