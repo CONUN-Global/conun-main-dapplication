@@ -236,7 +236,10 @@ function ConfirmTransferModal({
     >
       <Stack spacing="1rem" mb="2rem">
         <Text as="div" display="flex" justifyContent="space-between">
-          To: <strong>{values?.to}</strong>
+          To:{' '}
+          <Text as="strong" wordBreak="break-word">
+            {values?.to}
+          </Text>
         </Text>
         <Divider />
         <Text as="div" display="flex" justifyContent="space-between">

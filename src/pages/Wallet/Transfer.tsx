@@ -271,7 +271,11 @@ function Transfer() {
                   </MotionWrapper>
                 )}
               </AnimatePresence>
-              <Button type="submit" backgroundColor="#05c0a5">
+              <Button
+                type="submit"
+                backgroundColor="#05c0a5"
+                marginTop="1.5rem !important"
+              >
                 Send Transaction
               </Button>
             </Stack>
