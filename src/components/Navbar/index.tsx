@@ -20,7 +20,7 @@ function Navbar() {
       bgColor="#f4f4f4"
     >
       <Link to="/">
-        <Icon height={6} width={6} icon={Home} />
+        <Icon height={6} width={6} icon={Home} fill="#3E5265" />
       </Link>
       <UserBox />
     </HStack>
