@@ -5,7 +5,7 @@ import { ipcRenderer } from 'electron';
 import { useHistory } from 'react-router-dom';
 
 import Box from '../../../components/Box';
-import Input from '../../../components/Form/Input';
+import Input from '../../../components/Form/Chakra/Input';
 import Form from '../../../components/Chakra/Form';
 import Link from '../../../components/Chakra/Link';
 import DragnDropInput from '../../../components/DropFile';

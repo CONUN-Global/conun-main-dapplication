@@ -12,12 +12,14 @@ import {
 import { FieldError } from 'react-hook-form';
 
 interface CustomInputProps extends InputProps {
+  formRef: any;
+  name: string;
   label?: string;
   error: FieldError | undefined;
   icon?: any;
 }
 
-function Input({ icon, error, label, ...props }: CustomInputProps) {
+function Input({ formRef, error, icon, label, ...props }: CustomInputProps) {
   const Icon = icon;
   return (
     <Container width="100%" padding="0" maxWidth="auto" position="relative">
@@ -32,7 +34,7 @@ function Input({ icon, error, label, ...props }: CustomInputProps) {
             <Icon color="gray.300" />
           </InputLeftElement>
         )}
-        <ChakraInput {...props} />
+        <ChakraInput ref={formRef} {...props} />
       </InputGroup>
       {error?.message && (
         <Text

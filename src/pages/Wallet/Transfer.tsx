@@ -19,7 +19,7 @@ import {
 
 import Box from '../../components/Box';
 import Form from '../../components/Chakra/Form';
-import Input from '../../components/Form/Input';
+import Input from '../../components/Form/Chakra/Input';
 import MotionWrapper from '../../components/MotionWrapper';
 import ConfirmTransferModal from './ConfirmTransferModal';
 
@@ -39,13 +39,13 @@ type FormData = {
 
 function Transfer() {
   const [confirmModal, setConfirmModal] = useState<FormData | null>(null);
-  const { register, handleSubmit, watch, errors, control } = useForm<FormData>({
+  const { register, handleSubmit, watch, errors, control, setValue } = useForm<
+    FormData
+  >({
     defaultValues: {
       type: 'ETH',
       fee: 'average',
       isAdvanced: false,
-      gasLimit: 21000,
-      gasPrice: 36,
     },
   });
 
@@ -59,6 +59,16 @@ function Transfer() {
     to: watchTo,
     token: watchType,
     amount: watchAmount,
+    onComplete: (gasData: any) => {
+      setValue('gasLimit', gasData?.average?.gasLimit, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+      setValue('gasPrice', gasData?.average?.gasPrice, {
+        shouldDirty: true,
+        shouldValidate: true,
+      });
+    },
   });
 
   const onSubmit: SubmitHandler<FormData> = async (values) => {
@@ -68,11 +78,11 @@ function Transfer() {
 
     const gasLimit = values.isAdvanced
       ? values.gasLimit
-      : data?.[values.fee]?.gasLimit;
+      : data?.[values?.fee]?.gasLimit;
 
     const gasPrice = values.isAdvanced
-      ? values.gasLimit
-      : data?.[values.fee]?.gasPrice;
+      ? +values.gasPrice
+      : data?.[values?.fee]?.gasPrice;
 
     setConfirmModal({
       ...values,
@@ -160,6 +170,7 @@ function Transfer() {
                               <Input
                                 name="gasPrice"
                                 type="number"
+                                defaultValue={data?.average?.gasPrice}
                                 formRef={register}
                                 label="Gas Price"
                                 error={errors.gasPrice}
@@ -167,6 +178,7 @@ function Transfer() {
                               <Input
                                 name="gasLimit"
                                 type="number"
+                                defaultValue={data?.average?.gasLimit}
                                 formRef={register}
                                 label="Gas Limit"
                                 error={errors.gasLimit}
@@ -189,9 +201,11 @@ function Transfer() {
                                     isReadOnly
                                     type="number"
                                     value={
-                                      (watchGasFee.gasPrice *
-                                        watchGasFee.gasLimit) /
-                                      1000000000
+                                      watchGasFee.gasLimit &&
+                                      watchGasFee.gasPrice &&
+                                      (watchGasFee?.gasPrice *
+                                        watchGasFee?.gasLimit) /
+                                        1000000000
                                     }
                                   />
                                 </InputGroup>

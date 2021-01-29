@@ -5,7 +5,7 @@ import { useHistory } from 'react-router-dom';
 import { ipcRenderer } from 'electron';
 
 import Box from '../../../components/Box';
-import Input from '../../../components/Form/Input';
+import Input from '../../../components/Form/Chakra/Input';
 import Form from '../../../components/Chakra/Form';
 import MotionWrapper from '../../../components/MotionWrapper';
 import Link from '../../../components/Chakra/Link';

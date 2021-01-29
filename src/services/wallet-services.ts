@@ -9,9 +9,6 @@ import QRReader from 'qrcode-reader';
 import { Transaction as Tx } from 'ethereumjs-tx';
 
 import envVariables from '../../env-variables.json';
-import signGenerator from './sign-generator';
-import { FcnTypes, ORG_NAME } from '../const';
-import instance from '../axios/instance';
 
 const web3 = new Web3(envVariables.web3Url);
 
@@ -257,7 +254,7 @@ export async function transferEth(args: {
     to: args.to,
     value: web3.utils.toHex(web3.utils.toWei(args.amount)),
     gasLimit: web3.utils.toHex(args.gasLimit),
-    gasPrice: web3.utils.toHex(web3.utils.toWei(args.gasPrice, 'gwei')),
+    gasPrice: web3.utils.toHex(web3.utils.toWei(String(args.gasPrice), 'gwei')),
   };
 
   const tx = new Tx(txObject, { chain: 'ropsten' });
@@ -309,7 +306,7 @@ export async function transferCon(args: {
     nonce: web3.utils.toHex(txCount),
     value: '0x0',
     gasLimit: web3.utils.toHex(args.gasLimit),
-    gasPrice: web3.utils.toHex(web3.utils.toWei(args.gasPrice, 'gwei')),
+    gasPrice: web3.utils.toHex(web3.utils.toWei(String(args.gasPrice), 'gwei')),
     data,
   };
 

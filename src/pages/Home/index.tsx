@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 
 import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
 
-import CustomInput from '../../components/Form/Input';
+import CustomInput from '../../components/Form/Chakra/Input';
 import Form from '../../components/Chakra/Form';
 import Link from '../../components/Chakra/Link';
 import Icon from '../../components/Chakra/Icon';
@@ -59,8 +59,10 @@ function Home() {
         <Center>
           <Link to="/wallet">
             <Stack>
-              <Icon icon={Wallet} width={70} height={70} />
-              <Text textAlign="center">Wallet</Text>
+              <Icon icon={Wallet} width={70} height={70} fill="#3E5265" />
+              <Text textAlign="center" color="#3E5265">
+                Wallet
+              </Text>
             </Stack>
           </Link>
         </Center>

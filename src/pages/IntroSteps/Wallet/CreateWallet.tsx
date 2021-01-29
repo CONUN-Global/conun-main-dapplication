@@ -7,7 +7,7 @@ import { useHistory } from 'react-router-dom';
 import Box from '../../../components/Box';
 import MotionWrapper from '../../../components/MotionWrapper';
 import Form from '../../../components/Chakra/Form';
-import Input from '../../../components/Form/Input';
+import Input from '../../../components/Form/Chakra/Input';
 import Link from '../../../components/Chakra/Link';
 
 import { useAppContext } from '../../../components/AppContext';

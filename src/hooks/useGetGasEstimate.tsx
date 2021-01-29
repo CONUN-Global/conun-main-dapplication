@@ -7,6 +7,7 @@ interface UseGetGasEstimateProps {
   to: string;
   token: string;
   amount: number;
+  onComplete: (data: any) => void;
 }
 
 const getGasEstimate = async (
@@ -24,7 +25,12 @@ const getGasEstimate = async (
   return data;
 };
 
-function useGetGasEstimate({ to, token, amount }: UseGetGasEstimateProps) {
+function useGetGasEstimate({
+  to,
+  token,
+  amount,
+  onComplete,
+}: UseGetGasEstimateProps) {
   const { currentUser } = useAppCurrentUser();
   const { data, isLoading } = useQuery(
     ['get-gas-estimate', to, token, amount],
@@ -33,6 +39,7 @@ function useGetGasEstimate({ to, token, amount }: UseGetGasEstimateProps) {
       enabled: !!currentUser.wallet_address && (!to?.length || to.length > 41),
       refetchOnMount: true,
       cacheTime: 0,
+      onSuccess: onComplete,
     }
   );
 
