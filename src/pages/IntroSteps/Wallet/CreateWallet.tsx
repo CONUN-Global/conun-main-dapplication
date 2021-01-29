@@ -72,7 +72,7 @@ function CreateWallet() {
           </Text>
           <Stack>
             <Form onSubmit={handleSubmit(onSubmit)}>
-              <Stack>
+              <Stack spacing="1.5rem">
                 <Input
                   name="password"
                   type="password"
