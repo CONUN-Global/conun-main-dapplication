@@ -1,13 +1,14 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Button, Center, Flex, Stack, Text } from '@chakra-ui/react';
+import { Center, Flex, Stack, Text } from '@chakra-ui/react';
 
 import CustomInput from '../../components/Form/Chakra/Input';
 import Form from '../../components/Chakra/Form';
 import Link from '../../components/Chakra/Link';
 import Icon from '../../components/Chakra/Icon';
 import MotionWrapper from '../../components/MotionWrapper';
+import Button from '../../components/Button';
 
 import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
 
@@ -45,25 +46,22 @@ function Home() {
               })}
               error={errors.search}
             />
-            <Button
-              bgColor="#5a78f0"
-              type="submit"
-              color="white"
-              ml="0.5rem"
-              _hover={{ bgColor: '#7c94f3' }}
-            >
+
+            <Button bgColor="#5a78f0" type="submit" color="white" ml="0.5rem">
               Search
             </Button>
           </Flex>
         </Form>
         <Center>
           <Link to="/wallet">
-            <Stack>
-              <Icon icon={Wallet} width={70} height={70} fill="#3E5265" />
-              <Text textAlign="center" color="#3E5265">
-                Wallet
-              </Text>
-            </Stack>
+            <MotionWrapper whileHover={{ y: -3 }}>
+              <Stack>
+                <Icon icon={Wallet} width={70} height={70} fill="#3E5265" />
+                <Text textAlign="center" color="#3E5265">
+                  Wallet
+                </Text>
+              </Stack>
+            </MotionWrapper>
           </Link>
         </Center>
       </Stack>

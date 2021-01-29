@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Controller, SubmitHandler, useForm } from 'react-hook-form';
 import { AnimatePresence } from 'framer-motion';
 import {
-  Button,
   Checkbox,
   FormControl,
   FormLabel,
@@ -22,6 +21,7 @@ import Form from '../../components/Chakra/Form';
 import Input from '../../components/Form/Chakra/Input';
 import MotionWrapper from '../../components/MotionWrapper';
 import ConfirmTransferModal from './ConfirmTransferModal';
+import Button from '../../components/Button';
 
 import useGetGasEstimate from '../../hooks/useGetGasEstimate';
 
@@ -286,6 +286,7 @@ function Transfer() {
                 )}
               </AnimatePresence>
               <Button
+                color="white"
                 type="submit"
                 backgroundColor="#05c0a5"
                 marginTop="1.5rem !important"

@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { ipcRenderer } from 'electron';
 import { useMutation } from 'react-query';
 import {
-  Button,
   Divider,
   HStack,
   Link,
@@ -14,6 +13,7 @@ import {
 
 import Modal from '../../components/Modal';
 import Icon from '../../components/Chakra/Icon';
+import Button from '../../components/Button';
 
 import useAppCurrentUser from '../../hooks/useAppCurrentUser';
 import useGetLocalConBalance from '../../hooks/useLocalConBalance';

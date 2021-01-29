@@ -1,9 +1,10 @@
 import React from 'react';
-import { Stack, Button, Text, useToast } from '@chakra-ui/react';
+import { Stack, Text, useToast } from '@chakra-ui/react';
 import { clipboard } from 'electron';
 
 import Box from '../../components/Box';
 import Icon from '../../components/Chakra/Icon';
+import Button from '../../components/Button';
 
 import useAppCurrentUser from '../../hooks/useAppCurrentUser';
 
@@ -27,6 +28,7 @@ function Address() {
           {currentUser.wallet_address}
         </Text>
         <Button
+          pure
           bgColor="transparent"
           _hover={{ bgColor: 'transparent' }}
           _active={{ bgColor: 'transparent' }}

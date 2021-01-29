@@ -1,9 +1,10 @@
 import React from 'react';
-import { Button, Spinner, Stack, Text } from '@chakra-ui/react';
+import { Spinner, Stack, Text } from '@chakra-ui/react';
 
 import Box from '../../components/Box';
 import Icon from '../../components/Chakra/Icon';
 import FormattedBalance from '../../components/FormattedBalance';
+import Button from '../../components/Button';
 
 import useGetConBalance from '../../hooks/useGetConBalance';
 import useGetEthBalance from '../../hooks/useGetEthBalance';
@@ -77,6 +78,7 @@ function Balance() {
           </Text>
         </Text>
         <Button
+          pure
           bgColor="transparent"
           padding={0}
           alignSelf="flex-end"

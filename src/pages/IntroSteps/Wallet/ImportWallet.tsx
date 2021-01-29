@@ -1,10 +1,12 @@
 import React from 'react';
-import { Button, Stack, Text } from '@chakra-ui/react';
+import { Stack, Text } from '@chakra-ui/react';
 
 import Box from '../../../components/Box';
 import Link from '../../../components/Chakra/Link';
-import { useAppContext } from '../../../components/AppContext';
+import Button from '../../../components/Button';
 import MotionWrapper from '../../../components/MotionWrapper';
+
+import { useAppContext } from '../../../components/AppContext';
 
 import { introVariants } from '../../../const';
 

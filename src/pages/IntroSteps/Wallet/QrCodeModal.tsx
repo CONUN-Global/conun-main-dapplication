@@ -1,8 +1,9 @@
 import React from 'react';
 import { ipcRenderer } from 'electron';
-import { Button, Img, Stack, useToast } from '@chakra-ui/react';
+import { Img, Stack, useToast } from '@chakra-ui/react';
 
 import Modal from '../../../components/Modal';
+import Button from '../../../components/Button';
 
 interface QrCodeModalProps {
   isOpen: boolean;

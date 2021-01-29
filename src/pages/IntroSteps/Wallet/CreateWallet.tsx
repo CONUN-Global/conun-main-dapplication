@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button, HStack, Stack, Text, useToast } from '@chakra-ui/react';
+import { HStack, Stack, Text, useToast } from '@chakra-ui/react';
 import { ipcRenderer } from 'electron';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useHistory } from 'react-router-dom';
@@ -9,6 +9,7 @@ import MotionWrapper from '../../../components/MotionWrapper';
 import Form from '../../../components/Chakra/Form';
 import Input from '../../../components/Form/Chakra/Input';
 import Link from '../../../components/Chakra/Link';
+import Button from '../../../components/Button';
 
 import { useAppContext } from '../../../components/AppContext';
 

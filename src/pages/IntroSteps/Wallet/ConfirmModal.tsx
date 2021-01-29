@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-  Button,
   Center,
   Checkbox,
   HStack,
@@ -15,6 +14,7 @@ import { useHistory } from 'react-router-dom';
 import Box from '../../../components/Box';
 import Form from '../../../components/Chakra/Form';
 import Modal from '../../../components/Modal';
+import Button from '../../../components/Button';
 
 import { useAppContext } from '../../../components/AppContext';
 

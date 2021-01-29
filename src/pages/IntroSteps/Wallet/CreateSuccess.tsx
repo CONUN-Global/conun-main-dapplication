@@ -1,11 +1,12 @@
 import React, { useState } from 'react';
 import { ipcRenderer, clipboard } from 'electron';
-import { Button, Flex, HStack, Stack, Text, useToast } from '@chakra-ui/react';
+import { Flex, HStack, Stack, Text, useToast } from '@chakra-ui/react';
 
 import Box from '../../../components/Box';
 import Icon from '../../../components/Chakra/Icon';
 import ConfirmModal from './ConfirmModal';
 import MotionWrapper from '../../../components/MotionWrapper';
+import Button from '../../../components/Button';
 
 import getWalletAddress from '../../../helpers/getWalletAddress';
 import getWalletPrivateKey from '../../../helpers/getWalletPrivateKey';
@@ -80,6 +81,7 @@ function CreateSuccess() {
               <Text fontSize="0.8rem">WALLET ADDRESS</Text>{' '}
               <Text fontSize="0.8rem">{getWalletAddress()}</Text>
               <Button
+                pure
                 _hover={{ bgColor: 'transparent' }}
                 variant="ghost"
                 onClick={() => {
@@ -100,6 +102,7 @@ function CreateSuccess() {
               <Text fontSize="0.8rem">PRIVATE KEY</Text>
               <Text fontSize="0.8rem">{getWalletPrivateKey()}</Text>
               <Button
+                pure
                 _hover={{ bgColor: 'transparent' }}
                 variant="ghost"
                 onClick={() => {

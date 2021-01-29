@@ -2,7 +2,7 @@ import React from 'react';
 import { ipcRenderer } from 'electron';
 import {
   Box,
-  Button,
+  Button as ChakraButton,
   Image,
   Popover,
   PopoverArrow,
@@ -12,6 +12,8 @@ import {
   Stack,
   Text,
 } from '@chakra-ui/react';
+
+import Button from '../Button';
 
 import useCurrentUser from '../../hooks/useCurrentUser';
 import { useAppContext } from '../AppContext';
@@ -28,14 +30,14 @@ function UserBox() {
   return (
     <Popover>
       <PopoverTrigger>
-        <Button variant="link" _focus={{ outline: 0 }}>
+        <ChakraButton variant="link" _focus={{ outline: 0 }}>
           <Image
             src={currentUser?.picture}
             height={35}
             width={35}
             borderRadius="50%"
           />
-        </Button>
+        </ChakraButton>
       </PopoverTrigger>
       <PopoverContent
         boxShadow="0 2px 10px rgba(0,0,0,.2)"
