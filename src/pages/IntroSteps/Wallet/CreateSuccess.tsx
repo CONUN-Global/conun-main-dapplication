@@ -72,14 +72,14 @@ function CreateSuccess() {
           <Text textAlign="center" fontSize="2rem">
             Account Created Successfully
           </Text>
-          <Text textAlign="justify">
+          <Text textAlign="justify" fontSize="1.2rem">
             Welcome to CONUN Distributed Supercomputing Platform. Please backup
             your account information and Download QR Code.
           </Text>
-          <Stack bgColor="grey" p="1rem" borderRadius="5px">
+          <Stack bgColor="#5a78f0" color="#fff" p="1rem" borderRadius="5px">
             <HStack justifyContent="space-between">
-              <Text fontSize="0.8rem">WALLET ADDRESS</Text>{' '}
-              <Text fontSize="0.8rem">{getWalletAddress()}</Text>
+              <Text fontSize="1rem">WALLET ADDRESS</Text>{' '}
+              <Text fontSize="1rem">{getWalletAddress()}</Text>
               <Button
                 pure
                 _hover={{ bgColor: 'transparent' }}
@@ -95,12 +95,12 @@ function CreateSuccess() {
                   });
                 }}
               >
-                <Icon icon={Copy} width={18} height={18} />
+                <Icon icon={Copy} width={18} height={18} fill="#fff" />
               </Button>
             </HStack>
             <HStack justifyContent="space-between">
-              <Text fontSize="0.8rem">PRIVATE KEY</Text>
-              <Text fontSize="0.8rem">{getWalletPrivateKey()}</Text>
+              <Text fontSize="1rem">PRIVATE KEY</Text>
+              <Text fontSize="1rem">{getWalletPrivateKey()}</Text>
               <Button
                 pure
                 _hover={{ bgColor: 'transparent' }}
@@ -116,7 +116,7 @@ function CreateSuccess() {
                   });
                 }}
               >
-                <Icon icon={Copy} width={18} height={18} />
+                <Icon icon={Copy} width={18} height={18} fill="#fff" />
               </Button>
             </HStack>
           </Stack>
@@ -128,11 +128,23 @@ function CreateSuccess() {
               mr="2%"
               variant="link"
             >
-              <Box bgColor="grey" width="100%" height="100%" p="1rem" noStyle>
-                <Text textAlign="left" color="black" fontWeight="light">
+              <Box
+                width="100%"
+                height="100%"
+                p="1rem"
+                bgColor="#7070e3"
+                noStyle
+              >
+                <Text color="#fff" textAlign="left">
                   Backup Wallet <br /> KeyStoreFile.json
                 </Text>
-                <Icon ml="auto" icon={Download} width={30} height={30} />
+                <Icon
+                  ml="auto"
+                  icon={Download}
+                  width={25}
+                  height={25}
+                  fill="#fff"
+                />
               </Box>
             </Button>
             <Button
@@ -141,11 +153,24 @@ function CreateSuccess() {
               onClick={exportQrCode}
               variant="link"
             >
-              <Box bgColor="grey" width="100%" height="100%" p="1rem" noStyle>
-                <Text textAlign="left" color="black" fontWeight="light">
+              <Box
+                bgColor="#25b0e8"
+                color="#fff"
+                width="100%"
+                height="100%"
+                p="1rem"
+                noStyle
+              >
+                <Text textAlign="left" color="#fff">
                   Export Account <br /> QR Code
                 </Text>
-                <Icon ml="auto" icon={Export} width={30} height={30} />
+                <Icon
+                  ml="auto"
+                  icon={Export}
+                  width={25}
+                  height={25}
+                  fill="#fff"
+                />
               </Box>
             </Button>
           </Flex>
