@@ -10,6 +10,16 @@ An electron app wallet developed by the CONUN foundation.
 - Conun
 - Conun Local
 
+**Features**
+
+- Wallet Create/Import
+- Transfer
+- P2P File Transfer
+
+**Planned Features**
+
+- Drive
+
 ### Install
 
 ```bash
@@ -28,7 +38,7 @@ yarn start
 
 ### Packaging for Production
 
-To package apps for the local platform:
+To package the app for the local platform:
 
 ```bash
 yarn package
