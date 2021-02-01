@@ -1,3 +1,4 @@
+import { extendTheme } from '@chakra-ui/react';
 import theme, { Theme } from '@chakra-ui/theme';
 import { Styles } from '@chakra-ui/theme-tools';
 
@@ -6,13 +7,6 @@ const styles: Styles = {
   global: () => ({
     ...theme.styles.global,
     margin: 0,
-    select: {
-      borderColor: '#CBD5E0 !important',
-    },
-    input: {
-      borderColor: '#CBD5E0 !important',
-    },
-
     body: {
       padding: 0,
       width: '100vw',
@@ -23,9 +17,16 @@ const styles: Styles = {
   }),
 };
 
-const customTheme: Theme = {
+const customTheme: Theme = extendTheme({
   ...theme,
   styles,
-};
+  components: {
+    Button: {
+      baseStyle: {
+        fontWeight: 'ligth',
+      },
+    },
+  },
+});
 
 export default customTheme;
