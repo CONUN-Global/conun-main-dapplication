@@ -19,7 +19,7 @@ function Navbar() {
       boxShadow="0 2px 4px 0 rgba(0,0,0,0.15)"
       bgColor="#f4f4f4"
     >
-      <Link to="/">
+      <Link to="/home">
         <Icon height={6} width={6} icon={Home} fill="#3E5265" />
       </Link>
       <UserBox />
