@@ -7,7 +7,7 @@ import os from 'os';
 
 import envVariables from '../../env-variables.json';
 
-const { apiIdentifier, auth0Domain, clientId } = envVariables;
+const { auth0Domain, clientId } = envVariables;
 
 const redirectUri = 'http://localhost/callback';
 
