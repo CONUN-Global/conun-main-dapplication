@@ -7,6 +7,7 @@ import Layout from './components/Layout';
 
 import IntroRoute from './components/Routes/IntroRoute';
 import PrivateRoute from './components/Routes/PrivateRoute';
+import FileSharing from './pages/FileSharing';
 import Home from './pages/Home';
 import Introduction from './pages/IntroSteps/Introduction';
 import Terms from './pages/IntroSteps/Terms';
@@ -58,6 +59,9 @@ export default function App() {
             </PrivateRoute>
             <PrivateRoute path="/wallet">
               <Wallet />
+            </PrivateRoute>
+            <PrivateRoute path="/file-sharing">
+              <FileSharing />
             </PrivateRoute>
           </Switch>
         </AnimatePresence>

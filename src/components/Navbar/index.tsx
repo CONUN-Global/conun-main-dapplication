@@ -5,7 +5,7 @@ import UserBox from '../UserBox';
 import Link from '../Chakra/Link';
 import Icon from '../Chakra/Icon';
 
-import { ReactComponent as Home } from '../../../assets/icons/home.svg';
+import { ReactComponent as Menu } from '../../../assets/icons/menu.svg';
 
 function Navbar() {
   return (
@@ -20,7 +20,7 @@ function Navbar() {
       bgColor="#f4f4f4"
     >
       <Link to="/home">
-        <Icon height={6} width={6} icon={Home} fill="#3E5265" />
+        <Icon height={6} width={6} icon={Menu} fill="#3E5265" />
       </Link>
       <UserBox />
     </HStack>

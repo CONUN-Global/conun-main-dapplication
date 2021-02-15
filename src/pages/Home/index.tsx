@@ -1,7 +1,7 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
 
-import { Center, Flex, Stack, Text } from '@chakra-ui/react';
+import { Center, Flex, HStack, Stack, Text } from '@chakra-ui/react';
 
 import CustomInput from '../../components/Form/Chakra/Input';
 import Form from '../../components/Chakra/Form';
@@ -11,6 +11,7 @@ import MotionWrapper from '../../components/MotionWrapper';
 import Button from '../../components/Button';
 
 import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
+import { ReactComponent as FileShare } from '../../../assets/icons/file-sharing.svg';
 
 type FormData = {
   search: string;
@@ -52,10 +53,10 @@ function Home() {
             </Button>
           </Flex>
         </Form>
-        <Center>
+        <HStack spacing="5rem" justifyContent="center">
           <Link to="/wallet">
             <MotionWrapper whileHover={{ y: -3 }}>
-              <Stack>
+              <Stack alignItems="center">
                 <Icon icon={Wallet} width={70} height={70} fill="#3E5265" />
                 <Text textAlign="center" color="#3E5265">
                   Wallet
@@ -63,7 +64,17 @@ function Home() {
               </Stack>
             </MotionWrapper>
           </Link>
-        </Center>
+          <Link to="/file-sharing">
+            <MotionWrapper whileHover={{ y: -3 }}>
+              <Stack alignItems="center">
+                <Icon icon={FileShare} width={70} height={70} fill="#3E5265" />
+                <Text textAlign="center" color="#3E5265">
+                  File Sharing
+                </Text>
+              </Stack>
+            </MotionWrapper>
+          </Link>
+        </HStack>
       </Stack>
     </MotionWrapper>
   );

@@ -31,11 +31,11 @@ function DragnDropInput({ onDrop, accept = '' }: DragnDropInputProps) {
     >
       <input {...getInputProps()} />
       {acceptedFile ? (
-        <Text>{acceptedFile.name}</Text>
+        <Text color="inherit">{acceptedFile.name}</Text>
       ) : isDragActive ? (
-        <Text>Drop the file here</Text>
+        <Text color="inherit">Drop the file here</Text>
       ) : (
-        <Text>Drop your Keystore.json file here</Text>
+        <Text color="inherit">Drop your Keystore.json file here</Text>
       )}
     </Flex>
   );
