@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { Button, HStack, Stack, Text } from '@chakra-ui/react';
 import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
-import ClickAwayListener from 'react-click-away-listener';
 
 import Box from '../../components/Box';
 import MotionWrapper from '../../components/MotionWrapper';
@@ -37,6 +36,7 @@ function FileSharing() {
         display="flex"
         justifyContent="center"
         alignItems="center"
+        position="relative"
       >
         <AnimateSharedLayout>
           <Stack
