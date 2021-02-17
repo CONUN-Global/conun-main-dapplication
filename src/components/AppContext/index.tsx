@@ -4,22 +4,23 @@ import React, {
   useCallback,
   useContext,
   useMemo,
-} from 'react';
+} from "react";
+import { ipcRenderer } from "electron";
 
-import useAppCurrentUser from '../../hooks/useAppCurrentUser';
-import useUserCheck from '../../hooks/useUserCheck';
+import useAppCurrentUser from "../../hooks/useAppCurrentUser";
+import useUserCheck from "../../hooks/useUserCheck";
 
-import removeAllTokens from '../../helpers/removeAllTokens';
+import removeAllTokens from "../../helpers/removeAllTokens";
 import getWalletAddress, {
   setWalletAddress,
-} from '../../helpers/getWalletAddress';
+} from "../../helpers/getWalletAddress";
 import getWalletPrivateKey, {
   setWalletPrivateKey,
-} from '../../helpers/getWalletPrivateKey';
-import getKeyStore, { setKeyStore } from '../../helpers/getKeyStore';
+} from "../../helpers/getWalletPrivateKey";
+import getKeyStore, { setKeyStore } from "../../helpers/getKeyStore";
 
-import { cache } from '../../react-query/config';
-import { AUTH_TOKEN } from '../../const';
+import { cache } from "../../react-query/config";
+import { AUTH_TOKEN } from "../../const";
 
 type WalletData = {
   address: string;
@@ -54,19 +55,20 @@ function AppProvider({ children }: AppProviderProps) {
 
   const { isUser } = useUserCheck();
 
-  const handleLogout = useCallback(() => {
+  const handleLogout = useCallback(async () => {
     removeAllTokens();
     cache.clear();
+    await ipcRenderer.invoke("logout");
   }, []);
 
-  const handleLogin: State['onLogin'] = useCallback((token, wallet) => {
+  const handleLogin: State["onLogin"] = useCallback((token, wallet) => {
     saveToken(token);
     setAuthHeaderToken(token);
     setWalletAddress(wallet);
     refetch();
   }, []);
 
-  const handleWalletCreation: State['handleWalletCreation'] = useCallback(
+  const handleWalletCreation: State["handleWalletCreation"] = useCallback(
     ({ address, keyStore, privateKey }) => {
       setWalletAddress(address);
       setWalletPrivateKey(privateKey);
@@ -98,7 +100,7 @@ function useAppContext() {
   const context = useContext(AppContext);
 
   if (context === undefined) {
-    throw new Error('useAppContext must be used within a AppProvider');
+    throw new Error("useAppContext must be used within a AppProvider");
   }
 
   return context;

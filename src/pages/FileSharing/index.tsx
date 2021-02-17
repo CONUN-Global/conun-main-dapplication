@@ -1,19 +1,19 @@
-import React, { useState } from 'react';
-import { Button, HStack, Stack, Text } from '@chakra-ui/react';
-import { AnimatePresence, AnimateSharedLayout, motion } from 'framer-motion';
+import React, { useState } from "react";
+import { Button, HStack, Stack, Text } from "@chakra-ui/react";
+import { AnimatePresence, AnimateSharedLayout, motion } from "framer-motion";
 
-import Box from '../../components/Box';
-import MotionWrapper from '../../components/MotionWrapper';
-import Upload from './Upload';
-import Download from './Download';
+import Box from "../../components/Box";
+import MotionWrapper from "../../components/MotionWrapper";
+import Upload from "./Upload";
+import Download from "./Download";
 
 const components = [
-  { id: 'Upload', component: Upload },
-  { id: 'Download', component: Download },
+  { id: "Upload", component: Upload },
+  { id: "Download", component: Download },
 ];
 
 function FileSharing() {
-  const [selectPage, setSelectPage] = useState('');
+  const [selectPage, setSelectPage] = useState("");
 
   const Component = components.find((c) => c.id === selectPage)?.component;
 
@@ -31,7 +31,7 @@ function FileSharing() {
       <Box
         elevation={2}
         p="1rem"
-        width={['98vw', '95vw', '90vw']}
+        width={["98vw", "95vw", "90vw"]}
         minHeight="80vh"
         display="flex"
         justifyContent="center"
@@ -53,10 +53,10 @@ function FileSharing() {
               {components.map((c) => (
                 <motion.div key={c.id} layoutId={c.id}>
                   <Button
-                    _focus={{ outline: 'none' }}
+                    _focus={{ outline: "none" }}
                     type="button"
                     onClick={() => setSelectPage(c.id)}
-                    colorScheme={c.id === 'Upload' ? 'blue' : 'green'}
+                    colorScheme={c.id === "Upload" ? "blue" : "green"}
                   >
                     {c.id}
                   </Button>
@@ -66,12 +66,7 @@ function FileSharing() {
           </Stack>
 
           <AnimatePresence>
-            {selectPage && (
-              <Component
-                layoutId={selectPage}
-                onClose={() => setSelectPage('')}
-              />
-            )}
+            {selectPage && <Component onClose={() => setSelectPage("")} />}
           </AnimatePresence>
         </AnimateSharedLayout>
       </Box>

@@ -1,7 +1,7 @@
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 
-import instance from '../axios/instance';
-import useCurrentUser from './useCurrentUser';
+import instance from "../axios/instance";
+import useCurrentUser from "./useCurrentUser";
 
 const checkUser = (currentUser: { email: string }) =>
   instance.get(`/users/check/?email=${currentUser?.email}`);
@@ -10,7 +10,7 @@ function useUserCheck() {
   const { currentUser, loading } = useCurrentUser();
 
   const { data, isLoading } = useQuery(
-    'check-user',
+    "check-user",
     () => checkUser(currentUser),
     {
       enabled: !loading && !!currentUser.email,

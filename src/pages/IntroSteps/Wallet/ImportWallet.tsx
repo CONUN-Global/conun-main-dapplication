@@ -1,17 +1,20 @@
-import React from 'react';
-import { Stack, Text } from '@chakra-ui/react';
+import React from "react";
+import { HStack, Image, Stack, Text } from "@chakra-ui/react";
 
-import Box from '../../../components/Box';
-import Link from '../../../components/Chakra/Link';
-import Button from '../../../components/Button';
-import MotionWrapper from '../../../components/MotionWrapper';
+import Box from "../../../components/Box";
+import Link from "../../../components/Chakra/Link";
+import Button from "../../../components/Button";
+import MotionWrapper from "../../../components/MotionWrapper";
 
-import { useAppContext } from '../../../components/AppContext';
+import { useAppContext } from "../../../components/AppContext";
 
-import { introVariants } from '../../../const';
+import { introVariants } from "../../../const";
+import useCurrentUser from "../../../hooks/useCurrentUser";
 
 function ImportWallet() {
-  const { isAlreadyUser } = useAppContext();
+  const { isAlreadyUser, onLogout } = useAppContext();
+
+  const { currentUser } = useCurrentUser();
 
   return (
     <MotionWrapper
@@ -19,17 +22,44 @@ function ImportWallet() {
       initial="hidden"
       animate="visible"
       exit="exit"
-      transition={{ duration: 1, type: 'spring' }}
+      transition={{ duration: 1, type: "spring" }}
     >
       <Box elevation={4} padding="2rem" minWidth="30rem">
         <Stack spacing="2rem">
-          <Text textAlign="center" fontSize="2rem">
-            {isAlreadyUser ? 'Welcome Back' : 'Choose Access Method'}
-          </Text>
+          {isAlreadyUser ? (
+            <Stack alignItems="center">
+              <Image
+                src={currentUser.picture}
+                height={20}
+                width={20}
+                borderRadius="50%"
+              />
+              <Text textAlign="center" fontSize="2rem">
+                Welcome back {currentUser.givenName ?? currentUser.name}
+              </Text>
+              <HStack>
+                <Text fontSize="0.875rem">Not you?</Text>
+                <Button
+                  type="button"
+                  variant="link"
+                  pure
+                  colorScheme="red"
+                  size="sm"
+                  onClick={onLogout}
+                >
+                  Logout
+                </Button>
+              </HStack>
+            </Stack>
+          ) : (
+            <Text textAlign="center" fontSize="2rem">
+              Choose Access Method
+            </Text>
+          )}
           <Text textAlign="center">
             {isAlreadyUser
               ? "Let's restore your previous wallet "
-              : 'Access your existing Ethereum-based wallet.'}
+              : "Access your existing Ethereum-based wallet."}
             <br />
           </Text>
           <Stack spacing="1rem" mb="1rem">

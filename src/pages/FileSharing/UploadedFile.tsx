@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React from "react";
+import { motion } from "framer-motion";
 import {
   Button,
   HStack,
@@ -9,11 +9,11 @@ import {
   Text,
   useClipboard,
   useToast,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import ExtensionIcon from '../../components/ExtensionIcon';
+import ExtensionIcon from "../../components/ExtensionIcon";
 
-import checkmark from '../../../assets/icons/check.svg';
+import checkmark from "../../assets/icons/check.svg";
 
 interface UploadedFileProps {
   file: {
@@ -24,7 +24,7 @@ interface UploadedFileProps {
 }
 
 function UploadedFile({ file }: UploadedFileProps) {
-  const { onCopy } = useClipboard(file.hash || '');
+  const { onCopy } = useClipboard(file.hash || "");
 
   const toast = useToast();
 
@@ -37,7 +37,7 @@ function UploadedFile({ file }: UploadedFileProps) {
     >
       <HStack justifyContent="space-around" fontSize="0.8rem">
         <ExtensionIcon
-          type={file?.name?.split('.')?.pop() ?? ''}
+          type={file?.name?.split(".")?.pop() ?? ""}
           width="3.5rem"
         />
         <Stack width="100%" spacing="0">
@@ -50,14 +50,14 @@ function UploadedFile({ file }: UploadedFileProps) {
             width="fit-content"
             padding="0 0.5rem"
             fontWeight="light"
-            _focus={{ outline: 'none' }}
+            _focus={{ outline: "none" }}
             color="#5153FF"
-            _hover={{ bgColor: 'transparent', textDecoration: 'underline' }}
+            _hover={{ bgColor: "transparent", textDecoration: "underline" }}
             onClick={() => {
               onCopy();
               toast({
-                title: 'Hash Copied',
-                status: 'success',
+                title: "Hash Copied",
+                status: "success",
                 duration: 500,
               });
             }}

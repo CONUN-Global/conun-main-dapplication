@@ -1,25 +1,25 @@
-import React, { useState } from 'react';
-import { ipcRenderer, clipboard } from 'electron';
-import { Flex, HStack, Stack, Text, useToast } from '@chakra-ui/react';
+import React, { useState } from "react";
+import { ipcRenderer, clipboard } from "electron";
+import { Flex, HStack, Stack, Text, useToast } from "@chakra-ui/react";
 
-import Box from '../../../components/Box';
-import Icon from '../../../components/Chakra/Icon';
-import ConfirmModal from './ConfirmModal';
-import MotionWrapper from '../../../components/MotionWrapper';
-import Button from '../../../components/Button';
+import Box from "../../../components/Box";
+import Icon from "../../../components/Chakra/Icon";
+import ConfirmModal from "./ConfirmModal";
+import MotionWrapper from "../../../components/MotionWrapper";
+import Button from "../../../components/Button";
 
-import getWalletAddress from '../../../helpers/getWalletAddress';
-import getWalletPrivateKey from '../../../helpers/getWalletPrivateKey';
+import getWalletAddress from "../../../helpers/getWalletAddress";
+import getWalletPrivateKey from "../../../helpers/getWalletPrivateKey";
 
-import getKeyStore from '../../../helpers/getKeyStore';
-import QrCodeModal from './QrCodeModal';
-import getConunPass from '../../../helpers/getConunPass';
+import getKeyStore from "../../../helpers/getKeyStore";
+import QrCodeModal from "./QrCodeModal";
+import getConunPass from "../../../helpers/getConunPass";
 
-import { ReactComponent as Download } from '../../../../assets/icons/download.svg';
-import { ReactComponent as Export } from '../../../../assets/icons/foreign.svg';
-import { ReactComponent as Copy } from '../../../../assets/icons/copy.svg';
+import { ReactComponent as Download } from "../../../assets/icons/download.svg";
+import { ReactComponent as Export } from "../../../assets/icons/foreign.svg";
+import { ReactComponent as Copy } from "../../../assets/icons/copy.svg";
 
-import { introVariants } from '../../../const';
+import { introVariants } from "../../../const";
 
 function CreateSuccess() {
   const toast = useToast();
@@ -27,32 +27,32 @@ function CreateSuccess() {
   const [confirmModal, setConfirmModal] = useState(false);
 
   const exportKeyStore = async () => {
-    const res = await ipcRenderer.invoke('export-key-store', {
+    const res = await ipcRenderer.invoke("export-key-store", {
       keyStore: getKeyStore(),
     });
 
     if (res?.success) {
       toast({
-        title: 'File saved',
-        status: 'success',
+        title: "File saved",
+        status: "success",
         duration: 5000,
         isClosable: true,
-        position: 'top',
+        position: "top",
       });
     } else if (!res.canceled) {
       toast({
-        title: 'Something went wrong.',
-        description: 'Please try again',
-        status: 'error',
+        title: "Something went wrong.",
+        description: "Please try again",
+        status: "error",
         duration: 5000,
         isClosable: true,
-        position: 'top',
+        position: "top",
       });
     }
   };
 
   const exportQrCode = async () => {
-    const res = await ipcRenderer.invoke('create-qr-code', {
+    const res = await ipcRenderer.invoke("create-qr-code", {
       privateKey: getWalletPrivateKey(),
       password: getConunPass(),
     });
@@ -65,7 +65,7 @@ function CreateSuccess() {
       initial="hidden"
       animate="visible"
       exit="exit"
-      transition={{ duration: 1, type: 'spring' }}
+      transition={{ duration: 1, type: "spring" }}
     >
       <Box elevation={2} padding="2rem">
         <Stack spacing="2rem">
@@ -78,20 +78,20 @@ function CreateSuccess() {
           </Text>
           <Stack bgColor="#5a78f0" color="#fff" p="1rem" borderRadius="5px">
             <HStack justifyContent="space-between">
-              <Text fontSize="1rem">WALLET ADDRESS</Text>{' '}
+              <Text fontSize="1rem">WALLET ADDRESS</Text>{" "}
               <Text fontSize="1rem">{getWalletAddress()}</Text>
               <Button
                 pure
-                _hover={{ bgColor: 'transparent' }}
+                _hover={{ bgColor: "transparent" }}
                 variant="ghost"
                 onClick={() => {
                   clipboard.writeText(getWalletAddress());
                   toast({
-                    title: 'Wallet address copied',
-                    status: 'success',
+                    title: "Wallet address copied",
+                    status: "success",
                     duration: 5000,
                     isClosable: true,
-                    position: 'top',
+                    position: "top",
                   });
                 }}
               >
@@ -103,16 +103,16 @@ function CreateSuccess() {
               <Text fontSize="1rem">{getWalletPrivateKey()}</Text>
               <Button
                 pure
-                _hover={{ bgColor: 'transparent' }}
+                _hover={{ bgColor: "transparent" }}
                 variant="ghost"
                 onClick={() => {
                   clipboard.writeText(getWalletPrivateKey());
                   toast({
-                    title: 'Private key copied',
-                    status: 'success',
+                    title: "Private key copied",
+                    status: "success",
                     duration: 5000,
                     isClosable: true,
-                    position: 'top',
+                    position: "top",
                   });
                 }}
               >
@@ -187,7 +187,7 @@ function CreateSuccess() {
         <QrCodeModal
           isOpen={!!qrCode}
           onClose={() => setQrCode(undefined)}
-          qrCodeSrc={qrCode ?? ''}
+          qrCodeSrc={qrCode ?? ""}
         />
         <ConfirmModal
           isOpen={confirmModal}

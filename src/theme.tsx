@@ -1,6 +1,6 @@
-import { extendTheme } from '@chakra-ui/react';
-import theme, { Theme } from '@chakra-ui/theme';
-import { Styles } from '@chakra-ui/theme-tools';
+import { extendTheme } from "@chakra-ui/react";
+import theme, { Theme } from "@chakra-ui/theme";
+import { Styles } from "@chakra-ui/theme-tools";
 
 const styles: Styles = {
   ...theme.styles,
@@ -9,24 +9,22 @@ const styles: Styles = {
     margin: 0,
     body: {
       padding: 0,
-      width: '100vw',
-      display: 'block',
-      overflow: 'hidden',
-      backgroundColor: '#f4f4f4',
+      width: "100vw",
+      display: "block",
+      overflow: "hidden",
+      backgroundColor: "#f4f4f4",
     },
   }),
 };
 
 const customTheme: Theme = extendTheme({
-  ...theme,
-  styles,
   components: {
     Button: {
       baseStyle: {
-        fontWeight: 'ligth',
+        fontWeight: "ligth",
       },
     },
   },
 });
 
-export default customTheme;
+export default { ...theme, styles, ...customTheme };

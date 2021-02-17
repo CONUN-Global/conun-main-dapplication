@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ipcRenderer } from 'electron';
-import { useMutation } from 'react-query';
+import React, { useState } from "react";
+import { ipcRenderer } from "electron";
+import { useMutation } from "react-query";
 import {
   Divider,
   HStack,
@@ -9,26 +9,26 @@ import {
   Stack,
   Text,
   useToast,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import Modal from '../../components/Modal';
-import Icon from '../../components/Chakra/Icon';
-import Button from '../../components/Button';
+import Modal from "../../components/Modal";
+import Icon from "../../components/Chakra/Icon";
+import Button from "../../components/Button";
 
-import useAppCurrentUser from '../../hooks/useAppCurrentUser';
-import useGetLocalConBalance from '../../hooks/useLocalConBalance';
-import useGetEthBalance from '../../hooks/useGetEthBalance';
-import useGetConBalance from '../../hooks/useGetConBalance';
-import useSignature from '../../hooks/useSignature';
+import useAppCurrentUser from "../../hooks/useAppCurrentUser";
+import useGetLocalConBalance from "../../hooks/useLocalConBalance";
+import useGetEthBalance from "../../hooks/useGetEthBalance";
+import useGetConBalance from "../../hooks/useGetConBalance";
+import useSignature from "../../hooks/useSignature";
 
-import getWalletPrivateKey from '../../helpers/getWalletPrivateKey';
-import getWalletAddress from '../../helpers/getWalletAddress';
-import getPrivateKey from '../../helpers/getPrivateKey';
+import getWalletPrivateKey from "../../helpers/getWalletPrivateKey";
+import getWalletAddress from "../../helpers/getWalletAddress";
+import getPrivateKey from "../../helpers/getPrivateKey";
 
-import instance from '../../axios/instance';
-import { FcnTypes, ORG_NAME } from '../../const';
+import instance from "../../axios/instance";
+import { FcnTypes, ORG_NAME } from "../../const";
 
-import { ReactComponent as Checkmark } from '../../../assets/icons/check.svg';
+import { ReactComponent as Checkmark } from "../../assets/icons/check.svg";
 
 type Values = {
   type: string;
@@ -55,7 +55,7 @@ type LocalTx = {
 } | null;
 
 const transferHelper = async (values: Values) => {
-  const data = await ipcRenderer.invoke('transfer', {
+  const data = await ipcRenderer.invoke("transfer", {
     ...values,
     from: getWalletAddress(),
     privateKey: getWalletPrivateKey(),
@@ -98,7 +98,7 @@ function ConfirmTransferModal({
   const { getSignature, loading } = useSignature();
 
   const sendTransaction = async () => {
-    if (values?.type !== 'COIN') {
+    if (values?.type !== "COIN") {
       const res = await transfer(values);
 
       if (res.success && values?.amount) {
@@ -109,17 +109,17 @@ function ConfirmTransferModal({
           },
         });
 
-        if (values.type === 'ETH') {
+        if (values.type === "ETH") {
           return refetchEth();
         }
         return refetchCon();
       }
 
       return toast({
-        title: 'An error occurred.',
+        title: "An error occurred.",
         description: String(res.error),
-        position: 'top',
-        status: 'error',
+        position: "top",
+        status: "error",
         duration: 9000,
         isClosable: true,
       });
@@ -146,19 +146,19 @@ function ConfirmTransferModal({
       }
 
       return toast({
-        title: 'An error occurred.',
-        description: 'Unable to complete transaction',
-        position: 'top',
-        status: 'error',
+        title: "An error occurred.",
+        description: "Unable to complete transaction",
+        position: "top",
+        status: "error",
         duration: 9000,
         isClosable: true,
       });
     } catch (error) {
       return toast({
-        title: 'An error occurred.',
-        description: 'Unable to complete transaction',
-        position: 'top',
-        status: 'error',
+        title: "An error occurred.",
+        description: "Unable to complete transaction",
+        position: "top",
+        status: "error",
         duration: 9000,
         isClosable: true,
       });
@@ -190,7 +190,7 @@ function ConfirmTransferModal({
             alignSelf="center"
           />
           <Text wordBreak="break-word">
-            Transaction ID:{' '}
+            Transaction ID:{" "}
             <Link
               href={`https://ropsten.etherscan.io/tx/${successModal?.TxID}`}
               isExternal
@@ -203,7 +203,7 @@ function ConfirmTransferModal({
           </Text>
           {successModal?.Timestamp?.seconds && (
             <Text>
-              Timestamp:{' '}
+              Timestamp:{" "}
               <strong>
                 {new Date(
                   successModal?.Timestamp?.seconds * 1000
@@ -236,31 +236,29 @@ function ConfirmTransferModal({
     >
       <Stack spacing="1rem" mb="2rem">
         <Text as="div" display="flex" justifyContent="space-between">
-          To:{' '}
+          To:{" "}
           <Text as="strong" wordBreak="break-word">
             {values?.to}
           </Text>
         </Text>
         <Divider />
         <Text as="div" display="flex" justifyContent="space-between">
-          Amount:{' '}
+          Amount:{" "}
           <strong>
             {values?.amount} {values.type}
           </strong>
         </Text>
 
-        {values.type !== 'COIN' && (
+        {values.type !== "COIN" && (
           <>
             <Divider />
             <Text as="div" display="flex" justifyContent="space-between">
-              Fee:{' '}
-              <strong>
-                {values?.fee?.toFixed(6)} {values.type}
-              </strong>
+              Fee:{" "}
+              <strong>{/* {values?.fee?.toFixed(6)} {values.type} */}</strong>
             </Text>
             <Divider />
             <Text as="div" display="flex" justifyContent="space-between">
-              Total:{' '}
+              Total:{" "}
               <strong>
                 {(+values?.amount + +values?.fee).toFixed(6)} {values.type}
               </strong>

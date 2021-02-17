@@ -1,17 +1,17 @@
-import React from 'react';
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 
-import { Center, Flex, HStack, Stack, Text } from '@chakra-ui/react';
+import { Flex, HStack, Stack, Text } from "@chakra-ui/react";
 
-import CustomInput from '../../components/Form/Chakra/Input';
-import Form from '../../components/Chakra/Form';
-import Link from '../../components/Chakra/Link';
-import Icon from '../../components/Chakra/Icon';
-import MotionWrapper from '../../components/MotionWrapper';
-import Button from '../../components/Button';
+import CustomInput from "../../components/Form/Chakra/Input";
+import Form from "../../components/Chakra/Form";
+import Link from "../../components/Chakra/Link";
+import Icon from "../../components/Chakra/Icon";
+import MotionWrapper from "../../components/MotionWrapper";
+import Button from "../../components/Button";
 
-import { ReactComponent as Wallet } from '../../../assets/icons/wallet.svg';
-import { ReactComponent as FileShare } from '../../../assets/icons/file-sharing.svg';
+import { ReactComponent as Wallet } from "../../assets/icons/wallet.svg";
+import { ReactComponent as FileShare } from "../../assets/icons/file-sharing.svg";
 
 type FormData = {
   search: string;
@@ -42,7 +42,7 @@ function Home() {
               formRef={register({
                 required: {
                   value: true,
-                  message: 'Please provide a search value',
+                  message: "Please provide a search value",
                 },
               })}
               error={errors.search}

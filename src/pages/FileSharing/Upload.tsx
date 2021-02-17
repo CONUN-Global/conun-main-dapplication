@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { ipcRenderer } from 'electron';
-import { useMutation } from 'react-query';
+import React, { useState } from "react";
+import { ipcRenderer } from "electron";
+import { useMutation } from "react-query";
 import {
   Button,
   HStack,
@@ -8,20 +8,20 @@ import {
   Stack,
   Text,
   useToast,
-  Image,
-} from '@chakra-ui/react';
-import { AnimatePresence, motion } from 'framer-motion';
+} from "@chakra-ui/react";
+import { AnimatePresence, motion } from "framer-motion";
 
-import Dropzone from '../../components/DropFile';
-import UploadedFile from './UploadedFile';
+import Dropzone from "../../components/DropFile";
+import UploadedFile from "./UploadedFile";
+import Icon from "../../components/Chakra/Icon";
 
-import close from '../../../assets/icons/close.svg';
+import { ReactComponent as Close } from "../../assets/icons/close.svg";
 
 // import styles from './Home.module.css';
 
 const uploadFiles = async (files: any) => {
   const data = await ipcRenderer.invoke(
-    'upload-file',
+    "upload-file",
     files.map((file: { path: string; name: string }) => ({
       path: file.path,
       name: file.name,
@@ -44,13 +44,13 @@ function Upload({ onClose }: UploadProps) {
 
   const handleUpload = async (files: any) => {
     const filteredFiles = files.filter(
-      (f) => !uploadedfiles.map((u) => u.name).includes(f.name)
+      (f: any) => !uploadedfiles.map((u) => u.name).includes(f.name)
     );
 
     if (!filteredFiles.length) {
       toast({
-        title: 'No new files added',
-        status: 'error',
+        title: "No new files added",
+        status: "error",
         duration: 500,
       });
     }
@@ -80,7 +80,7 @@ function Upload({ onClose }: UploadProps) {
           right="2%"
           size="sm"
         >
-          <Image src={close} alt="close" width={25} />
+          <Icon icon={Close} width={25} />
         </Button>
         <Text fontSize="1.8rem" color="white" textAlign="center">
           Upload your files

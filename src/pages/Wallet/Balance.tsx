@@ -1,16 +1,16 @@
-import React from 'react';
-import { Spinner, Stack, Text } from '@chakra-ui/react';
+import React from "react";
+import { Spinner, Stack, Text } from "@chakra-ui/react";
 
-import Box from '../../components/Box';
-import Icon from '../../components/Chakra/Icon';
-import FormattedBalance from '../../components/FormattedBalance';
-import Button from '../../components/Button';
+import Box from "../../components/Box";
+import Icon from "../../components/Chakra/Icon";
+import FormattedBalance from "../../components/FormattedBalance";
+import Button from "../../components/Button";
 
-import useGetConBalance from '../../hooks/useGetConBalance';
-import useGetEthBalance from '../../hooks/useGetEthBalance';
-import useGetLocalConBalance from '../../hooks/useLocalConBalance';
+import useGetConBalance from "../../hooks/useGetConBalance";
+import useGetEthBalance from "../../hooks/useGetEthBalance";
+import useGetLocalConBalance from "../../hooks/useLocalConBalance";
 
-import { ReactComponent as Refresh } from '../../../assets/icons/refresh.svg';
+import { ReactComponent as Refresh } from "../../assets/icons/refresh.svg";
 
 function Balance() {
   const { balance, refetch: refetchEth, isFetching } = useGetEthBalance();
@@ -83,9 +83,9 @@ function Balance() {
           padding={0}
           alignSelf="flex-end"
           minWidth="auto"
-          _active={{ bgColor: 'transparent' }}
-          _focus={{ border: 'none' }}
-          _hover={{ bgColor: 'transparent' }}
+          _active={{ bgColor: "transparent" }}
+          _focus={{ border: "none" }}
+          _hover={{ bgColor: "transparent" }}
           width="auto"
           onClick={async () => {
             await refetch();

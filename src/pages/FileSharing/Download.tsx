@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState } from "react";
 import {
   Button,
   HStack,
@@ -6,17 +6,18 @@ import {
   Stack,
   Text,
   Link,
-  Image,
   useToast,
-} from '@chakra-ui/react';
-import { motion } from 'framer-motion';
-import { ipcRenderer } from 'electron';
-import { useMutation } from 'react-query';
+} from "@chakra-ui/react";
+import { motion } from "framer-motion";
+import { ipcRenderer } from "electron";
+import { useMutation } from "react-query";
 
-import close from '../../../assets/icons/close.svg';
+import Icon from "../../components/Chakra/Icon";
+
+import { ReactComponent as Close } from "../../assets/icons/close.svg";
 
 const downloadFile = async (hash: string) => {
-  const data = await ipcRenderer.invoke('download-file', hash);
+  const data = await ipcRenderer.invoke("download-file", hash);
 
   return data;
 };
@@ -26,11 +27,11 @@ interface DownloadProps {
 }
 
 function Download({ onClose }: DownloadProps) {
-  const [hash, setHash] = useState('');
+  const [hash, setHash] = useState("");
 
   const { mutateAsync: download, isLoading } = useMutation(downloadFile);
 
-  const downloadRef = useRef<HTMLElement | null>(null);
+  const downloadRef = useRef<any>(null);
 
   const toast = useToast();
 
@@ -42,18 +43,18 @@ function Download({ onClose }: DownloadProps) {
       const newFile = new Blob(res.file);
 
       downloadRef.current.href = URL.createObjectURL(newFile);
-      downloadRef.current.download = 'file';
+      downloadRef.current.download = "file";
       downloadRef.current.click();
 
       toast({
-        title: 'File downloaded',
-        status: 'success',
+        title: "File downloaded",
+        status: "success",
         duration: 500,
       });
     } else {
       toast({
-        title: 'An error happened',
-        status: 'error',
+        title: "An error happened",
+        status: "error",
         duration: 500,
       });
     }
@@ -86,7 +87,7 @@ function Download({ onClose }: DownloadProps) {
           right="2%"
           size="sm"
         >
-          <Image src={close} alt="close" width={25} />
+          <Icon icon={Close} width={25} />
         </Button>
         <Text fontSize="1.8rem" color="white" textAlign="center">
           Download files

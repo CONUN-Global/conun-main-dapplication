@@ -1,5 +1,4 @@
-import React from 'react';
-import { ipcRenderer } from 'electron';
+import React from "react";
 import {
   Box,
   Button as ChakraButton,
@@ -11,12 +10,12 @@ import {
   PopoverTrigger,
   Stack,
   Text,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import Button from '../Button';
+import Button from "../Button";
 
-import useCurrentUser from '../../hooks/useCurrentUser';
-import { useAppContext } from '../AppContext';
+import useCurrentUser from "../../hooks/useCurrentUser";
+import { useAppContext } from "../AppContext";
 
 function UserBox() {
   const { currentUser } = useCurrentUser();
@@ -24,7 +23,6 @@ function UserBox() {
 
   const handleLogout = async () => {
     await onLogout();
-    await ipcRenderer.invoke('logout');
   };
 
   return (

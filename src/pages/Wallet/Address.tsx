@@ -1,14 +1,14 @@
-import React from 'react';
-import { Stack, Text, useToast } from '@chakra-ui/react';
-import { clipboard } from 'electron';
+import React from "react";
+import { Stack, Text, useToast } from "@chakra-ui/react";
+import { clipboard } from "electron";
 
-import Box from '../../components/Box';
-import Icon from '../../components/Chakra/Icon';
-import Button from '../../components/Button';
+import Box from "../../components/Box";
+import Icon from "../../components/Chakra/Icon";
+import Button from "../../components/Button";
 
-import useAppCurrentUser from '../../hooks/useAppCurrentUser';
+import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 
-import { ReactComponent as Copy } from '../../../assets/icons/copy.svg';
+import { ReactComponent as Copy } from "../../assets/icons/copy.svg";
 
 function Address() {
   const { currentUser } = useAppCurrentUser();
@@ -30,20 +30,20 @@ function Address() {
         <Button
           pure
           bgColor="transparent"
-          _hover={{ bgColor: 'transparent' }}
-          _active={{ bgColor: 'transparent' }}
-          _focus={{ border: 'none' }}
+          _hover={{ bgColor: "transparent" }}
+          _active={{ bgColor: "transparent" }}
+          _focus={{ border: "none" }}
           width="auto"
           padding={0}
           minWidth="auto"
           onClick={() => {
             clipboard.writeText(currentUser.wallet_address);
             toast({
-              title: 'Wallet address copied',
-              status: 'success',
+              title: "Wallet address copied",
+              status: "success",
               duration: 5000,
               isClosable: true,
-              position: 'top',
+              position: "top",
             });
           }}
         >

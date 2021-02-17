@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import {
   InputGroup,
   InputLeftElement,
@@ -7,9 +7,10 @@ import {
   Container,
   Text,
   FormLabel,
-} from '@chakra-ui/react';
+} from "@chakra-ui/react";
 
-import { FieldError } from 'react-hook-form';
+import { FieldError } from "react-hook-form";
+import Icon from "../Chakra/Icon";
 
 interface CustomInputProps extends InputProps {
   label?: string;
@@ -18,7 +19,6 @@ interface CustomInputProps extends InputProps {
 }
 
 function Input({ icon, error, label, ...props }: CustomInputProps) {
-  const Icon = icon;
   return (
     <Container width="100%" padding="0" maxWidth="auto" position="relative">
       {label && (
@@ -29,7 +29,7 @@ function Input({ icon, error, label, ...props }: CustomInputProps) {
       <InputGroup>
         {icon && (
           <InputLeftElement pointerEvents="none">
-            <Icon color="gray.300" />
+            <Icon icon={icon} color="gray.300" />
           </InputLeftElement>
         )}
         <ChakraInput {...props} />

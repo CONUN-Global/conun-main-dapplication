@@ -1,17 +1,16 @@
-import { BrowserWindow } from 'electron';
-import jwtDecode from 'jwt-decode';
-import axios from 'axios';
-import url from 'url';
-import keytar from 'keytar';
-import os from 'os';
+import jwtDecode from "jwt-decode";
+import axios from "axios";
+import url from "url";
+import keytar from "keytar";
+import os from "os";
 
-import envVariables from '../../env-variables.json';
+import envVariables from "../../env-variables.json";
 
 const { auth0Domain, clientId } = envVariables;
 
-const redirectUri = 'http://localhost/callback';
+const redirectUri = "http://localhost/callback";
 
-const keytarService = 'electron-openid-oauth';
+const keytarService = "electron-openid-oauth";
 const keytarAccount = os.userInfo().username;
 
 let accessToken: string | null = null;
@@ -38,7 +37,7 @@ async function logout() {
 }
 
 function getLogOutUrl() {
-  return `https://${auth0Domain}/v2/logout`;
+  return `https://${auth0Domain}/v2/logout?federated`;
 }
 
 async function refreshTokens() {
@@ -49,11 +48,11 @@ async function refreshTokens() {
 
   if (newRefreshToken) {
     const refreshOptions = {
-      method: 'POST',
+      method: "POST",
       url: `https://${auth0Domain}/oauth/token`,
-      headers: { 'content-type': 'application/json' },
+      headers: { "content-type": "application/json" },
       data: {
-        grant_type: 'refresh_token',
+        grant_type: "refresh_token",
         client_id: clientId,
         refresh_token: newRefreshToken,
       },
@@ -70,21 +69,8 @@ async function refreshTokens() {
       throw error;
     }
   } else {
-    throw new Error('No available refresh token.');
+    throw new Error("No available refresh token.");
   }
-}
-
-function createLogoutWindow() {
-  const logoutWindow = new BrowserWindow({
-    show: false,
-  });
-
-  logoutWindow.loadURL(getLogOutUrl());
-
-  logoutWindow.on('ready-to-show', async () => {
-    logoutWindow.close();
-    await logout();
-  });
 }
 
 async function loadTokens(callbackURL: string) {
@@ -92,17 +78,17 @@ async function loadTokens(callbackURL: string) {
   const { query } = urlParts;
 
   const exchangeOptions = {
-    grant_type: 'authorization_code',
+    grant_type: "authorization_code",
     client_id: clientId,
     code: query.code,
     redirect_uri: redirectUri,
   };
 
   const options = {
-    method: 'POST',
+    method: "POST",
     url: `https://${auth0Domain}/oauth/token`,
     headers: {
-      'content-type': 'application/json',
+      "content-type": "application/json",
     },
     data: JSON.stringify(exchangeOptions),
   };
@@ -124,7 +110,6 @@ async function loadTokens(callbackURL: string) {
 }
 
 export {
-  createLogoutWindow,
   getAccessToken,
   getAuthenticationURL,
   getLogOutUrl,

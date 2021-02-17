@@ -1,11 +1,11 @@
-import React from 'react';
-import { HStack } from '@chakra-ui/react';
+import React from "react";
+import { HStack } from "@chakra-ui/react";
 
-import UserBox from '../UserBox';
-import Link from '../Chakra/Link';
-import Icon from '../Chakra/Icon';
+import UserBox from "../UserBox";
+import Link from "../Chakra/Link";
+import Icon from "../Chakra/Icon";
 
-import { ReactComponent as Menu } from '../../../assets/icons/menu.svg';
+import { ReactComponent as Menu } from "../../assets/icons/menu.svg";
 
 function Navbar() {
   return (
