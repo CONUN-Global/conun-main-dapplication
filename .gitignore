@@ -86,11 +86,15 @@ typings/
 .webpack/
 
 # Electron-Forge
-out/
+out
 
-dist/
+dist
 
 parcel-build/
 parcel-dist/
 
 env-variables.json
+
+electron/const/index.ts
+
+src/const/index.ts
