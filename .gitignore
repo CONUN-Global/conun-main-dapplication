@@ -95,6 +95,5 @@ parcel-dist/
 
 env-variables.json
 
-electron/const/index.ts
+const/
 
-src/const/index.ts
