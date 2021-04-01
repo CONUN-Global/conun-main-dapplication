@@ -90,13 +90,17 @@ function Transaction() {
       ? +values.gasPrice
       : data?.payload?.[values?.fee]?.gas_price;
 
-    api.openTransferWindow({
-      ...values,
-      fee,
-      gasLimit,
-      gasPrice,
-      token: token.token,
-    });
+    try {
+      api.openTransferWindow({
+        ...values,
+        fee,
+        gasLimit,
+        gasPrice,
+        token: token.token,
+      });
+    } catch (error) {
+      console.log(`error`, error);
+    }
   };
 
   return (

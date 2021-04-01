@@ -13,8 +13,10 @@ import { TOKEN_CARDS } from "../../const";
 import styles from "./Home.module.scss";
 
 import "pure-react-carousel/dist/react-carousel.es.css";
+import { useAppContext } from "../../components/AppContext";
 
 function HomeWrapper() {
+  const { handleSettingsSidebar } = useAppContext();
   return (
     <Layout>
       <CarouselProvider
@@ -28,7 +30,10 @@ function HomeWrapper() {
           <div className={styles.NetworkName}>
             Conun <br /> Test Network
           </div>
-          <Settings className={styles.Settings} />
+          <Settings
+            onClick={handleSettingsSidebar}
+            className={styles.Settings}
+          />
         </div>
         <Home />
         <QrCodeSidebar />

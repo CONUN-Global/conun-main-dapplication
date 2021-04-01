@@ -1,8 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 
-import TopBar from "./TopBar";
 import Footer from "./Footer";
+import SettingsSidebar from "./SettingsSidebar";
 
 import { useAppContext } from "../AppContext";
 
@@ -13,10 +13,11 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  const { isAuthenticated } = useAppContext();
+  const { isAuthenticated, isSettingsOpen } = useAppContext();
 
   return (
     <>
+      {isSettingsOpen && <SettingsSidebar />}
       <div
         className={classNames(styles.Layout, {
           [styles.isAuthenticated]: isAuthenticated,

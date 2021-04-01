@@ -4,6 +4,7 @@ import React, {
   useCallback,
   useContext,
   useMemo,
+  useState,
 } from "react";
 
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
@@ -38,6 +39,8 @@ type State = {
   walletAddress: string;
   walletPrivateKey: string;
   keyStore: string;
+  isSettingsOpen: boolean;
+  handleSettingsSidebar: () => void;
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -53,6 +56,7 @@ const setAuthHeaderToken = (token: string) => {
 
 function AppProvider({ children }: AppProviderProps) {
   const { currentUser, refetch } = useAppCurrentUser();
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
   const { isAlreadyUser } = useUserCheck();
 
@@ -79,6 +83,8 @@ function AppProvider({ children }: AppProviderProps) {
     []
   );
 
+  const handleSettingsSidebar = () => setIsSettingsOpen((prev) => !prev);
+
   const value = useMemo(
     () => ({
       isAuthenticated: !!currentUser,
@@ -89,6 +95,8 @@ function AppProvider({ children }: AppProviderProps) {
       walletPrivateKey: getWalletPrivateKey(),
       handleWalletCreation,
       keyStore: getKeyStore(),
+      isSettingsOpen,
+      handleSettingsSidebar,
     }),
     [
       handleLogin,
@@ -96,6 +104,8 @@ function AppProvider({ children }: AppProviderProps) {
       handleWalletCreation,
       currentUser,
       isAlreadyUser,
+      isSettingsOpen,
+      handleSettingsSidebar,
     ]
   );
 

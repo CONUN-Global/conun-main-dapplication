@@ -1,0 +1,48 @@
+.SettingsSidebar {
+  position: absolute;
+  height: 100vh;
+  background-color: #fff;
+  z-index: 1001;
+  right: 0;
+
+  & .TopButtons {
+    display: flex;
+    padding: 0 15px 3px 15px;
+    border-bottom: 1px solid #e9ebef;
+
+    justify-content: space-around;
+    & .TopButton {
+      font-size: 11px;
+
+      &:hover {
+        color: var(--ui-red);
+      }
+    }
+  }
+
+  & .LogoContainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px 35px;
+  }
+
+  & .Tabs {
+    display: flex;
+    flex-direction: column;
+
+    & .Tab {
+      color: var(--primary-color);
+      display: flex;
+      padding: 15px 40px;
+      font-size: 14px;
+      text-decoration: none;
+      border-bottom: 1px solid #e9ebef;
+
+      &:hover {
+        background-color: var(--primary-color);
+        color: var(--secondary-color);
+      }
+    }
+  }
+}

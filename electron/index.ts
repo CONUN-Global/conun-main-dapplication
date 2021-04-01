@@ -141,42 +141,45 @@ ipcMain.handle("logout", async () => {
 });
 
 ipcMain.handle("open-transfer-window", async (_, args) => {
-  transferWindow = new BrowserWindow({
-    width: 250,
-    height: 250,
-    frame: false,
-    webPreferences: {
-      nodeIntegration: false,
-      preload: path.resolve(__dirname, "preload.js"),
-    },
-  });
+  if (!transferWindow) {
+    transferWindow = new BrowserWindow({
+      width: 250,
+      height: 250,
+      frame: false,
+      webPreferences: {
+        nodeIntegration: false,
+        preload: path.resolve(__dirname, "preload.js"),
+      },
+    });
 
-  transferWindow.removeMenu();
-  transferWindow.setResizable(false);
-  transferWindow.setAlwaysOnTop(true, "normal");
+    transferWindow.removeMenu();
+    transferWindow.setResizable(false);
+    transferWindow.setAlwaysOnTop(true, "normal");
 
-  if (isDev) {
-    await transferWindow.loadURL("http://localhost:1234/#transfer");
-    transferWindow.webContents.openDevTools();
-  } else {
-    await transferWindow.loadURL(
-      `file://${path.join(__dirname, "../parcel-build/index.html#transfer")}`
-    );
+    if (isDev) {
+      await transferWindow.loadURL("http://localhost:1234/#transfer");
+      transferWindow.webContents.openDevTools();
+    } else {
+      await transferWindow.loadURL(
+        `file://${path.join(__dirname, "../parcel-build/index.html#transfer")}`
+      );
+    }
+
+    if (transferWindow) {
+      transferWindow.webContents.send("send-transfer-data", args);
+    }
+
+    transferWindow.webContents.on("new-window", (event, url) => {
+      event.preventDefault();
+      shell.openExternal(url);
+    });
   }
-
-  if (transferWindow) {
-    transferWindow.webContents.send("send-transfer-data", args);
-  }
-
-  transferWindow.webContents.on("new-window", (event, url) => {
-    event.preventDefault();
-    shell.openExternal(url);
-  });
 });
 
 ipcMain.handle("close-transfer-window", () => {
   if (transferWindow) {
     transferWindow.close();
+    transferWindow = null;
   }
 });
 

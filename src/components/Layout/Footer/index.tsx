@@ -1,9 +1,9 @@
 import React from "react";
 import classNames from "classnames";
 
-import { useAppContext } from "../AppContext";
+import { useAppContext } from "../../AppContext";
 
-import History from "../../assets/icons/history.svg";
+import History from "../../../assets/icons/history.svg";
 
 import styles from "./Footer.module.scss";
 
