@@ -1,0 +1,42 @@
+.Footer {
+  height: 32px;
+  display: flex;
+  border-top: 1px solid #e9ebee;
+  align-items: center;
+  width: 100vw;
+  position: relative;
+
+  &.isAuthenticated {
+    width: calc(100vw - 24px);
+  }
+}
+
+.Versioning {
+  justify-self: flex-start;
+
+  & .Version {
+    font-size: 10px;
+    padding: 0 1rem;
+  }
+
+  & .Updates {
+    font-size: 10px;
+    padding: 0 1rem;
+    color: #8bbea9;
+  }
+}
+
+.HistoryButton {
+  background: transparent;
+  border: none;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.HistoryIcon {
+  fill: #8e9196;
+  width: 20px;
+  height: 20px;
+}

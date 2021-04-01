@@ -1,10 +1,14 @@
-import { useMutation } from 'react-query';
+import { useMutation } from "react-query";
 
-import instance from '../axios/instance';
+import instance from "../axios/instance";
 
 function useLogin() {
-  const { mutateAsync: login, isLoading } = useMutation((loginData: any) =>
-    instance.post('/auth', loginData)
+  const { mutateAsync: login, isLoading } = useMutation(
+    async (loginData: any) => {
+      const { data } = await instance.post("/auth", loginData);
+
+      return data;
+    }
   );
   return { login, loading: isLoading };
 }

@@ -1,7 +1,8 @@
-import { ipcRenderer } from 'electron';
-import { useState } from 'react';
+import { useState } from "react";
 
-import { PRIVATE_KEY_TOKEN, PUBLIC_KEY_TOKEN } from '../const';
+const { api } = window;
+
+import { PRIVATE_KEY_TOKEN, PUBLIC_KEY_TOKEN } from "../const";
 
 function setKeys(privateKey: string, publicKey: string) {
   localStorage.setItem(PUBLIC_KEY_TOKEN, publicKey);
@@ -14,12 +15,12 @@ function useKeyGenerator() {
   const generate = async () => {
     try {
       setIsLoading(true);
-      const keys = await ipcRenderer.invoke('generate-api-private-key');
+      const keys = await api.generateApiPrivateKey();
       setIsLoading(false);
       setKeys(keys?.privateKey, keys?.publicKey);
       return keys;
     } catch (error) {
-      // todo: handle error
+      // TODO: handle error
       return error;
     }
   };

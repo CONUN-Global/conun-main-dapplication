@@ -1,0 +1,33 @@
+.BackButton {
+  width: 15px;
+  height: 15px;
+  position: absolute;
+  top: 35px;
+  left: 22px;
+
+  & .Arrow {
+    height: 100%;
+    width: 100%;
+    transform: rotate(180deg);
+  }
+}
+
+.Title {
+  font-size: 20px;
+  margin-top: 110px;
+  margin-bottom: 15px;
+}
+
+.Subtitle {
+  font-size: 12px;
+  margin-bottom: 90px;
+  margin-right: 35px;
+}
+
+.Password {
+  margin-bottom: 26px;
+}
+
+.ConfirmPassword {
+  margin-bottom: 38px;
+}

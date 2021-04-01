@@ -1,44 +1,43 @@
-import React from 'react';
-import { Stack, Text } from '@chakra-ui/react';
+import React from "react";
 
-import Box from '../../../components/Box';
-import Link from '../../../components/Chakra/Link';
-import MotionWrapper from '../../../components/MotionWrapper';
-import Button from '../../../components/Button';
+import Button from "../../../components/Button";
 
-import { introVariants } from '../../../const';
+import Arrow from "../../../assets/icons/arrow.svg";
 
-function Introduction() {
+import { StepProps } from "..";
+
+import styles from "./Introduction.module.scss";
+
+function Introduction({ setCurrentStep }: StepProps) {
   return (
-    <MotionWrapper
-      variants={introVariants}
-      initial="hidden"
-      animate="visible"
-      exit="exit"
-      transition={{ duration: 1, type: 'spring' }}
-    >
-      <Box elevation={2} padding="2rem">
-        <Stack spacing="2rem">
-          <Text textAlign="center" fontSize="1.5rem">
-            CONUN DISTRIBUTED SUPERCOMPUTING PLATFORM
-          </Text>
-          <Text textAlign="justify">
-            CONUN&apos;s Distributed Computing provides a universal computing
-            network architecture platform that enables distributed processing of
-            personal computers connected to the Internet based on desktop grid
-            computing technology. CONUN is operated by an agreement between
-            distributed computing resource share participants and users and
-            supports an open and horizontal profit ecosystem for all
-            participants.
-          </Text>
-          <Link to="/terms">
-            <Button colorScheme="yellow" width="100%">
-              Next
-            </Button>
-          </Link>
-        </Stack>
-      </Box>
-    </MotionWrapper>
+    <>
+      <Button
+        type="button"
+        onClick={() => setCurrentStep("welcome")}
+        className={styles.BackButton}
+        noStyle
+      >
+        <Arrow className={styles.Arrow} />
+      </Button>
+      <div className={styles.Title}>
+        CONUN <br /> Supercomputer <br /> Distributing platform
+      </div>
+      <div className={styles.Subtitle}>
+        CONUN’s Distributed Computing provides a universal comuting network
+        architecture platform that enables distributed processing of personal
+        computers connected to the internet based on desktop grid computing
+      </div>
+      <div className={styles.NextButtonContainer}>
+        <span className={styles.Text}>Next</span>
+        <Button
+          type="button"
+          onClick={() => setCurrentStep("termsAndConditions")}
+          className={styles.ArrowButton}
+        >
+          <Arrow className={styles.Arrow} />
+        </Button>
+      </div>
+    </>
   );
 }
 

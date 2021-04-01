@@ -1,12 +1,12 @@
-import axios from 'axios';
+import axios from "axios";
 
-import getAuthHeader from '../helpers/getAuthHeader';
+import getAuthHeader from "../helpers/getAuthHeader";
 
-import { serverUrl } from '../const';
+import { serverUrl } from "../const";
 
 const instance = axios.create({
   baseURL: serverUrl,
-  timeout: 10000,
+  timeout: 60000,
 });
 
 instance.interceptors.request.use(
@@ -14,9 +14,9 @@ instance.interceptors.request.use(
     const token = getAuthHeader();
 
     if (token) {
-      config.headers['x-auth-token'] = token;
+      config.headers["x-auth-token"] = token;
     } else {
-      delete instance.defaults.headers['x-auth-token'];
+      delete instance.defaults.headers["x-auth-token"];
     }
     return config;
   },

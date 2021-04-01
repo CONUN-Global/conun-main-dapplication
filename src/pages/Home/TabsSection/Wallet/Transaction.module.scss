@@ -1,0 +1,71 @@
+.Transaction {
+  display: flex;
+  flex-direction: column;
+}
+
+.Title {
+  margin-bottom: 18px;
+  font-size: 12px;
+}
+
+.Input {
+  margin-bottom: 16px;
+}
+
+.SpeedPicker {
+  display: flex;
+  justify-content: space-between;
+  border-radius: 12px;
+  border: 0.8px solid #dadada;
+  margin-bottom: 10px;
+
+  & .Speed {
+    border: none;
+    background: transparent;
+    display: flex;
+    flex-direction: column;
+    padding: 6px 10px;
+    cursor: pointer;
+    overflow: hidden;
+
+    &:focus {
+      outline: none;
+    }
+
+    &.active {
+      border-radius: 12px;
+      border: 1px solid #8bbea9;
+    }
+
+    & .SpeedLabel {
+      font-size: 10px;
+    }
+
+    & .SpeedValue {
+      color: #5e758a;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      width: 100%;
+    }
+  }
+}
+
+.AdvancedOptions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 10px;
+
+  & .GasInput {
+    width: 80px;
+  }
+}
+
+.Switch {
+  border-radius: 8px;
+  margin-bottom: 36px;
+}
+
+.ConfirmButton {
+}

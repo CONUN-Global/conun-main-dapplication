@@ -12,22 +12,18 @@
     "plugin:import/errors",
     "plugin:import/warnings"
   ],
-  "parser": "@typescript-eslint/parser",
   "plugins": ["react", "@typescript-eslint"],
-  "rules": {
-    "react/prop-types": "off",
-    "@typescript-eslint/explicit-function-return-type": "off",
-    "@typescript-eslint/explicit-module-boundary-types": "off",
-    "simple-import-sort/imports": "off"
-  },
+  "parser": "@typescript-eslint/parser",
   "settings": {
-    "react": {
-      "version": "detect"
-    },
     "import/resolver": {
       "node": {
         "extensions": [".js", ".jsx", ".ts", ".tsx"]
       }
     }
+  },
+  "rules": {
+    "react/prop-types": "off",
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/camelcase": "off"
   }
 }

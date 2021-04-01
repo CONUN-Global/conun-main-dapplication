@@ -1,15 +1,19 @@
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
 
-import instance from '../axios/instance';
-import getAuthHeader from '../helpers/getAuthHeader';
+import instance from "../axios/instance";
+import getAuthHeader from "../helpers/getAuthHeader";
 
-const getCurrentUser = () => instance.get('/admin/me');
+const getCurrentUser = async () => {
+  const { data } = await instance.get("/users/me");
+  return data;
+};
 
 function useAppCurrentUser() {
-  const { data, isLoading, refetch } = useQuery('currentUser', getCurrentUser, {
+  const { data, isLoading, refetch } = useQuery("currentUser", getCurrentUser, {
     enabled: !!getAuthHeader(),
   });
-  return { currentUser: data?.data, isLoading, refetch };
+
+  return { currentUser: data?.payload ?? null, isLoading, refetch };
 }
 
 export default useAppCurrentUser;

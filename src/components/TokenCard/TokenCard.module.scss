@@ -1,0 +1,77 @@
+.CardContainer {
+  display: flex;
+  justify-content: center;
+}
+
+.Card {
+  width: 351px;
+  height: 209px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  background-blend-mode: color;
+  mix-blend-mode: normal;
+  box-shadow: 0px 4px 5px rgba(0, 0, 0, 0.2);
+  border-radius: 15px;
+  cursor: pointer;
+  width: 90%;
+
+  & * {
+    color: #ffffff;
+  }
+
+  & > * {
+    margin: 0 30px;
+  }
+
+  &.con {
+    background: linear-gradient(244.5deg, #2b81e6 12.9%, #22b4d5 85.63%);
+  }
+
+  &.eth {
+    background: linear-gradient(244.5deg, #5994d9 12.9%, #d2d2d2 85.63%);
+  }
+
+  &.conx {
+    background: linear-gradient(244.5deg, #1f7479 12.9%, #7da0a3 85.63%);
+  }
+
+  & .Network {
+    text-transform: uppercase;
+    font-size: 12px;
+  }
+
+  & .BalanceContainer {
+    display: flex;
+    align-items: center;
+
+    & .Balance {
+      font-size: 30px;
+      margin-right: 8px;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
+    & .TokenName {
+      text-transform: uppercase;
+    }
+  }
+
+  & .WalletAddressContainer {
+    & .WalletAddress {
+      font-size: 13px;
+      text-transform: uppercase;
+    }
+
+    & .WalletLabel {
+      text-transform: uppercase;
+      font-size: 10px;
+    }
+  }
+
+  & .UserName {
+    font-size: 10px;
+  }
+}

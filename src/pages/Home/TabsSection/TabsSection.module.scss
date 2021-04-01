@@ -1,0 +1,28 @@
+.TabsSection {
+  width: 100%;
+}
+
+.Tabs {
+  display: flex;
+  border-bottom: 1px solid #e9ebee;
+  width: 100%;
+  padding: 0 1.5rem 0.5rem 1.5rem;
+  & :not(:first-child) {
+    margin-left: 1rem;
+  }
+}
+
+.Tab {
+  text-transform: uppercase;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+
+  &.active {
+    color: #63abee;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}

@@ -5,7 +5,6 @@ import React, {
   useContext,
   useMemo,
 } from "react";
-import { ipcRenderer } from "electron";
 
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 import useUserCheck from "../../hooks/useUserCheck";
@@ -22,6 +21,8 @@ import getKeyStore, { setKeyStore } from "../../helpers/getKeyStore";
 import { cache } from "../../react-query/config";
 import { AUTH_TOKEN } from "../../const";
 
+const { api } = window;
+
 type WalletData = {
   address: string;
   keyStore?: string;
@@ -29,7 +30,7 @@ type WalletData = {
 };
 
 type State = {
-  onLogin: (token: string, wallet: string) => void;
+  onLogin: (token: string) => void;
   onLogout: () => void;
   handleWalletCreation: (data: WalletData) => void;
   isAuthenticated: boolean;
@@ -53,18 +54,17 @@ const setAuthHeaderToken = (token: string) => {
 function AppProvider({ children }: AppProviderProps) {
   const { currentUser, refetch } = useAppCurrentUser();
 
-  const { isUser } = useUserCheck();
+  const { isAlreadyUser } = useUserCheck();
 
   const handleLogout = useCallback(async () => {
     removeAllTokens();
     cache.clear();
-    await ipcRenderer.invoke("logout");
+    await api.logout();
   }, []);
 
-  const handleLogin: State["onLogin"] = useCallback((token, wallet) => {
+  const handleLogin: State["onLogin"] = useCallback((token) => {
     saveToken(token);
     setAuthHeaderToken(token);
-    setWalletAddress(wallet);
     refetch();
   }, []);
 
@@ -82,7 +82,7 @@ function AppProvider({ children }: AppProviderProps) {
   const value = useMemo(
     () => ({
       isAuthenticated: !!currentUser,
-      isAlreadyUser: isUser,
+      isAlreadyUser,
       onLogin: handleLogin,
       onLogout: handleLogout,
       walletAddress: getWalletAddress(),
@@ -90,7 +90,13 @@ function AppProvider({ children }: AppProviderProps) {
       handleWalletCreation,
       keyStore: getKeyStore(),
     }),
-    [handleLogin, handleLogout, handleWalletCreation, currentUser, isUser]
+    [
+      handleLogin,
+      handleLogout,
+      handleWalletCreation,
+      currentUser,
+      isAlreadyUser,
+    ]
   );
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;

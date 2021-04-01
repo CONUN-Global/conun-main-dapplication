@@ -88,6 +88,9 @@ typings/
 # Electron-Forge
 out/
 
+dist/
 
-# Variables
+parcel-build/
+parcel-dist/
+
 env-variables.json

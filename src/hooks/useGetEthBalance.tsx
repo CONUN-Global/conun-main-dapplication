@@ -1,21 +1,21 @@
-import { ipcRenderer } from 'electron';
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
+import instance from "../axios/instance";
 
-import useAppCurrentUser from './useAppCurrentUser';
-
-const getEthBalance = async (address: string) => {
-  const data = await ipcRenderer.invoke('get-eth-balance', { address });
-  return data;
-};
+import useAppCurrentUser from "./useAppCurrentUser";
 
 function useGetEthBalance() {
   const { currentUser } = useAppCurrentUser();
 
   const { data, isLoading, refetch, isFetching } = useQuery(
-    'get-eth-balance',
-    () => getEthBalance(currentUser.wallet_address),
+    "get-eth-balance",
+    async () => {
+      const { data } = await instance(
+        `/ether/getBalanceOfEth?walletAddress=${currentUser?.walletAddress}`
+      );
+      return data;
+    },
     {
-      enabled: !!currentUser.wallet_address,
+      enabled: !!currentUser.walletAddress,
     }
   );
 

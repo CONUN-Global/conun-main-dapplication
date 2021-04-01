@@ -1,0 +1,38 @@
+.InputWrapper {
+  display: inline-block;
+  background: #ffffff;
+  border: 0.8px solid #e9ebee;
+  box-sizing: border-box;
+  border-radius: 5px;
+  height: 45px;
+  padding: 3px 10px;
+  width: 100%;
+  position: relative;
+
+  &.round {
+    border-radius: 20px;
+  }
+
+  & .Input {
+    outline: none;
+    border: none;
+    display: block;
+    line-height: 1.5em;
+    width: 100%;
+
+    &:focus {
+      outline: none;
+    }
+
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      margin: 0;
+    }
+  }
+
+  & .Label {
+    display: block;
+    font-size: 10px;
+  }
+}

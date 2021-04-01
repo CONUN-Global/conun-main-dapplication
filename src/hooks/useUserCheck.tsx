@@ -3,25 +3,26 @@ import { useQuery } from "react-query";
 import instance from "../axios/instance";
 import useCurrentUser from "./useCurrentUser";
 
-const checkUser = (currentUser: { email: string }) =>
-  instance.get(`/users/check/?email=${currentUser?.email}`);
+const checkUser = async (email: string) => {
+  const { data } = await instance.get(`/users/check/?email=${email}`);
+
+  return data;
+};
 
 function useUserCheck() {
-  const { currentUser, loading } = useCurrentUser();
+  const { currentUser, isLoading: currentUserLoading } = useCurrentUser();
 
   const { data, isLoading } = useQuery(
     "check-user",
-    () => checkUser(currentUser),
+    () => checkUser(currentUser?.email),
     {
-      enabled: !loading && !!currentUser.email,
+      enabled: !currentUserLoading && !!currentUser?.email,
     }
   );
 
   return {
-    isUser: !!data?.data?.message?.email,
-    email: data?.data?.message?.email,
-    walletAddress: data?.data?.message?.wallet_address,
-    loading: isLoading,
+    isAlreadyUser: data?.success,
+    isLoading,
   };
 }
 

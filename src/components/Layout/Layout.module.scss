@@ -1,0 +1,13 @@
+.Layout {
+  height: calc(100vh - 33px);
+  width: 100vw;
+  display: flex;
+  justify-content: center;
+  overflow: hidden;
+  background: #f8f8f9;
+
+  &.isAuthenticated {
+    height: calc(100vh - 33px);
+    width: calc(100vw - 24px);
+  }
+}

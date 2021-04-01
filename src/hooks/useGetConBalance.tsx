@@ -1,21 +1,21 @@
-import { ipcRenderer } from 'electron';
-import { useQuery } from 'react-query';
+import { useQuery } from "react-query";
+import instance from "../axios/instance";
 
-import useAppCurrentUser from './useAppCurrentUser';
-
-const getConBalance = async (address: string) => {
-  const data = await ipcRenderer.invoke('get-con-balance', { address });
-  return data;
-};
+import useAppCurrentUser from "./useAppCurrentUser";
 
 function useGetConBalance() {
   const { currentUser } = useAppCurrentUser();
 
   const { data, isLoading, refetch, isFetching } = useQuery(
-    'get-con-balance',
-    () => getConBalance(currentUser.wallet_address),
+    "get-con-balance",
+    async () => {
+      const { data } = await instance.get(
+        `/ether/getBalanceOfCon?walletAddress=${currentUser?.walletAddress}`
+      );
+      return data;
+    },
     {
-      enabled: !!currentUser.wallet_address,
+      enabled: !!currentUser.walletAddress,
     }
   );
 

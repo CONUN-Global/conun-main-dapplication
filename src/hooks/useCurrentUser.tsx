@@ -1,5 +1,13 @@
-import { ipcRenderer } from "electron";
 import { useEffect, useState } from "react";
+import { useQuery } from "react-query";
+
+const { api } = window;
+
+const getProfile = async () => {
+  const user = await api.getProfile();
+
+  return user;
+};
 
 type CurrentUser = {
   name: string;
@@ -9,29 +17,15 @@ type CurrentUser = {
 };
 
 function useCurrentUser() {
-  const [currentUser, setCurrentUser] = useState<CurrentUser>({
-    name: "",
-    email: "",
-    picture: "",
-    givenName: "",
-  });
-  const [loading, setLoading] = useState(false);
+  const { data, isLoading } = useQuery("current-user", getProfile);
 
-  const getProfile = async () => {
-    setLoading(true);
-    const user = await ipcRenderer.invoke("get-profile");
-    setLoading(false);
-    setCurrentUser({
-      ...user,
-      givenName: user.given_name,
-    });
+  const currentUser: CurrentUser =
+    { ...data, givenName: data?.given_name } || null;
+
+  return {
+    currentUser,
+    isLoading,
   };
-
-  useEffect(() => {
-    getProfile();
-  }, []);
-
-  return { currentUser, loading };
 }
 
 export default useCurrentUser;
