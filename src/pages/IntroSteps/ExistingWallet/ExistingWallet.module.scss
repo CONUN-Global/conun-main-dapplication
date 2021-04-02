@@ -1,7 +1,8 @@
 .UserBox {
   display: flex;
   align-items: center;
-  margin-top: 30px;
+  margin-top: 58px;
+  transform: translateX(-13px);
 
   & .ProfilePicture {
     border-radius: 50%;
@@ -23,15 +24,16 @@
 
 .Title {
   font-size: 22px;
-  margin-top: 20px;
+  margin-top: 45px;
   margin-bottom: 15px;
   color: var(--primary-color);
+  font-weight: 500;
 }
 
 .Subtitle {
   color: var(--primary-color);
   font-size: 12px;
-  margin-bottom: 105px;
+  margin-bottom: 90px;
   margin-right: 35px;
 }
 

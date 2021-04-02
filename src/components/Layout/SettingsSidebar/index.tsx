@@ -37,7 +37,7 @@ const variants = {
 };
 
 function SettingsSidebar() {
-  const { handleSettingsSidebar, isSettingsOpen } = useAppContext();
+  const { handleSettingsSidebar, isSettingsOpen, onLogout } = useAppContext();
 
   return (
     <OutsideClickHandler onClickOutside={() => handleSettingsSidebar(false)}>
@@ -52,7 +52,7 @@ function SettingsSidebar() {
           <Button className={styles.TopButton} noStyle>
             Disable Networks
           </Button>
-          <Button className={styles.TopButton} noStyle>
+          <Button className={styles.TopButton} onClick={onLogout} noStyle>
             Logout
           </Button>
         </div>

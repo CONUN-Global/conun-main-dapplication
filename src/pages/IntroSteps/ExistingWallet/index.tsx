@@ -9,8 +9,6 @@ import useCurrentUser from "../../../hooks/useCurrentUser";
 import useLogin from "../../../hooks/useLogin";
 import { useAppContext } from "../../../components/AppContext";
 
-import Arrow from "../../../assets/icons/arrow.svg";
-
 import { StepProps } from "..";
 
 import instance from "../../../axios/instance";
@@ -90,7 +88,7 @@ function ExistingWallet({ setCurrentStep }: StepProps) {
           <span className={styles.Email}>{currentUser?.email}</span>
         </div>
       </div>
-      <div className={styles.Title}>Welcome back {currentUser?.givenName}</div>
+      <div className={styles.Title}>Welcome back {currentUser?.givenName}!</div>
       <div className={styles.Subtitle}>
         Please drag and drop your JSON CONUN wallet file and enter your password
         to login to CONUN Manager.
