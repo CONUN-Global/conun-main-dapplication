@@ -40,7 +40,7 @@ type State = {
   walletPrivateKey: string;
   keyStore: string;
   isSettingsOpen: boolean;
-  handleSettingsSidebar: () => void;
+  handleSettingsSidebar: (state: boolean) => void;
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -83,7 +83,7 @@ function AppProvider({ children }: AppProviderProps) {
     []
   );
 
-  const handleSettingsSidebar = () => setIsSettingsOpen((prev) => !prev);
+  const handleSettingsSidebar = (state: boolean) => setIsSettingsOpen(state);
 
   const value = useMemo(
     () => ({

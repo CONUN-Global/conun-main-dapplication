@@ -92,6 +92,7 @@
     "electron-is-dev": "^2.0.0",
     "electron-squirrel-startup": "^1.0.0",
     "ethereumjs-tx": "^2.1.2",
+    "framer-motion": "^4.1.2",
     "jimp": "^0.16.1",
     "jsonwebtoken": "^8.5.1",
     "jwt-decode": "^3.1.2",

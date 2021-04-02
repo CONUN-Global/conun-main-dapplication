@@ -3,10 +3,11 @@ import { CarouselProvider } from "pure-react-carousel";
 
 import Layout from "../../components/Layout";
 import Home from ".";
+import QrCodeSidebar from "../../components/Layout/QrCodeSidebar";
+import Button from "../../components/Button";
 
 import Menu from "../../assets/icons/menu.svg";
 import Settings from "../../assets/icons/settings.svg";
-import QrCodeSidebar from "../../components/Layout/QrCodeSidebar";
 
 import { TOKEN_CARDS } from "../../const";
 
@@ -30,10 +31,14 @@ function HomeWrapper() {
           <div className={styles.NetworkName}>
             Conun <br /> Test Network
           </div>
-          <Settings
-            onClick={handleSettingsSidebar}
+          <Button
+            type="button"
+            noStyle
             className={styles.Settings}
-          />
+            onClick={() => handleSettingsSidebar(true)}
+          >
+            <Settings />
+          </Button>
         </div>
         <Home />
         <QrCodeSidebar />

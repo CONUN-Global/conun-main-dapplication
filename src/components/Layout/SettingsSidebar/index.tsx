@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { motion } from "framer-motion";
 import { useAppContext } from "../../AppContext";
 
 import Button from "../../Button";
@@ -30,19 +31,29 @@ const tabs = [
   },
 ];
 
+const variants = {
+  open: { x: 0 },
+  closed: { x: 200 },
+};
+
 function SettingsSidebar() {
-  const { handleSettingsSidebar } = useAppContext();
+  const { handleSettingsSidebar, isSettingsOpen } = useAppContext();
 
   return (
-    <OutsideClickHandler onClickOutside={handleSettingsSidebar}>
-      <div className={styles.SettingsSidebar}>
+    <OutsideClickHandler onClickOutside={() => handleSettingsSidebar(false)}>
+      <motion.div
+        className={styles.SettingsSidebar}
+        animate={isSettingsOpen ? "open" : "closed"}
+        variants={variants}
+        transition={{ duration: 0.4, ease: "easeInOut" }}
+      >
         <div className={styles.LogoContainer}>Logo</div>
         <div className={styles.TopButtons}>
           <Button className={styles.TopButton} noStyle>
             Disable Networks
           </Button>
           <Button className={styles.TopButton} noStyle>
-            Lougout
+            Logout
           </Button>
         </div>
         <div className={styles.Tabs}>
@@ -52,7 +63,7 @@ function SettingsSidebar() {
             </Link>
           ))}
         </div>
-      </div>
+      </motion.div>
     </OutsideClickHandler>
   );
 }

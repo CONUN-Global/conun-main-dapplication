@@ -13,11 +13,11 @@ interface LayoutProps {
 }
 
 function Layout({ children }: LayoutProps) {
-  const { isAuthenticated, isSettingsOpen } = useAppContext();
+  const { isAuthenticated } = useAppContext();
 
   return (
     <>
-      {isSettingsOpen && <SettingsSidebar />}
+      <SettingsSidebar />
       <div
         className={classNames(styles.Layout, {
           [styles.isAuthenticated]: isAuthenticated,
