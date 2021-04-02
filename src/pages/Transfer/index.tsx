@@ -5,6 +5,8 @@ import Button from "../../components/Button";
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 import useTransfer from "../../hooks/useTransfer";
 
+import Checkmark from "../../assets/icons/checkmark.svg";
+
 import styles from "./Transfer.module.scss";
 
 const { api } = window;
@@ -40,31 +42,21 @@ function Tranfer() {
   if (success) {
     return (
       <div className={styles.TransferPage}>
-        <div>
-          <p>
-            Transaction ID:{" "}
-            <a
-              href={`https://ropsten.etherscan.io/tx/${
-                success?.TxID ?? success
-              }`}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <strong>{success?.TxID ?? success}</strong>
-            </a>
-          </p>
-          <p>
-            Amount:{" "}
-            <strong>{success?.Func?.Amount ?? transferData?.amount}</strong>
-          </p>
-          {success?.Timestamp?.seconds && (
-            <p>
-              Timestamp:{" "}
-              <strong>
-                {new Date(success?.Timestamp?.seconds * 1000).toLocaleString()}
-              </strong>
-            </p>
-          )}
+        <p className={styles.Title}>Transaction Complete</p>
+        <div className={styles.SuccessBox}>
+          <p className={styles.Amount}>{transferData?.amount}</p>
+          <p className={styles.Token}>{transferData?.token}</p>
+        </div>
+        <div className={styles.Transaction}>
+          <p className={styles.TransactionIdLabel}>TX ID</p>
+          <a
+            href={`https://ropsten.etherscan.io/tx/${success?.TxID ?? success}`}
+            className={styles.TransactionId}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {success?.TxID ?? success}
+          </a>
         </div>
 
         <Button type="button" onClick={() => api.closeTransferWindow()}>

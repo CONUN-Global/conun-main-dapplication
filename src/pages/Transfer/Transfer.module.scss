@@ -23,7 +23,7 @@
     }
 
     & .Box {
-      background-color: #fff;
+      background-color: var(--bg-secondary);
       padding: 9px 12px;
 
       & .Amount {
@@ -44,7 +44,7 @@
     }
 
     & .Box {
-      background-color: #fff;
+      background-color: var(--bg-secondary);
       padding: 12px;
 
       & > :first-child {
@@ -66,6 +66,39 @@
           color: #a6a6a6;
           text-transform: uppercase;
         }
+      }
+    }
+  }
+
+  & .Checkmark {
+    width: 56px;
+    height: 56px;
+  }
+
+  & .SuccessBox {
+    display: flex;
+    & .Amount {
+      color: var(--primary-color);
+      font-size: 25px;
+    }
+    & .Amount {
+      color: var(--grey);
+      font-size: 14px;
+      text-transform: uppercase;
+    }
+
+    & .Transaction {
+      display: flex;
+      flex-direction: column;
+
+      & .TransactionIdLabel {
+        text-transform: uppercase;
+        color: #666769;
+        font-size: 10px;
+      }
+
+      & .TransactionId {
+        background-color: var(--bg-secondary);
       }
     }
   }
