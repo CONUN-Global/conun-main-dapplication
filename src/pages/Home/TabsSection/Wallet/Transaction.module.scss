@@ -68,4 +68,9 @@
 }
 
 .ConfirmButton {
+  align-self: center;
+
+  &.hasFee {
+    max-width: 240px;
+  }
 }

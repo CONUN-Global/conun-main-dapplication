@@ -23,7 +23,7 @@ function Switch({ id, label, className, ...props }: SwitchProps) {
         width={30}
         checkedIcon={false}
         uncheckedIcon={false}
-        onColor="#5E758A"
+        onColor="#184186"
         {...props}
       />
       {label && <div className={styles.Label}>{label}</div>}

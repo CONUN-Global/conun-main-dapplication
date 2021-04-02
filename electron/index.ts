@@ -143,8 +143,8 @@ ipcMain.handle("logout", async () => {
 ipcMain.handle("open-transfer-window", async (_, args) => {
   if (!transferWindow) {
     transferWindow = new BrowserWindow({
-      width: 250,
-      height: 250,
+      width: 345,
+      height: 371,
       frame: false,
       webPreferences: {
         nodeIntegration: false,

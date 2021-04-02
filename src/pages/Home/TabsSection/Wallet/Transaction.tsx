@@ -75,8 +75,6 @@ function Transaction() {
     });
   }, []);
 
-  const hasFee = token.token !== "conx";
-
   const onSubmit: SubmitHandler<FormData> = async (values) => {
     const fee = values.isAdvanced
       ? (values.gasPrice * values.gasLimit) / 1000000000
@@ -99,9 +97,11 @@ function Transaction() {
         token: token.token,
       });
     } catch (error) {
-      console.log(`error`, error);
+      // TODO: handle error
     }
   };
+
+  const hasFee = token.token !== "conx";
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.Transaction}>
@@ -213,7 +213,13 @@ function Transaction() {
           />
         </>
       )}
-      <Button className={styles.ConfirmButton} type="submit" round>
+      <Button
+        className={classNames(styles.ConfirmButton, {
+          [styles.hasFee]: hasFee && data,
+        })}
+        type="submit"
+        round
+      >
         Next
       </Button>
     </form>
