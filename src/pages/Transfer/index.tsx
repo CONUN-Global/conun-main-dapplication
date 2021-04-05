@@ -1,11 +1,10 @@
 import React, { useEffect, useState } from "react";
 
 import Button from "../../components/Button";
+import PendingTransaction from "./PendingTransaction";
 
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 import useTransfer from "../../hooks/useTransfer";
-
-import Checkmark from "../../assets/icons/checkmark.svg";
 
 import styles from "./Transfer.module.scss";
 
@@ -13,7 +12,7 @@ const { api } = window;
 
 function Tranfer() {
   const [transferData, setTransferData] = useState(null);
-  const [success, setSuccess] = useState(null);
+  const [transactionStarted, setTransactionStarted] = useState(null);
 
   const { currentUser } = useAppCurrentUser();
 
@@ -31,7 +30,7 @@ function Tranfer() {
     try {
       const data = await transfer(transferData);
 
-      setSuccess(data?.payload);
+      setTransactionStarted(data?.payload);
 
       api.requestBalanceRefetch();
     } catch (error) {
@@ -39,38 +38,12 @@ function Tranfer() {
     }
   };
 
-  if (success) {
+  if (transactionStarted) {
     return (
-      <div className={styles.TransferPage}>
-        <Checkmark className={styles.Checkmark} />
-        <p className={styles.Title}>Transaction Complete</p>
-        <div className={styles.SuccessBox}>
-          <span className={styles.Amount}>
-            {transferData?.amount} {transferData?.token}
-          </span>
-          <span className={styles.ToLabel}>to</span>
-          <span className={styles.To}>{transferData?.to}</span>
-        </div>
-        <div className={styles.SuccessBox}>
-          <p className={styles.TransactionIdLabel}>TX ID</p>
-          <a
-            href={`https://ropsten.etherscan.io/tx/${success?.TxID ?? success}`}
-            className={styles.TransactionId}
-            target="_blank"
-            rel="noreferrer"
-          >
-            {success?.TxID ?? success}
-          </a>
-        </div>
-
-        <Button
-          type="button"
-          className={styles.CloseButton}
-          onClick={() => api.closeTransferWindow()}
-        >
-          Close
-        </Button>
-      </div>
+      <PendingTransaction
+        transferData={transferData}
+        txId={transactionStarted?.TxID ?? transactionStarted}
+      />
     );
   }
 

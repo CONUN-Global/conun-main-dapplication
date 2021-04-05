@@ -167,188 +167,19 @@ export async function validateQrCode({
   return { success: false };
 }
 
-export async function validatePrivateKey({
-  privateKey,
-}: {
-  privateKey: string;
-}) {
-  return privateKey;
-}
+export async function checkTransaction(txHash: string) {
+  const transaction = await web3.eth.getTransaction(txHash);
 
-export async function getEthBalance(address: string) {
-  const wei = await web3.eth.getBalance(address);
-  return web3.utils.fromWei(wei, "ether");
-}
+  if (transaction?.transactionIndex && transaction?.blockHash) {
+    const receipt = await web3.eth.getTransactionReceipt(txHash);
 
-export async function getConunBalance(address: string) {
-  const contract = new web3.eth.Contract(
-    //@ts-expect-error
-    envVariables.abi,
-    envVariables.contractAddress
-  );
-
-  const data = await contract.methods.balanceOf(address).call();
-
-  const balance = await web3.utils.fromWei(data);
-
-  return balance;
-}
-
-export async function estimateGas({
-  from,
-  to,
-  token,
-  amount,
-}: {
-  from: string;
-  to: string;
-  token: string;
-  amount: string;
-}) {
-  const { contractAddress, abi } = envVariables;
-
-  let gasLimit;
-
-  const gasPrice = await web3.eth.getGasPrice();
-
-  if (token === "ETH") {
-    gasLimit = await web3.eth.estimateGas({
-      from,
-      to: to || from,
-    });
-  } else if (to && amount) {
-    //@ts-expect-error
-    const contract = new web3.eth.Contract(abi, contractAddress, {
-      from,
-    });
-
-    const data = contract.methods
-      .transfer(to, web3.utils.toWei(amount))
-      .encodeABI();
-
-    gasLimit = await web3.eth.estimateGas({
-      from,
-      to: contractAddress,
-      data,
-    });
+    return {
+      success: true,
+      data: receipt,
+    };
   } else {
-    gasLimit = await web3.eth.estimateGas({
-      from,
-    });
+    return {
+      success: false,
+    };
   }
-
-  const gweiGasPrice = await web3.utils.fromWei(gasPrice, "gwei");
-
-  return {
-    slow: {
-      gasPrice: String(gweiGasPrice),
-      gasLimit,
-      total: (+gweiGasPrice * gasLimit) / 1000000000,
-    },
-    average: {
-      gasPrice: String(2 * +gweiGasPrice),
-      gasLimit,
-      total: (+gweiGasPrice * 2 * gasLimit) / 1000000000,
-    },
-    fast: {
-      gasPrice: String(3 * +gweiGasPrice),
-      gasLimit,
-      total: (+gweiGasPrice * 3 * gasLimit) / 1000000000,
-    },
-  };
-}
-
-export async function transferEth(args: {
-  privateKey: any;
-  from: string;
-  to: string;
-  amount: string;
-  gasLimit: string;
-  gasPrice: string;
-}) {
-  web3.eth.defaultAccount = args.from;
-  let formattedPrivateKey = args.privateKey;
-
-  if (formattedPrivateKey.includes("0x")) {
-    formattedPrivateKey = formattedPrivateKey.slice(
-      2,
-      formattedPrivateKey.length
-    );
-  }
-
-  formattedPrivateKey = await Buffer.from(formattedPrivateKey, "hex");
-
-  const txCount = await web3.eth.getTransactionCount(args.from);
-
-  const txObject = {
-    nonce: web3.utils.toHex(txCount),
-    to: args.to,
-    value: web3.utils.toHex(web3.utils.toWei(args.amount)),
-    gasLimit: web3.utils.toHex(args.gasLimit),
-    gasPrice: web3.utils.toHex(web3.utils.toWei(String(args.gasPrice), "gwei")),
-  };
-
-  const tx = new Tx(txObject, { chain: "ropsten" });
-
-  tx.sign(formattedPrivateKey);
-
-  const serializedTx = tx.serialize();
-  const raw = `0x${serializedTx.toString("hex")}`;
-
-  const sentTx = await web3.eth.sendSignedTransaction(raw);
-
-  return sentTx;
-}
-
-export async function transferCon(args: {
-  privateKey: any;
-  from: string;
-  to: string;
-  amount: string;
-  gasLimit: string;
-  gasPrice: string;
-}) {
-  const { contractAddress, abi } = envVariables;
-  web3.eth.defaultAccount = args.from;
-  let formattedPrivateKey = args.privateKey;
-
-  if (formattedPrivateKey.includes("0x")) {
-    formattedPrivateKey = formattedPrivateKey.slice(
-      2,
-      formattedPrivateKey.length
-    );
-  }
-
-  formattedPrivateKey = await Buffer.from(formattedPrivateKey, "hex");
-
-  //@ts-expect-error
-  const contract = new web3.eth.Contract(abi, contractAddress, {
-    from: args.from,
-  });
-
-  const data = contract.methods
-    .transfer(args.to, web3.utils.toWei(args.amount))
-    .encodeABI();
-
-  const txCount = await web3.eth.getTransactionCount(args.from);
-
-  const txObject = {
-    from: args.from,
-    to: contractAddress,
-    nonce: web3.utils.toHex(txCount),
-    value: "0x0",
-    gasLimit: web3.utils.toHex(args.gasLimit),
-    gasPrice: web3.utils.toHex(web3.utils.toWei(String(args.gasPrice), "gwei")),
-    data,
-  };
-
-  const tx = new Tx(txObject, { chain: "ropsten" });
-  tx.sign(formattedPrivateKey);
-
-  const serializedTx = tx.serialize();
-  const raw = `0x${serializedTx.toString("hex")}`;
-
-  const sentTx = await web3.eth.sendSignedTransaction(raw);
-
-  return sentTx;
 }

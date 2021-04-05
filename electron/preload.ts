@@ -17,4 +17,6 @@ contextBridge.exposeInMainWorld("api", {
   listenToRefetchRequest: (fn: any) => {
     ipcRenderer.on("refetch-balances", () => fn());
   },
+  checkTransaction: (txHash: string) =>
+    ipcRenderer.invoke("check-transaction", txHash),
 });
