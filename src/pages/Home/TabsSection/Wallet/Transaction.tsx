@@ -219,6 +219,7 @@ function Transaction() {
         })}
         type="submit"
         round
+        variant="secondary"
       >
         Next
       </Button>

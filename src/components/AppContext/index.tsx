@@ -41,6 +41,8 @@ type State = {
   keyStore: string;
   isSettingsOpen: boolean;
   handleSettingsSidebar: (state: boolean) => void;
+  isQrCodeOpen: boolean;
+  handleQRSidebar: (state: boolean) => void;
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -57,6 +59,7 @@ const setAuthHeaderToken = (token: string) => {
 function AppProvider({ children }: AppProviderProps) {
   const { currentUser, refetch } = useAppCurrentUser();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [isQrCodeOpen, setIsQrCodeOpen] = useState(false);
 
   const { isAlreadyUser } = useUserCheck();
 
@@ -85,6 +88,8 @@ function AppProvider({ children }: AppProviderProps) {
 
   const handleSettingsSidebar = (state: boolean) => setIsSettingsOpen(state);
 
+  const handleQRSidebar = (state: boolean) => setIsQrCodeOpen(state);
+
   const value = useMemo(
     () => ({
       isAuthenticated: !!currentUser,
@@ -97,6 +102,8 @@ function AppProvider({ children }: AppProviderProps) {
       keyStore: getKeyStore(),
       isSettingsOpen,
       handleSettingsSidebar,
+      isQrCodeOpen,
+      handleQRSidebar,
     }),
     [
       handleLogin,
@@ -106,6 +113,8 @@ function AppProvider({ children }: AppProviderProps) {
       isAlreadyUser,
       isSettingsOpen,
       handleSettingsSidebar,
+      isQrCodeOpen,
+      handleQRSidebar,
     ]
   );
 
