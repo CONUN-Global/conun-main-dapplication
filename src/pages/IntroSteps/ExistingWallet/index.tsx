@@ -18,6 +18,8 @@ import { setIndentity } from "../../../helpers/getIdentity";
 
 import styles from "./ExistingWallet.module.scss";
 
+const { api } = window;
+
 function ExistingWallet({ setCurrentStep }: StepProps) {
   const [idFile, setIdFile] = useState(null);
   const [password, setPassword] = useState("");
@@ -116,7 +118,12 @@ function ExistingWallet({ setCurrentStep }: StepProps) {
       >
         Activate
       </Button>
-      <Button type="button" noStyle className={styles.LogoutButton}>
+      <Button
+        type="button"
+        onClick={() => api.logout()}
+        noStyle
+        className={styles.LogoutButton}
+      >
         Not you? Login with a different account.
       </Button>
     </>

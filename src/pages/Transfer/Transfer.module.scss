@@ -2,13 +2,13 @@
   background-color: var(--bg);
   display: flex;
   flex-direction: column;
-  padding: 27px 30px;
-  min-height: 100vh;
+  padding: 38px 30px;
+  height: 100vh;
 
   & .Title {
     color: #666769;
     font-size: 12px;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     text-align: center;
   }
 
@@ -71,35 +71,48 @@
   }
 
   & .Checkmark {
-    width: 56px;
-    height: 56px;
+    width: 98px;
+    height: 98px;
+    margin: 0 auto 18px auto;
   }
 
   & .SuccessBox {
     display: flex;
+    background-color: var(--bg-secondary);
+    padding: 10px 6px;
+    justify-content: space-between;
+    margin-bottom: 13px;
+    align-items: center;
+
     & .Amount {
       color: var(--primary-color);
-      font-size: 25px;
-    }
-    & .Amount {
-      color: var(--grey);
-      font-size: 14px;
+      font-size: 12px;
       text-transform: uppercase;
     }
 
-    & .Transaction {
-      display: flex;
-      flex-direction: column;
+    & .ToLabel {
+      font-size: 10px;
+    }
 
-      & .TransactionIdLabel {
-        text-transform: uppercase;
-        color: #666769;
-        font-size: 10px;
-      }
+    & .To {
+      color: var(--primary-color);
+      font-size: 10px;
+    }
 
-      & .TransactionId {
-        background-color: var(--bg-secondary);
-      }
+    & .TransactionIdLabel {
+      text-transform: uppercase;
+      color: #666769;
+      font-size: 10px;
+      min-width: 30px;
+    }
+
+    & .TransactionId {
+      color: var(--primary-color);
+      font-size: 10px;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
+      text-decoration: none;
     }
   }
 
@@ -110,5 +123,11 @@
     & .Button {
       width: 138px;
     }
+  }
+
+  & .CloseButton {
+    align-self: center;
+    margin-top: 22px;
+    max-width: 140px;
   }
 }

@@ -42,12 +42,16 @@ function Tranfer() {
   if (success) {
     return (
       <div className={styles.TransferPage}>
+        <Checkmark className={styles.Checkmark} />
         <p className={styles.Title}>Transaction Complete</p>
         <div className={styles.SuccessBox}>
-          <p className={styles.Amount}>{transferData?.amount}</p>
-          <p className={styles.Token}>{transferData?.token}</p>
+          <span className={styles.Amount}>
+            {transferData?.amount} {transferData?.token}
+          </span>
+          <span className={styles.ToLabel}>to</span>
+          <span className={styles.To}>{transferData?.to}</span>
         </div>
-        <div className={styles.Transaction}>
+        <div className={styles.SuccessBox}>
           <p className={styles.TransactionIdLabel}>TX ID</p>
           <a
             href={`https://ropsten.etherscan.io/tx/${success?.TxID ?? success}`}
@@ -59,7 +63,11 @@ function Tranfer() {
           </a>
         </div>
 
-        <Button type="button" onClick={() => api.closeTransferWindow()}>
+        <Button
+          type="button"
+          className={styles.CloseButton}
+          onClick={() => api.closeTransferWindow()}
+        >
           Close
         </Button>
       </div>
