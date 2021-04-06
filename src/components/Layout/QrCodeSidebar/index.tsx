@@ -1,15 +1,23 @@
 import React from "react";
 import classNames from "classnames";
 import { motion } from "framer-motion";
+import { useQuery } from "react-query";
+import { saveAs } from "file-saver";
 
 import OutsideClickHandler from "../../OutsideClickHandler";
+import Button from "../../Button";
 
 import { useAppContext } from "../../AppContext";
+import useAppCurrentUser from "../../../hooks/useAppCurrentUser";
 
 import QrCodePlaceholder from "../../../assets/icons/qr-code-placeholder.svg";
 import QrCode from "../../../assets/icons/qr-code.svg";
 
+import getIdentity from "../../../helpers/getIdentity";
+
 import styles from "./QrCodeSidebar.module.scss";
+
+const { api } = window;
 
 const variants = {
   open: { x: -414 },
@@ -21,8 +29,27 @@ const qrPageVariants = {
   closed: { x: 414 },
 };
 
+function saveFileIdentity(
+  identity: Record<string, unknown>,
+  walletAddress: string
+) {
+  const blob = new Blob([JSON.stringify(identity)], {
+    type: "text/plain;charset=utf-8",
+  });
+  saveAs(blob, `${walletAddress}.id`);
+}
+
 function QrCodeSidebar() {
   const { isQrCodeOpen, handleQRSidebar } = useAppContext();
+  const { currentUser } = useAppCurrentUser();
+
+  const { data } = useQuery(
+    "get-qr-code",
+    () => api.createQrCode(currentUser?.walletAddress),
+    {
+      enabled: !!currentUser,
+    }
+  );
 
   return (
     <OutsideClickHandler onClickOutside={() => handleQRSidebar(false)}>
@@ -48,6 +75,31 @@ function QrCodeSidebar() {
         variants={qrPageVariants}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
+        <span className={styles.Title}>Ethereum Wallet</span>
+        <div className={styles.QrCodeBox}>
+          <img src={data} className={styles.QrCode} alt="qr code" />
+        </div>
+        <span className={styles.Instructions}>
+          You can use the QR code to
+          <br /> share your wallet address
+        </span>
+        <div className={styles.AddressContainer}>
+          <span className={styles.Label}>Wallet Address</span>
+          <Button type="button" noStyle className={styles.WalletAddress}>
+            {currentUser?.walletAddress}
+          </Button>
+        </div>
+        <Button
+          type="button"
+          onClick={() =>
+            saveFileIdentity(getIdentity(), currentUser?.walletAddress)
+          }
+          className={styles.ExportButton}
+          variant="secondary"
+          round
+        >
+          Export JSON File
+        </Button>
         <div className={classNames(styles.Sidebar, styles.isOpen)}>
           <div className={classNames(styles.QrButtonWrapper, styles.isOpen)}>
             <QrCodePlaceholder className={styles.QrCodePlaceholderOpen} />

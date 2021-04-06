@@ -9,7 +9,6 @@ import Button from "../../../../components/Button";
 
 import useCurrentToken from "../../../../hooks/useCurrentToken";
 import useTransferFee from "../../../../hooks/useTransferFee";
-import useTransfer from "../../../../hooks/useTransfer";
 
 import styles from "./Transaction.module.scss";
 
@@ -107,6 +106,7 @@ function Transaction() {
     <form onSubmit={handleSubmit(onSubmit)} className={styles.Transaction}>
       <FormInput
         name="amount"
+        autoComplete="amount"
         formRef={register({
           required: {
             value: true,
@@ -122,6 +122,7 @@ function Transaction() {
       />
       <FormInput
         name="to"
+        autoComplete="to"
         formRef={register({
           required: {
             value: true,

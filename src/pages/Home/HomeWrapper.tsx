@@ -9,12 +9,13 @@ import Button from "../../components/Button";
 import Menu from "../../assets/icons/menu.svg";
 import Settings from "../../assets/icons/settings.svg";
 
+import { useAppContext } from "../../components/AppContext";
+
 import { TOKEN_CARDS } from "../../const";
 
 import styles from "./Home.module.scss";
 
 import "pure-react-carousel/dist/react-carousel.es.css";
-import { useAppContext } from "../../components/AppContext";
 
 function HomeWrapper() {
   const { handleSettingsSidebar } = useAppContext();

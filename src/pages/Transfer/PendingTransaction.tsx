@@ -25,7 +25,7 @@ function PendingTransaction({ transferData, txId }: PendingTransactionProps) {
     () => api.checkTransaction(txId),
     {
       refetchInterval: 10000,
-      enabled: transferData.token !== "conx" && !isTransactionSuccessful,
+      enabled: transferData?.token !== "conx" && !isTransactionSuccessful,
     }
   );
 

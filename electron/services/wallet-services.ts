@@ -8,7 +8,6 @@ import fetch from "electron-fetch";
 import jimp from "jimp";
 //@ts-expect-error
 import QRReader from "qrcode-reader";
-import { Transaction as Tx } from "ethereumjs-tx";
 
 import envVariables from "../../env-variables.json";
 import { API_URI, ORG_NAME } from "../const";
@@ -77,23 +76,8 @@ export async function saveKeyStoreJson(keyStore: string) {
   }
 }
 
-export async function createQrCode({
-  password,
-  privateKey,
-}: {
-  password: string;
-  privateKey: string;
-}) {
-  const key = crypto.createCipher("aes-128-cbc", password);
-  let encrypt = key.update(
-    JSON.stringify({
-      privateKey,
-    }),
-    "utf8",
-    "base64"
-  );
-  encrypt += key.final("base64");
-  const conunAccountQrCode = await qrcode.toDataURL(JSON.stringify(encrypt));
+export async function createQrCode(args: object) {
+  const conunAccountQrCode = await qrcode.toDataURL(JSON.stringify(args));
 
   return conunAccountQrCode;
 }

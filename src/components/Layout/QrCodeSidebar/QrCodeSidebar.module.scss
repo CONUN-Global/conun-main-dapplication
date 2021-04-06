@@ -67,10 +67,62 @@
 }
 
 .QrCodePage {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
   position: absolute;
   top: 0;
   width: 414px;
   background-color: var(--primary-color);
   height: 100vh;
   z-index: 9000;
+  padding-top: 128px;
+
+  & * {
+    color: #ffff;
+  }
+
+  & .Title {
+    text-transform: uppercase;
+
+    font-size: 15px;
+    margin-bottom: 52px;
+  }
+
+  & .QrCodeBox {
+    background: #ffffff;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 15px;
+    margin-bottom: 15px;
+
+    & .QrCode {
+      height: 189px;
+      width: 189px;
+      border-radius: 15px;
+    }
+  }
+
+  & .Instructions {
+    font-size: 10px;
+    margin-bottom: 63px;
+  }
+
+  & .AddressContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 135px;
+
+    & .Label {
+      margin-bottom: 5px;
+    }
+
+    & .WalletAddress {
+      text-transform: uppercase;
+    }
+  }
+
+  & .ExportButton {
+    max-width: 250px;
+  }
 }

@@ -47,13 +47,14 @@
 .Menu {
   width: 18px;
   height: 18px;
-  fill: #939ca7;
+  fill: var(--primary-color);
   margin-right: 15px;
 }
 
 .NetworkName {
   text-transform: uppercase;
   font-size: 10px;
+  color: var(--primary-color);
 }
 
 .Settings {

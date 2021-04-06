@@ -19,4 +19,6 @@ contextBridge.exposeInMainWorld("api", {
   },
   checkTransaction: (txHash: string) =>
     ipcRenderer.invoke("check-transaction", txHash),
+  createQrCode: (walletAddress: string) =>
+    ipcRenderer.invoke("create-qr-code", { walletAddress }),
 });
