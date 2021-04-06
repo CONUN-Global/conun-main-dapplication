@@ -35,15 +35,6 @@ function Wallet() {
         >
           New Transaction
         </Button>
-        <Button
-          noStyle
-          onClick={() => setCurrentAction(actions.swap.id)}
-          className={classNames(styles.Action, {
-            [styles.active]: currentAction === actions.swap.id,
-          })}
-        >
-          Swap
-        </Button>
       </div>
       <Component />
     </div>

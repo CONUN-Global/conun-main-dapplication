@@ -1,13 +1,49 @@
 import React, { useEffect, useState } from "react";
 import { useQuery } from "react-query";
+import { motion, useAnimation } from "framer-motion";
 
 import Button from "../../components/Button";
 
 import Checkmark from "../../assets/icons/checkmark.svg";
+import Rocket from "../../assets/icons/rocket.svg";
+import Clouds from "../../assets/icons/rocket-bg.svg";
 
 import styles from "./PendingTransaction.module.scss";
 
 const { api } = window;
+
+const getRandomDelay = () => -(Math.random() * 0.7 + 0.05);
+
+const randomDuration = () => Math.random() * 0.1 + 0.15;
+
+const rocketVariants = {
+  start: (i) => ({
+    rotate: i % 2 === 0 ? [-1, 1.3, 0] : [1, -1.4, 0],
+    transition: {
+      ease: "linear",
+      delay: getRandomDelay(),
+      repeat: Infinity,
+      duration: randomDuration(),
+    },
+  }),
+  reset: {
+    rotate: 0,
+  },
+};
+
+const cloudVariants = {
+  start: () => ({
+    y: 4100,
+    transition: {
+      repeat: Infinity,
+      duration: 50,
+    },
+  }),
+};
+
+async function animateRocket(animation) {
+  await animation.start("start");
+}
 
 interface PendingTransactionProps {
   transferData: {
@@ -29,13 +65,21 @@ function PendingTransaction({ transferData, txId }: PendingTransactionProps) {
     }
   );
 
+  const animation = useAnimation();
+
   useEffect(() => {
-    if (transferData.token !== "conx" && data?.success) {
+    if (transferData?.token !== "conx" && data?.success) {
       setIsTransactionSuccessful(data?.data);
     }
   }, [data]);
 
-  if (isTransactionSuccessful || transferData.token === "conx") {
+  useEffect(() => {
+    if (transferData?.token !== "conx" && !isTransactionSuccessful) {
+      animateRocket(animation);
+    }
+  }, []);
+
+  if (isTransactionSuccessful || transferData?.token === "conx") {
     return (
       <div className={styles.TransferPage}>
         <Checkmark className={styles.Checkmark} />
@@ -69,7 +113,37 @@ function PendingTransaction({ transferData, txId }: PendingTransactionProps) {
     );
   }
 
-  return <div className={styles.TransferPage}>Pending</div>;
+  return (
+    <div className={styles.InProgressPage}>
+      <motion.div
+        className={styles.RocketContainer}
+        animate={animation}
+        transition={{ duration: 10, repeat: Infinity }}
+        variants={rocketVariants}
+      >
+        <Rocket className={styles.Rocket} />
+      </motion.div>
+      <motion.div
+        className={styles.CloudsContainer}
+        animate={animation}
+        variants={cloudVariants}
+      >
+        <Clouds className={styles.Clouds} />
+      </motion.div>
+
+      <p className={styles.Text}>
+        Transaction in progress, to check status click{" "}
+        <a
+          href={`https://ropsten.etherscan.io/tx/${txId}`}
+          className={styles.TransactionLink}
+          target="_blank"
+          rel="noreferrer"
+        >
+          here
+        </a>
+      </p>
+    </div>
+  );
 }
 
 export default PendingTransaction;

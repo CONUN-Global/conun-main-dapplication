@@ -64,3 +64,40 @@
     max-width: 140px;
   }
 }
+
+.InProgressPage {
+  background-color: var(--bg);
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+
+  & .RocketContainer {
+    position: absolute;
+    z-index: 1;
+
+    & .Rocket {
+      height: 200px;
+    }
+  }
+
+  & .CloudsContainer {
+    position: absolute;
+    bottom: -10px;
+    & .Clouds {
+      height: 3696px;
+    }
+  }
+
+  & .Text {
+    color: var(--primary-color);
+    position: absolute;
+    font-size: 12px;
+    bottom: 10%;
+
+    & .TransactionLink {
+      color: var(--primary-color);
+    }
+  }
+}
