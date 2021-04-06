@@ -1,0 +1,62 @@
+.Network {
+  padding: 40px;
+  background: #f8f8f8;
+  display: flex;
+  flex-direction: column;
+  width: calc(100% - 100px);
+
+  & .RunningApps {
+    margin-bottom: 50px;
+
+    & .Label {
+      font-size: 10px;
+      margin-bottom: 11px;
+    }
+
+    & .AppsList {
+      & .AppIcon {
+        height: 45px;
+        width: 45px;
+      }
+    }
+  }
+
+  & .PeerIdContainer {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 50px;
+
+    & .Label {
+      font-size: 10px;
+      margin-bottom: 11px;
+    }
+
+    & .PeerId {
+      color: var(--primary-color);
+      font-size: 10px;
+    }
+  }
+
+  & .NodesContainer {
+    & .Label {
+      font-size: 10px;
+      margin-bottom: 11px;
+      display: flex;
+      align-items: center;
+
+      & .Node {
+        height: 5px;
+        width: 5px;
+        display: block;
+        border-radius: 50%;
+        background-color: var(--green);
+        margin-right: 5px;
+      }
+    }
+
+    & .Status {
+      color: var(--green);
+      font-size: 10px;
+    }
+  }
+}
