@@ -6,7 +6,6 @@ import Home from ".";
 import QrCodeSidebar from "../../components/Layout/QrCodeSidebar";
 import Button from "../../components/Button";
 
-import Menu from "../../assets/icons/menu.svg";
 import Settings from "../../assets/icons/settings.svg";
 
 import { useAppContext } from "../../components/AppContext";
@@ -28,7 +27,6 @@ function HomeWrapper() {
         totalSlides={TOKEN_CARDS.length}
       >
         <div className={styles.MainBar}>
-          <Menu className={styles.Menu} />
           <div className={styles.NetworkName}>
             Conun <br /> Test Network
           </div>

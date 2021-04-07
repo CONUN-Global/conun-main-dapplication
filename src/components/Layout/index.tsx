@@ -3,6 +3,7 @@ import classNames from "classnames";
 
 import Footer from "./Footer";
 import SettingsSidebar from "./SettingsSidebar";
+import RecentTransactions from "./RecentTransactions";
 
 import { useAppContext } from "../AppContext";
 
@@ -26,6 +27,7 @@ function Layout({ children }: LayoutProps) {
         {children}
       </div>
       <Footer />
+      <RecentTransactions />
     </>
   );
 }

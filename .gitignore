@@ -97,3 +97,6 @@ env-variables.json
 
 const/
 
+#db
+/conun-db
+

@@ -10,8 +10,11 @@ import {
   refreshTokens,
 } from "./services/auth-service";
 
+import { prepareDb } from "./store/db";
+
 import "./ipcMain/account";
 import "./ipcMain/wallet";
+import "./ipcMain/db";
 
 let mainWindow: BrowserWindow | null = null;
 let authWindow: BrowserWindow | null = null;
@@ -46,6 +49,8 @@ const createWindow = async (): Promise<void> => {
   mainWindow.removeMenu();
   mainWindow.setResizable(false);
 
+  await prepareDb();
+
   if (isDev) {
     await mainWindow.loadURL("http://localhost:1234");
     mainWindow.webContents.openDevTools();
@@ -54,6 +59,11 @@ const createWindow = async (): Promise<void> => {
       `file://${path.join(__dirname, "../parcel-build/index.html")}`
     );
   }
+
+  mainWindow.webContents.on("new-window", (event, url) => {
+    event.preventDefault();
+    shell.openExternal(url);
+  });
 
   if (authWindow) {
     destroyAuthWin();

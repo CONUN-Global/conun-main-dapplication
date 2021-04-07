@@ -29,6 +29,15 @@ function Tranfer() {
   const handleTransfer = async () => {
     try {
       const data = await transfer(transferData);
+      if (data?.payload?.TxID) {
+        api.setRecentTransacton({
+          to: data?.payload?.Func?.To,
+          amount: data?.payload?.Func?.Amount,
+          txId: data?.payload?.TxID,
+          token: transferData.token,
+          date: new Date().toISOString(),
+        });
+      }
 
       setTransactionStarted(data?.payload);
 

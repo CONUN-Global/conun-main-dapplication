@@ -1,6 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 
+import Button from "../../Button";
+
 import { useAppContext } from "../../AppContext";
 
 import History from "../../../assets/icons/history.svg";
@@ -8,7 +10,7 @@ import History from "../../../assets/icons/history.svg";
 import styles from "./Footer.module.scss";
 
 function Footer() {
-  const { isAuthenticated } = useAppContext();
+  const { isAuthenticated, handleTransactionsBar } = useAppContext();
 
   return (
     <div
@@ -23,9 +25,14 @@ function Footer() {
         )}
       </div>
       {isAuthenticated && (
-        <button type="button" className={styles.HistoryButton}>
+        <Button
+          type="button"
+          onClick={() => handleTransactionsBar(true)}
+          className={styles.HistoryButton}
+          noStyle
+        >
           <History className={styles.HistoryIcon} />
-        </button>
+        </Button>
       )}
     </div>
   );

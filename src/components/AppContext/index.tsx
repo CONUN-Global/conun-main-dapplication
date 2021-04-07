@@ -43,6 +43,8 @@ type State = {
   handleSettingsSidebar: (state: boolean) => void;
   isQrCodeOpen: boolean;
   handleQRSidebar: (state: boolean) => void;
+  isTransactionsOpen: boolean;
+  handleTransactionsBar: (state: boolean) => void;
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -60,6 +62,7 @@ function AppProvider({ children }: AppProviderProps) {
   const { currentUser, refetch } = useAppCurrentUser();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [isQrCodeOpen, setIsQrCodeOpen] = useState(false);
+  const [isTransactionsOpen, setIsTransactionsOpen] = useState(false);
 
   const { isAlreadyUser } = useUserCheck();
 
@@ -69,7 +72,7 @@ function AppProvider({ children }: AppProviderProps) {
     await api.logout();
   }, []);
 
-  const handleLogin: State["onLogin"] = useCallback((token) => {
+  const handleLogin: State["onLogin"] = useCallback(async (token) => {
     saveToken(token);
     setAuthHeaderToken(token);
     refetch();
@@ -90,6 +93,9 @@ function AppProvider({ children }: AppProviderProps) {
 
   const handleQRSidebar = (state: boolean) => setIsQrCodeOpen(state);
 
+  const handleTransactionsBar = (state: boolean) =>
+    setIsTransactionsOpen(state);
+
   const value = useMemo(
     () => ({
       isAuthenticated: !!currentUser,
@@ -104,6 +110,8 @@ function AppProvider({ children }: AppProviderProps) {
       handleSettingsSidebar,
       isQrCodeOpen,
       handleQRSidebar,
+      isTransactionsOpen,
+      handleTransactionsBar,
     }),
     [
       handleLogin,
@@ -115,6 +123,8 @@ function AppProvider({ children }: AppProviderProps) {
       handleSettingsSidebar,
       isQrCodeOpen,
       handleQRSidebar,
+      isTransactionsOpen,
+      handleTransactionsBar,
     ]
   );
 

@@ -70,6 +70,13 @@ function PendingTransaction({ transferData, txId }: PendingTransactionProps) {
   useEffect(() => {
     if (transferData?.token !== "conx" && data?.success) {
       setIsTransactionSuccessful(data?.data);
+      api.setRecentTransacton({
+        to: data?.data?.to,
+        amount: transferData?.amount,
+        token: transferData.token,
+        txId: data?.data?.transactionHash,
+        date: new Date().toISOString(),
+      });
     }
   }, [data]);
 
@@ -94,7 +101,11 @@ function PendingTransaction({ transferData, txId }: PendingTransactionProps) {
         <div className={styles.SuccessBox}>
           <p className={styles.TransactionIdLabel}>TX ID</p>
           <a
-            href={`https://ropsten.etherscan.io/tx/${txId}`}
+            href={
+              transferData.token === "conx"
+                ? `https://conscan.conun.io/txns/${txId}`
+                : `https://ropsten.etherscan.io/tx/${txId}`
+            }
             className={styles.TransactionId}
             target="_blank"
             rel="noreferrer"

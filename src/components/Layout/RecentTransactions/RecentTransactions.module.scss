@@ -1,0 +1,57 @@
+.RecentTransactions {
+  bottom: 0;
+  position: absolute;
+
+  background-color: #ffff;
+  width: 100vw;
+  z-index: 1000;
+  border-radius: 12px 12px 0px 0px;
+  padding-top: 15px;
+
+  & * {
+    color: var(--primary-color);
+  }
+
+  & .Title {
+    text-align: center;
+    margin-bottom: 15px;
+    font-size: 12px;
+    font-weight: bolder;
+  }
+
+  & .Transactions {
+    display: flex;
+    flex-direction: column;
+
+    & .Transaction {
+      border-top: 1px solid var(--bg-secondary);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 57px;
+      padding: 0 36px;
+
+      & > * {
+        font-size: 11px;
+      }
+
+      & .Amount {
+        text-transform: uppercase;
+        text-align: center;
+        width: 60px;
+      }
+
+      & .Date {
+        text-align: center;
+        width: 110px;
+      }
+
+      & .TransactionLink {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        text-align: center;
+      }
+    }
+  }
+}
