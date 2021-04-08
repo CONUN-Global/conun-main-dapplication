@@ -52,6 +52,10 @@
         text-overflow: ellipsis;
         text-align: center;
       }
+
+      & .NoTransactions {
+        margin: 0 auto;
+      }
     }
   }
 }

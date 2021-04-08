@@ -18,7 +18,7 @@ function Layout({ children }: LayoutProps) {
 
   return (
     <>
-      <SettingsSidebar />
+      {isAuthenticated && <SettingsSidebar />}
       <div
         className={classNames(styles.Layout, {
           [styles.isAuthenticated]: isAuthenticated,
@@ -27,7 +27,7 @@ function Layout({ children }: LayoutProps) {
         {children}
       </div>
       <Footer />
-      <RecentTransactions />
+      {isAuthenticated && <RecentTransactions />}
     </>
   );
 }

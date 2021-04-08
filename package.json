@@ -1,8 +1,8 @@
 {
-  "name": "electron-react-typescript-template",
-  "productName": "electron-react-typescript-template",
+  "name": "conun-manager",
+  "productName": "conun-manager",
   "version": "1.0.0",
-  "description": "Electron React boilerplate",
+  "description": "Conun Manager",
   "homepage": "./",
   "main": "dist/electron/index.js",
   "scripts": {

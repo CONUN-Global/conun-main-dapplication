@@ -65,6 +65,13 @@ const createWindow = async (): Promise<void> => {
     shell.openExternal(url);
   });
 
+  mainWindow.on("close", () => {
+    if (transferWindow) {
+      transferWindow.close();
+      transferWindow = null;
+    }
+  });
+
   if (authWindow) {
     destroyAuthWin();
   }
