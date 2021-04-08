@@ -6,9 +6,9 @@ import PrivateRoute from "./Routes/PrivateRoute";
 import HomeWrapper from "./pages/Home/HomeWrapper";
 import Transfer from "./pages/Transfer";
 import IntroSteps from "./pages/IntroSteps";
+import Success from "./pages/Success";
 
 import { AppProvider } from "./components/AppContext";
-import Success from "./pages/Success";
 
 function App() {
   return (

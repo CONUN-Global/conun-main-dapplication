@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useMutation } from "react-query";
+import { toast } from "react-toastify";
 
 import Button from "../../../components/Button";
 import Dropzone from "../../../components/Dropzone";
@@ -8,8 +9,6 @@ import Input from "../../../components/Form/Input";
 import useCurrentUser from "../../../hooks/useCurrentUser";
 import useLogin from "../../../hooks/useLogin";
 import { useAppContext } from "../../../components/AppContext";
-
-import { StepProps } from "..";
 
 import instance from "../../../axios/instance";
 import { ORG_NAME, WALLET_TYPE } from "../../../const";
@@ -20,7 +19,7 @@ import styles from "./ExistingWallet.module.scss";
 
 const { api } = window;
 
-function ExistingWallet({ setCurrentStep }: StepProps) {
+function ExistingWallet() {
   const [idFile, setIdFile] = useState(null);
   const [password, setPassword] = useState("");
 
@@ -54,7 +53,11 @@ function ExistingWallet({ setCurrentStep }: StepProps) {
         onLogin(data?.payload?.["x-auth-token"]);
       }
     } catch (error) {
-      // TODO: Show a toast
+      toast.error(error?.response?.data?.payload ?? "An error happened", {
+        position: "top-center",
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
     }
   };
 

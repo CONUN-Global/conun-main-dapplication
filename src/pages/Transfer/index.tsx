@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 import Button from "../../components/Button";
 import PendingTransaction from "./PendingTransaction";
@@ -40,10 +41,16 @@ function Tranfer() {
       }
 
       setTransactionStarted(data?.payload);
-
       api.requestBalanceRefetch();
     } catch (error) {
-      // TODO: handle error
+      toast.error("An error happened", {
+        position: "top-center",
+        autoClose: 1000,
+        style: {
+          color: "#fff",
+        },
+        hideProgressBar: true,
+      });
     }
   };
 
