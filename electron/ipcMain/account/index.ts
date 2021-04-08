@@ -1,5 +1,7 @@
 import { ipcMain } from "electron";
+
 import { getProfile } from "../../services/auth-service";
+
 import {
   createWallet,
   saveKeyStoreJson,
@@ -8,6 +10,8 @@ import {
   validateKeystoreFile,
   validateQrCode,
 } from "../../services/wallet-services";
+
+import db from "../../store/db";
 
 ipcMain.handle("get-profile", () => {
   return getProfile();
@@ -54,3 +58,13 @@ ipcMain.handle("validate-qr-code", async (_, args) => {
     };
   }
 });
+
+ipcMain.handle("save-pass", async (_, args) => {
+  const userDetails: { pass: string } = await db.get("userDetails");
+
+  userDetails.pass = args?.password;
+
+  return db.put(userDetails);
+});
+
+ipcMain.handle("get-pass", async () => db.get("userDetails"));

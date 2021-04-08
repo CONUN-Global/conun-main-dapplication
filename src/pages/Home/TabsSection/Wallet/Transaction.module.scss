@@ -57,10 +57,14 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 15px;
+  margin-bottom: 30px;
 
   & .GasInput {
     width: 80px;
+
+    & > span {
+      margin-bottom: -12px;
+    }
   }
 }
 

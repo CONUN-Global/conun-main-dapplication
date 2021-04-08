@@ -156,7 +156,12 @@ function Transaction() {
                 wrapperStyles={styles.GasInput}
                 defaultValue={data?.payload?.average?.gas_limit}
                 label="Gas Limit"
-                formRef={register}
+                formRef={register({
+                  required: {
+                    value: watchIsAdvanced,
+                    message: "Gas limit is required",
+                  },
+                })}
                 error={errors.gasLimit}
               />
 
@@ -165,7 +170,12 @@ function Transaction() {
                 wrapperStyles={styles.GasInput}
                 defaultValue={data?.payload?.average?.gas_price}
                 type="number"
-                formRef={register}
+                formRef={register({
+                  required: {
+                    value: watchIsAdvanced,
+                    message: "Gas price is required",
+                  },
+                })}
                 label="Gas Price"
                 error={errors.gasPrice}
               />

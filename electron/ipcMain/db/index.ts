@@ -5,17 +5,7 @@ const TRANSACTION_LIMIT = 5;
 
 ipcMain.handle("get-recent-transactions", async () => {
   const transactions = await db.get("transactions");
-
-  if (transactions) {
-    return transactions;
-  }
-
-  await db.put({
-    _id: "transactions",
-    list: [],
-  });
-
-  return db.get("transactions");
+  return transactions;
 });
 
 ipcMain.handle("set-recent-transaction", async (_, args) => {

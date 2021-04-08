@@ -4,6 +4,7 @@ import instance from "../axios/instance";
 
 import { FcnTypes, ORG_NAME, WALLET_TYPE } from "../const";
 import useAppCurrentUser from "./useAppCurrentUser";
+import usePass from "./usePass";
 import useSignature from "./useSignature";
 
 type Values = {
@@ -20,7 +21,7 @@ interface UseTransferProps {
   token: string;
 }
 
-async function transferHelper(token, values, fromAddress) {
+async function transferHelper(token, values, fromAddress, pass) {
   if (token === "con") {
     const { data } = await instance.post("/ether/SendCON", {
       fromAddress,
@@ -28,7 +29,7 @@ async function transferHelper(token, values, fromAddress) {
       value: values.amount,
       gasLimit: String(values.gasLimit),
       gasPrice: String(values.gasPrice),
-      password: "12345",
+      password: pass,
       walletType: WALLET_TYPE,
       orgName: ORG_NAME,
     });
@@ -42,7 +43,7 @@ async function transferHelper(token, values, fromAddress) {
     value: values.amount,
     gasLimit: String(values.gasLimit),
     gasPrice: String(values.gasPrice),
-    password: "12345",
+    password: pass,
     walletType: WALLET_TYPE,
     orgName: ORG_NAME,
   });
@@ -53,12 +54,13 @@ async function transferHelper(token, values, fromAddress) {
 function useTransfer({ token }: UseTransferProps) {
   const { currentUser } = useAppCurrentUser();
   const { getSignature } = useSignature();
+  const { pass } = usePass();
 
   const {
     mutateAsync: transfer,
     isLoading,
   } = useMutation((transferData: Values) =>
-    transferHelper(token, transferData, currentUser?.walletAddress)
+    transferHelper(token, transferData, currentUser?.walletAddress, pass)
   );
 
   const {

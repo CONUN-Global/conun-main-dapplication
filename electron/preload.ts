@@ -23,4 +23,6 @@ contextBridge.exposeInMainWorld("api", {
   getRecentTransactions: () => ipcRenderer.invoke("get-recent-transactions"),
   setRecentTransacton: (transaction: any) =>
     ipcRenderer.invoke("set-recent-transaction", transaction),
+  savePass: (data: any) => ipcRenderer.invoke("save-pass", data),
+  getPass: () => ipcRenderer.invoke("get-pass"),
 });
