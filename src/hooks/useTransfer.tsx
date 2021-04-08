@@ -73,7 +73,7 @@ function useTransfer({ token }: UseTransferProps) {
         orgName: ORG_NAME,
         fromAddress: currentUser?.walletAddress,
         toAddress: transferData.to,
-        value: Number(transferData.amount),
+        value: String(transferData.amount),
       }),
     });
     if (signature) {
@@ -84,7 +84,7 @@ function useTransfer({ token }: UseTransferProps) {
           orgName: ORG_NAME,
           fromAddress: currentUser?.walletAddress,
           toAddress: transferData.to,
-          value: Number(transferData.amount),
+          value: String(transferData.amount),
           signature,
         }
       );

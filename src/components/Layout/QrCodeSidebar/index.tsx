@@ -85,7 +85,14 @@ function QrCodeSidebar() {
         </span>
         <div className={styles.AddressContainer}>
           <span className={styles.Label}>Wallet Address</span>
-          <Button type="button" noStyle className={styles.WalletAddress}>
+          <Button
+            type="button"
+            noStyle
+            onClick={() =>
+              navigator.clipboard.writeText(currentUser?.walletAddress)
+            }
+            className={styles.WalletAddress}
+          >
             {currentUser?.walletAddress}
           </Button>
         </div>

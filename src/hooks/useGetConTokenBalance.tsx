@@ -16,6 +16,13 @@ function useGetConTokenBalance() {
         `/con-token/channels/mychannel/chaincodes/conos?walletAddress=${currentUser?.walletAddress}&orgName=${ORG_NAME}&fcn=${FcnTypes.BalanceOf}`
       );
       return data;
+    },
+    {
+      enabled: !!currentUser.walletAddress,
+      cacheTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 0,
     }
   );
 

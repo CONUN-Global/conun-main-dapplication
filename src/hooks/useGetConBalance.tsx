@@ -16,6 +16,10 @@ function useGetConBalance() {
     },
     {
       enabled: !!currentUser.walletAddress,
+      cacheTime: 0,
+      refetchOnMount: true,
+      refetchOnWindowFocus: true,
+      staleTime: 0,
     }
   );
 
