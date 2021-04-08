@@ -21,7 +21,7 @@ function useUserCheck() {
   );
 
   return {
-    isAlreadyUser: !!data?.success,
+    isAlreadyUser: data?.success,
     isLoading,
   };
 }
