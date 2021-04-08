@@ -8,7 +8,7 @@ import CreateWallet from "./CreateWallet";
 import Layout from "../../components/Layout";
 import ExistingWallet from "./ExistingWallet";
 
-import useCurrentUser from "../../hooks/useCurrentUser";
+import { useAppContext } from "../../components/AppContext";
 
 import styles from "./IntroSteps.module.scss";
 
@@ -45,9 +45,9 @@ export interface StepProps {
 }
 
 function IntroSteps() {
-  const { currentUser } = useCurrentUser();
+  const { isAlreadyUser } = useAppContext();
   const [currentStep, setCurrentStep] = useState(
-    currentUser ? steps.existingWallet.id : steps.welcome.id
+    isAlreadyUser ? steps.existingWallet.id : steps.welcome.id
   );
 
   const Component = steps[currentStep].component;
