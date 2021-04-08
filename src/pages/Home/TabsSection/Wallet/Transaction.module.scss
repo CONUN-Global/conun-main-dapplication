@@ -14,10 +14,9 @@
 
 .SpeedPicker {
   display: flex;
-  justify-content: space-between;
+
   border-radius: 12px;
-  border: 0.8px solid #dadada;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 
   & .Speed {
     border: none;
@@ -27,14 +26,18 @@
     padding: 6px 10px;
     cursor: pointer;
     overflow: hidden;
+    width: 100%;
 
     &:focus {
       outline: none;
     }
 
     &.active {
-      border-radius: 12px;
-      border: 1px solid #8bbea9;
+      border: 1px solid var(--primary-color);
+      background-color: #ffff;
+      & > * {
+        color: var(--primary-color);
+      }
     }
 
     & .SpeedLabel {
@@ -42,11 +45,10 @@
     }
 
     & .SpeedValue {
-      color: #5e758a;
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
+      text-transform: uppercase;
+      font-size: 10px;
       width: 100%;
+      text-align: left;
     }
   }
 }
@@ -55,7 +57,7 @@
   display: flex;
   justify-content: space-between;
   width: 100%;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 
   & .GasInput {
     width: 80px;
@@ -63,8 +65,7 @@
 }
 
 .Switch {
-  border-radius: 8px;
-  margin-bottom: 36px;
+  margin-bottom: 11px;
 }
 
 .ConfirmButton {

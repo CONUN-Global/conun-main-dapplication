@@ -4,6 +4,8 @@ import url from "url";
 import keytar from "keytar";
 import os from "os";
 
+import db from "../store/db";
+
 import envVariables from "../../env-variables.json";
 
 const { auth0Domain, clientId } = envVariables;
@@ -36,7 +38,9 @@ function getAuthenticationURL() {
 }
 
 async function logout() {
+  await db.destroy();
   await keytar.deletePassword(keytarService, keytarAccount);
+
   accessToken = null;
   profile = null;
   refreshToken = null;

@@ -139,6 +139,20 @@ function Transaction() {
       />
       {hasFee && data && (
         <>
+          <Controller
+            name="isAdvanced"
+            control={control}
+            defaultValue={!!watchIsAdvanced}
+            render={({ value, onChange }) => (
+              <Switch
+                id="advanced-switch"
+                label="Advanced Options"
+                className={styles.Switch}
+                checked={value}
+                onChange={onChange}
+              />
+            )}
+          />
           {watchIsAdvanced ? (
             <div className={styles.AdvancedOptions}>
               <FormInput
@@ -190,7 +204,7 @@ function Transaction() {
                     >
                       <div className={styles.SpeedLabel}>{speed.label}</div>
                       <div className={styles.SpeedValue}>
-                        {data?.payload?.[speed.id]?.total}
+                        {data?.payload?.[speed.id]?.total} {token.token}
                       </div>
                     </button>
                   ))}
@@ -198,20 +212,6 @@ function Transaction() {
               )}
             />
           )}
-          <Controller
-            name="isAdvanced"
-            control={control}
-            defaultValue={!!watchIsAdvanced}
-            render={({ value, onChange }) => (
-              <Switch
-                id="advanced-switch"
-                label="Advanced Options"
-                className={styles.Switch}
-                checked={value}
-                onChange={onChange}
-              />
-            )}
-          />
         </>
       )}
       <Button

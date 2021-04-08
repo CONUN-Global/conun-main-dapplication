@@ -26,7 +26,7 @@ function Switch({ id, label, className, ...props }: SwitchProps) {
         onColor="#184186"
         {...props}
       />
-      {label && <div className={styles.Label}>{label}</div>}
+      {label && <span className={styles.Label}>{label}</span>}
     </label>
   );
 }

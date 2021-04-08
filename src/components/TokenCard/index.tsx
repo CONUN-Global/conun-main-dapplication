@@ -4,6 +4,8 @@ import classNames from "classnames";
 
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 
+import Conun from "../../assets/icons/conun.svg";
+
 import styles from "./TokenCard.module.scss";
 
 const { api } = window;
@@ -39,7 +41,10 @@ function TokenCard({ token, i }: TokenCardProps) {
       <div className={classNames(styles.Card, styles[token?.token])}>
         <span className={styles.Network}>Ethereum Network</span>
         <div className={styles.BalanceContainer}>
-          <div className={styles.Balance}>{balance?.payload}</div>
+          <div className={styles.Balance}>
+            <Conun className={styles.ConunLogoBalance} />
+            {balance?.payload}
+          </div>
           <span className={styles.TokenName}>{token.token}</span>
         </div>
         <div className={styles.WalletAddressContainer}>

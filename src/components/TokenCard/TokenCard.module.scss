@@ -15,6 +15,7 @@
   border-radius: 15px;
   cursor: pointer;
   width: 90%;
+  position: relative;
 
   & * {
     color: #ffffff;
@@ -29,16 +30,17 @@
   }
 
   &.eth {
-    background: linear-gradient(244.5deg, #5994d9 12.9%, #d2d2d2 85.63%);
+    background: linear-gradient(244.5deg, #223548 12.9%, #4d6987 85.63%);
   }
 
   &.conx {
-    background: linear-gradient(244.5deg, #1f7479 12.9%, #7da0a3 85.63%);
+    background: linear-gradient(244.5deg, #c95f72 12.9%, #792721 85.63%);
   }
 
   & .Network {
     text-transform: uppercase;
-    font-size: 12px;
+    font-size: 14px;
+    font-weight: bold;
   }
 
   & .BalanceContainer {
@@ -52,6 +54,12 @@
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
+
+      & .ConunLogoBalance {
+        height: 28px;
+        margin-right: 9px;
+        transform: translateY(3px);
+      }
     }
 
     & .TokenName {
