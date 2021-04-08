@@ -31,6 +31,7 @@ function Introduction({ setCurrentStep }: StepProps) {
         <span className={styles.Text}>Next</span>
         <Button
           type="button"
+          noStyle
           onClick={() => setCurrentStep("termsAndConditions")}
           className={styles.ArrowButton}
         >

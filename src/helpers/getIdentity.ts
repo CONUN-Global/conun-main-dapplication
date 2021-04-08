@@ -8,7 +8,7 @@ function getIdentity() {
   return null;
 }
 
-export function setIndentity(token: string) {
+export function setIndentity(token: any) {
   return localStorage.setItem(IDENTITY, JSON.stringify(token));
 }
 

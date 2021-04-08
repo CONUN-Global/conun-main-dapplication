@@ -5,12 +5,12 @@ import Introduction from "./Introduction";
 import TermsAndConditions from "./TermsAndConditions";
 import ImportWallet from "./ImportWallet";
 import CreateWallet from "./CreateWallet";
-import Success from "./Success";
 import Layout from "../../components/Layout";
 import ExistingWallet from "./ExistingWallet";
 
-import styles from "./IntroSteps.module.scss";
 import useCurrentUser from "../../hooks/useCurrentUser";
+
+import styles from "./IntroSteps.module.scss";
 
 const steps = {
   welcome: {
@@ -37,10 +37,6 @@ const steps = {
   existingWallet: {
     id: "existingWallet",
     component: ExistingWallet,
-  },
-  success: {
-    id: "success",
-    component: Success,
   },
 };
 

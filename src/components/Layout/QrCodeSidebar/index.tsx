@@ -36,7 +36,7 @@ function saveFileIdentity(
   const blob = new Blob([JSON.stringify(identity)], {
     type: "text/plain;charset=utf-8",
   });
-  saveAs(blob, `${walletAddress}.id`);
+  saveAs(blob, `${walletAddress}.json`);
 }
 
 function QrCodeSidebar() {
@@ -44,8 +44,8 @@ function QrCodeSidebar() {
   const { currentUser } = useAppCurrentUser();
 
   const { data } = useQuery(
-    "get-qr-code",
-    () => api.createQrCode(currentUser?.walletAddress),
+    "get-qr-code-wallet-address",
+    () => api.createQrCode({ walletAddress: currentUser?.walletAddress }),
     {
       enabled: !!currentUser,
     }

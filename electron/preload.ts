@@ -19,8 +19,7 @@ contextBridge.exposeInMainWorld("api", {
   },
   checkTransaction: (txHash: string) =>
     ipcRenderer.invoke("check-transaction", txHash),
-  createQrCode: (walletAddress: string) =>
-    ipcRenderer.invoke("create-qr-code", { walletAddress }),
+  createQrCode: (args: any) => ipcRenderer.invoke("create-qr-code", args),
   getRecentTransactions: () => ipcRenderer.invoke("get-recent-transactions"),
   setRecentTransacton: (transaction: any) =>
     ipcRenderer.invoke("set-recent-transaction", transaction),

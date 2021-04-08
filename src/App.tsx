@@ -1,5 +1,5 @@
 import React from "react";
-import { Switch, useLocation } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 
 import IntroRoute from "./Routes/IntroRoute";
 import PrivateRoute from "./Routes/PrivateRoute";
@@ -8,6 +8,7 @@ import Transfer from "./pages/Transfer";
 import IntroSteps from "./pages/IntroSteps";
 
 import { AppProvider } from "./components/AppContext";
+import Success from "./pages/Success";
 
 function App() {
   return (
@@ -16,6 +17,9 @@ function App() {
         <IntroRoute exact path="/">
           <IntroSteps />
         </IntroRoute>
+        <Route path="/success">
+          <Success />
+        </Route>
         <PrivateRoute path="/home">
           <HomeWrapper />
         </PrivateRoute>

@@ -1,0 +1,109 @@
+.ModalBodyOpen {
+  position: fixed;
+}
+
+.Overlay {
+  background-color: rgba(29, 37, 49, 0.7);
+  bottom: 0;
+  left: 0;
+  position: fixed;
+  right: 0;
+  top: 0;
+  z-index: 99999;
+
+  & :global(.ReactModal__Overlay) {
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+  }
+
+  & :global(.ReactModal__Overlay--after-open) {
+    opacity: 1;
+  }
+
+  & :global(.ReactModal__Overlay--before-close) {
+    opacity: 0;
+  }
+}
+
+.Modal {
+  overflow: hidden;
+  background-color: #fff;
+  border: 0;
+  font-size: 16px;
+  left: 50%;
+  max-height: calc(100vh - 100px);
+  position: absolute;
+  top: 50%;
+  border: 1px solid var(--primary-color);
+  outline: 0px;
+  transform: translate(-50%, -50%);
+  transition: all 0.5s ease-in-out;
+
+  &:focus {
+    outline: 0;
+  }
+}
+
+.Title {
+  padding: 15px 40px;
+  border-style: solid;
+  border-image: linear-gradient(
+    to right,
+    #f3f6fa 0%,
+    #d5dae9 20%,
+    #d5dae9 80%,
+    #f3f6fa 100%
+  );
+  border-image-width: 0px 0px 2px 0px;
+  border-image-slice: 1;
+  color: #8ea6c1;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-align: center;
+}
+
+.Close {
+  position: absolute;
+  display: flex;
+  right: 14px;
+  top: 14px;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  border: 2px solid #dbe5f1;
+  border-radius: 50%;
+  box-sizing: border-box;
+  color: #fff;
+  justify-content: center;
+  align-items: center;
+  transition: 0.2s;
+  cursor: pointer;
+
+  &:hover {
+    background-color: #645df6;
+    border-color: #645df6;
+    color: #fff;
+
+    & > svg {
+      fill: #fff;
+    }
+  }
+
+  & > svg {
+    width: 16px;
+    height: 16px;
+    fill: #bed0e4;
+  }
+}
+
+.Content {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  min-height: 200px;
+  padding: 1rem;
+  color: #405793;
+  font-size: 16px;
+  box-sizing: border-box;
+}

@@ -9,13 +9,21 @@
     height: 100%;
     width: 100%;
     transform: rotate(180deg);
+    fill: var(--arrow-grey);
   }
 }
 
 .Title {
-  font-size: 20px;
-  margin-top: 100px;
-  margin-bottom: 15px;
+  font-size: 24px;
+  margin-top: 120px;
+  margin-bottom: 12px;
+  color: var(--primary-color);
+}
+
+.Subtitle {
+  color: var(--primary-color);
+  font-size: 9px;
+  margin-bottom: 20px;
 }
 
 .TermsAndConditionsContainer {
@@ -24,7 +32,7 @@
 
 .TermsAndConditions {
   width: 280px;
-  height: 210px;
+  height: 260px;
   font-size: 10px;
 }
 

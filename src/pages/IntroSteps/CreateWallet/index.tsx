@@ -1,13 +1,19 @@
 import React from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useMutation } from "react-query";
+import { useHistory } from "react-router";
 
 import Button from "../../../components/Button";
 import FormInput from "../../../components/Form/HookForm/FormInput";
 
+import { useAppContext } from "../../../components/AppContext";
+import useLogin from "../../../hooks/useLogin";
+
 import Arrow from "../../../assets/icons/arrow.svg";
 
+import { setIndentity } from "../../../helpers/getIdentity";
+
 import { WALLET_TYPE } from "../../../const";
-import { useMutation } from "react-query";
 
 import { StepProps } from "..";
 
@@ -27,17 +33,26 @@ interface FormData {
 }
 
 function CreateWallet({ setCurrentStep }: StepProps) {
+  const { onLogin } = useAppContext();
   const { register, getValues, errors, handleSubmit } = useForm<FormData>();
 
   const { mutateAsync: create, isLoading } = useMutation((password: string) =>
     createWallet(password)
   );
 
+  const { login } = useLogin();
+
+  const history = useHistory();
+
   const onSubmit: SubmitHandler<FormData> = async ({ password }) => {
     const res = await create(password);
 
     if (res?.success) {
-      setCurrentStep("success");
+      setIndentity(res?.payload?.x509Identity);
+
+      const data = await login({ password, email: res?.payload?.user?.email });
+      onLogin(data?.payload?.["x-auth-token"]);
+      history.replace("/success");
     }
   };
 
@@ -51,7 +66,7 @@ function CreateWallet({ setCurrentStep }: StepProps) {
       >
         <Arrow className={styles.Arrow} />
       </Button>
-      <div className={styles.Title}>Set-up a Password</div>
+      <div className={styles.Title}>Password Setup</div>
       <div className={styles.Subtitle}>
         To create a new wallet,
         <br /> please set your wallet password.

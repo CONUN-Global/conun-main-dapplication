@@ -22,12 +22,12 @@ function ImportWallet({ setCurrentStep }: StepProps) {
         <Arrow className={styles.Arrow} />
       </Button>
       <div className={styles.Title}>
-        Do you have an Ethereum wallet
-        <br /> you would like to import?
+        Do you have an Ethereum
+        <br /> wallet to import?
       </div>
       <div className={styles.Subtitle}>
         If you have an existing Ethereum wallet you would like to import, enter
-        your private key, otherwise click create a new wallet.
+        your private key. Otherwise click “Create a new wallet.”
       </div>
       <Input
         label="Private Key"
@@ -52,6 +52,7 @@ function ImportWallet({ setCurrentStep }: StepProps) {
           type="button"
           onClick={() => setCurrentStep("createWallet")}
           className={styles.ArrowButton}
+          noStyle
         >
           <Arrow className={styles.Arrow} />
         </Button>

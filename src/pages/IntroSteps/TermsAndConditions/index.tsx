@@ -23,6 +23,10 @@ function TermsAndConditions({ setCurrentStep }: StepProps) {
         <Arrow className={styles.Arrow} />
       </Button>
       <div className={styles.Title}>Terms and Conditions</div>
+      <p className={styles.Subtitle}>
+        Please read through CONUN’s terms and conditions and privacy policies,
+        then select the check mark below to accept.
+      </p>
       <TextBox
         className={styles.TermsAndConditions}
         containerStyle={styles.TermsAndConditionsContainer}
@@ -75,7 +79,7 @@ function TermsAndConditions({ setCurrentStep }: StepProps) {
         round
         onClick={() => setCurrentStep("importWallet")}
       >
-        Accept
+        Next
       </Button>
     </>
   );

@@ -51,4 +51,8 @@
 
 .LogoutButton {
   font-size: 12px;
+
+  & > span {
+    color: var(--primary-color);
+  }
 }

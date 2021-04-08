@@ -52,8 +52,6 @@ function ExistingWallet({ setCurrentStep }: StepProps) {
         const data = await login({ password, email: currentUser.email });
 
         onLogin(data?.payload?.["x-auth-token"]);
-
-        setCurrentStep("success");
       }
     } catch (error) {
       // TODO: Show a toast
