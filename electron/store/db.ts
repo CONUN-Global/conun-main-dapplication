@@ -1,6 +1,7 @@
+import { app } from "electron";
 import PouchDB from "pouchdb";
 
-const db = new PouchDB("conun-db");
+const db = new PouchDB(`${app.getPath("appData")}/conun-db`);
 
 async function initDb() {
   const newTransactions: any = {
