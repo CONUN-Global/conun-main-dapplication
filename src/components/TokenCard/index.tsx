@@ -5,6 +5,7 @@ import classNames from "classnames";
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 
 import Conun from "../../assets/icons/conun.svg";
+import Ethereum from "../../assets/icons/ethereum.svg";
 
 import styles from "./TokenCard.module.scss";
 
@@ -39,10 +40,18 @@ function TokenCard({ token, i }: TokenCardProps) {
   return (
     <Slide innerClassName={styles.CardContainer} index={i}>
       <div className={classNames(styles.Card, styles[token?.token])}>
-        <span className={styles.Network}>Ethereum Network</span>
+        {token?.token === "conx" ? (
+          <span className={styles.Network}>Conun Network</span>
+        ) : (
+          <span className={styles.Network}>Ethereum Network</span>
+        )}
         <div className={styles.BalanceContainer}>
           <div className={styles.Balance}>
-            <Conun className={styles.ConunLogoBalance} />
+            {token?.token === "eth" ? (
+              <Ethereum className={styles.ConunLogoBalance} />
+            ) : (
+              <Conun className={styles.ConunLogoBalance} />
+            )}
             {balance?.payload}
           </div>
           <span className={styles.TokenName}>{token.token}</span>
