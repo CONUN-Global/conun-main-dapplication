@@ -91,7 +91,9 @@ function ExistingWallet() {
           <span className={styles.Email}>{currentUser?.email}</span>
         </div>
       </div>
-      <div className={styles.Title}>Welcome back {currentUser?.givenName}!</div>
+      <div className={styles.Title}>
+        Welcome back, {currentUser?.givenName}!
+      </div>
       <div className={styles.Subtitle}>
         Please drag and drop your JSON CONUN wallet file and enter your password
         to login to CONUN Manager.

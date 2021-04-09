@@ -200,6 +200,8 @@ ipcMain.handle("close-transfer-window", () => {
   }
 });
 
+ipcMain.handle("check-transfer-window", () => !!transferWindow);
+
 ipcMain.handle("request-balance-refetch", async () => {
   mainWindow.webContents.send("refetch-balances");
 });

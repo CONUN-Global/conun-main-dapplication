@@ -45,7 +45,7 @@ function Tranfer() {
     } catch (error) {
       toast.error("An error happened", {
         position: "top-center",
-        autoClose: 1000,
+        autoClose: 2000,
         hideProgressBar: true,
       });
     }

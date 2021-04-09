@@ -25,4 +25,5 @@ contextBridge.exposeInMainWorld("api", {
     ipcRenderer.invoke("set-recent-transaction", transaction),
   savePass: (data: any) => ipcRenderer.invoke("save-pass", data),
   getPass: () => ipcRenderer.invoke("get-pass"),
+  checkTransferWindow: () => ipcRenderer.invoke("check-transfer-window"),
 });
