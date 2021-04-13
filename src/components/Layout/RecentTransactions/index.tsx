@@ -1,12 +1,20 @@
+import React from "react";
 import { motion } from "framer-motion";
 import { formatDistance } from "date-fns";
-import React from "react";
 import { useQuery } from "react-query";
-import { useAppContext } from "../../AppContext";
 
 import OutsideClickHandler from "../../OutsideClickHandler";
+import Button from "../../Button";
+
+import { useAppContext } from "../../AppContext";
+
+import Ethereum from "../../../assets/icons/ethereum.svg";
+import Conun from "../../../assets/icons/conun.svg";
+import Copy from "../../../assets/icons/copy.svg";
+import Link from "../../../assets/icons/link.svg";
 
 import styles from "./RecentTransactions.module.scss";
+import Tooltip from "../../Tooltip";
 
 const { api } = window;
 
@@ -42,7 +50,11 @@ function RecentTransactions() {
           {data?.list?.length ? (
             data?.list?.map((tx) => (
               <div key={tx?.txId} className={styles.Transaction}>
-                <span>Icon</span>
+                {tx.token === "eth" ? (
+                  <Ethereum className={styles.Icon} />
+                ) : (
+                  <Conun className={styles.Icon} />
+                )}
                 <span className={styles.Amount}>
                   {tx.amount} {tx.token}
                 </span>
@@ -51,18 +63,45 @@ function RecentTransactions() {
                     addSuffix: true,
                   })}
                 </span>
-                <a
-                  href={
-                    tx.token === "conx"
-                      ? `https://conscan.conun.io/txns/${tx.txId}`
-                      : `https://ropsten.etherscan.io/tx/${tx.txId}`
+                <Tooltip id="copy">
+                  <Button
+                    type="button"
+                    noStyle
+                    onClick={() => navigator.clipboard.writeText(tx?.txId)}
+                    data-for="copy"
+                    data-tip="Copy transaction ID"
+                  >
+                    <Copy className={styles.ActionIcon} />
+                  </Button>
+                </Tooltip>
+                <Tooltip
+                  id="link"
+                  data-for="link"
+                  data-tip={
+                    tx?.token === "conx"
+                      ? "View on Conscan"
+                      : "View on Etherescan"
                   }
-                  className={styles.TransactionLink}
-                  target="_blank"
-                  rel="noreferrer"
                 >
-                  more
-                </a>
+                  <a
+                    href={
+                      tx.token === "conx"
+                        ? `https://conscan.conun.io/txns/${tx.txId}`
+                        : `https://ropsten.etherscan.io/tx/${tx.txId}`
+                    }
+                    className={styles.TransactionLink}
+                    target="_blank"
+                    rel="noreferrer"
+                    data-for="link"
+                    data-tip={
+                      tx?.token === "conx"
+                        ? "View on Conscan"
+                        : "View on Etherescan"
+                    }
+                  >
+                    <Link className={styles.ActionIcon} />
+                  </a>
+                </Tooltip>
               </div>
             ))
           ) : (

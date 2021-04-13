@@ -38,8 +38,8 @@ function getAuthenticationURL() {
 }
 
 async function logout() {
-  await db.destroy();
   await keytar.deletePassword(keytarService, keytarAccount);
+  await db.destroy();
 
   accessToken = null;
   profile = null;

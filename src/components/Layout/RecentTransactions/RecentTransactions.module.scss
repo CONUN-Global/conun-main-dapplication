@@ -35,6 +35,11 @@
         font-size: 11px;
       }
 
+      & .Icon {
+        width: 22px;
+        height: 22px;
+      }
+
       & .Amount {
         text-transform: uppercase;
         text-align: center;
@@ -46,11 +51,21 @@
         width: 110px;
       }
 
+      & .ActionIcon {
+        fill: var(--primary-color);
+        width: 15px;
+      }
+
       & .TransactionLink {
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
         text-align: center;
+
+        & .ActionIcon {
+          fill: var(--primary-color);
+          width: 15px;
+        }
       }
 
       & .NoTransactions {

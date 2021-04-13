@@ -18,7 +18,7 @@
 .QrButtonWrapper {
   position: absolute;
   right: 2px;
-  bottom: 65px;
+  bottom: 0;
   padding: 1rem;
   width: 65px;
   height: 65px;
@@ -111,7 +111,7 @@
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 135px;
+    margin-bottom: 20px;
 
     & .Label {
       margin-bottom: 5px;
