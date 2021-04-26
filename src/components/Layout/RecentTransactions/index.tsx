@@ -42,6 +42,7 @@ function RecentTransactions() {
       <motion.div
         className={styles.RecentTransactions}
         animate={isTransactionsOpen ? "open" : "closed"}
+        initial="closed"
         variants={variants}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >

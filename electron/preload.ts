@@ -26,4 +26,5 @@ contextBridge.exposeInMainWorld("api", {
   savePass: (data: any) => ipcRenderer.invoke("save-pass", data),
   getPass: () => ipcRenderer.invoke("get-pass"),
   checkTransferWindow: () => ipcRenderer.invoke("check-transfer-window"),
+  openDrive: () => ipcRenderer.invoke("open-drive"),
 });

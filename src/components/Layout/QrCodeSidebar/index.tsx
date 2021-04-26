@@ -56,6 +56,7 @@ function QrCodeSidebar() {
       <motion.div
         className={classNames(styles.Sidebar, styles.isClosed)}
         animate={isQrCodeOpen ? "open" : "closed"}
+        initial="closed"
         variants={variants}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
@@ -72,6 +73,7 @@ function QrCodeSidebar() {
       <motion.div
         className={styles.QrCodePage}
         animate={isQrCodeOpen ? "open" : "closed"}
+        initial="closed"
         variants={qrPageVariants}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >

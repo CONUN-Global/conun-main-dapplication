@@ -5,6 +5,12 @@
   z-index: 1001;
   right: 0;
 
+  & .LogoContainer {
+    & .ConunLogo {
+      width: 120px;
+    }
+  }
+
   & .TopButtons {
     display: flex;
     padding: 0 15px 3px 15px;

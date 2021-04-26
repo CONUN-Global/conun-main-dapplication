@@ -6,6 +6,8 @@ import { useAppContext } from "../../AppContext";
 import Button from "../../Button";
 import OutsideClickHandler from "../../OutsideClickHandler";
 
+import ConunLogo from "../../../assets/icons/conun-logo-letter.svg";
+
 import styles from "./SettingsSidebar.module.scss";
 
 const tabs = [
@@ -44,10 +46,13 @@ function SettingsSidebar() {
       <motion.div
         className={styles.SettingsSidebar}
         animate={isSettingsOpen ? "open" : "closed"}
+        initial="closed"
         variants={variants}
         transition={{ duration: 0.4, ease: "easeInOut" }}
       >
-        <div className={styles.LogoContainer}>Logo</div>
+        <div className={styles.LogoContainer}>
+          <ConunLogo className={styles.ConunLogo} />
+        </div>
         <div className={styles.TopButtons}>
           <Button className={styles.TopButton} noStyle>
             Disable Networks

@@ -15,6 +15,7 @@ import { prepareDb } from "./store/db";
 import "./ipcMain/account";
 import "./ipcMain/wallet";
 import "./ipcMain/db";
+import "./ipcMain/drive";
 
 let mainWindow: BrowserWindow | null = null;
 let authWindow: BrowserWindow | null = null;

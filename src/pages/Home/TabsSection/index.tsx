@@ -18,7 +18,7 @@ const tabs = {
 };
 
 function TabsSection() {
-  const [currentTab, setCurrentTab] = useState(tabs.wallet.id);
+  const [currentTab, setCurrentTab] = useState(tabs.network.id);
 
   const Component = tabs[currentTab].component;
   return (
