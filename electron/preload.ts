@@ -27,4 +27,9 @@ contextBridge.exposeInMainWorld("api", {
   getPass: () => ipcRenderer.invoke("get-pass"),
   checkTransferWindow: () => ipcRenderer.invoke("check-transfer-window"),
   openDrive: () => ipcRenderer.invoke("open-drive"),
+  listenIsDriveOpen: (fn: any) => {
+    ipcRenderer.on("is-drive-open", (e, ...args) => fn(...args));
+  },
+  setCurrentUser: (currentUser: any) =>
+    ipcRenderer.invoke("set-current-user", currentUser),
 });

@@ -3,6 +3,11 @@ import db from "../../store/db";
 
 const TRANSACTION_LIMIT = 5;
 
+ipcMain.handle("set-current-user", async (_, info) => {
+  const userDetails = await db.get("userDetails");
+  return db.put({ ...userDetails, walletAddress: info?.walletAddress });
+});
+
 ipcMain.handle("get-recent-transactions", async () => {
   const transactions = await db.get("transactions");
   return transactions;

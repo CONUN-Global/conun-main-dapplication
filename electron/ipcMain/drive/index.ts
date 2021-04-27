@@ -2,10 +2,14 @@ import path from "path";
 import { ipcMain } from "electron";
 import { spawn, ChildProcess } from "child_process";
 
+import db from "../../store/db";
 import { countDownload, likeContent, createFile } from "../../drive";
+
+import { mainWindow } from "../../";
 
 export let drive: ChildProcess | null;
 
+// @ts-expect-error
 ipcMain.handle("open-drive", async () => {
   try {
     drive = spawn(
@@ -17,6 +21,15 @@ ipcMain.handle("open-drive", async () => {
         stdio: ["pipe", "pipe", "pipe", "ipc"],
       }
     );
+
+    mainWindow.webContents.send("is-drive-open", true);
+
+    const userDetails: any = await db.get("userDetails");
+
+    drive.send({
+      type: "send-user-details",
+      walletAddress: userDetails?.walletAddress,
+    });
 
     drive.stdout.on("data", (data) => {
       console.log(`stdout:\n${data}`);
@@ -95,6 +108,7 @@ ipcMain.handle("open-drive", async () => {
 
     drive.on("exit", (code) => {
       console.log(`Child exited with code ${code}`);
+      mainWindow.webContents.send("is-drive-open", false);
     });
   } catch (error) {
     return {

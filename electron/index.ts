@@ -10,6 +10,8 @@ import {
   refreshTokens,
 } from "./services/auth-service";
 
+import { drive } from "./ipcMain/drive";
+
 import { prepareDb } from "./store/db";
 
 import "./ipcMain/account";
@@ -17,7 +19,7 @@ import "./ipcMain/wallet";
 import "./ipcMain/db";
 import "./ipcMain/drive";
 
-let mainWindow: BrowserWindow | null = null;
+export let mainWindow: BrowserWindow | null = null;
 let authWindow: BrowserWindow | null = null;
 let transferWindow: BrowserWindow | null = null;
 let showWindow: () => Promise<void> | null = null;
@@ -127,6 +129,9 @@ app.on("ready", showWindow);
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
+    if (drive) {
+      drive.kill();
+    }
     app.quit();
   }
 });

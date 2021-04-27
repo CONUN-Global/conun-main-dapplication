@@ -1,10 +1,14 @@
 import { useQuery } from "react-query";
 
 import instance from "../axios/instance";
+
 import getAuthHeader from "../helpers/getAuthHeader";
+
+const { api } = window;
 
 const getCurrentUser = async () => {
   const { data } = await instance.get("/users/me");
+  await api.setCurrentUser(data?.payload);
   return data;
 };
 
