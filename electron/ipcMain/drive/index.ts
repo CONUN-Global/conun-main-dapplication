@@ -50,8 +50,6 @@ ipcMain.handle("open-drive", async () => {
 
           const data = await res.json();
 
-          console.log(`data`, data);
-
           drive.send({
             type: "upload-success",
             transactionHash: data?.payload?.TxID,
