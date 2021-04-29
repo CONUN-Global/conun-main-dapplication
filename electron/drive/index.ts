@@ -70,12 +70,14 @@ export async function countDownload({
   userId: number;
   contentId: number;
 }) {
+  const userDetails: any = await db.get("userDetails");
+
   const body = {
     fcn: FcnTypes.CountDownloads,
     orgName: ORG_NAME,
     action: {
       ccid: publicHash,
-      wallet: "0xe4FD245bf3A78D414cFceec73d01b53959635935",
+      wallet: userDetails?.walletAddress,
       user_id: String(userId),
       content_id: String(contentId),
     },
