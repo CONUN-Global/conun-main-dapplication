@@ -26,13 +26,11 @@ function Network() {
         </div>
       </div>
       <div className={styles.RunningApps}>
-        <span className={styles.Label}>Offline Apps</span>
+        <span className={styles.Label}>Available Apps</span>
         <div className={styles.AppsList}>
-          {!isDriveOpen && (
-            <Button type="button" onClick={() => api.openDrive()} noStyle>
-              <DriveIcon className={styles.AppIcon} />
-            </Button>
-          )}
+          <Button type="button" onClick={() => api.openDrive()} noStyle>
+            <DriveIcon className={styles.AppIcon} />
+          </Button>
         </div>
       </div>
     </div>

@@ -19,10 +19,7 @@ function Footer() {
       })}
     >
       <div className={styles.Versioning}>
-        <div className={styles.Version}>Version 1.2</div>
-        {isAuthenticated && (
-          <div className={styles.Updates}>2 updates available</div>
-        )}
+        <div className={styles.Version}>Version 0.1.0-beta</div>
       </div>
       {isAuthenticated && (
         <Button

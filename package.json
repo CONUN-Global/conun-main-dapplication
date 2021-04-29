@@ -29,7 +29,7 @@
     "directories": {
       "output": "./out"
     },
-    "appId": "conun-manager.app",
+    "appId": "conun.manager.app",
     "mac": {
       "category": "public.app-category.productivity"
     },

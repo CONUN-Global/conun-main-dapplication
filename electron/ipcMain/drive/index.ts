@@ -3,10 +3,12 @@ import http from "http";
 
 import db from "../../store/db";
 import { countDownload, likeContent, createFile } from "../../drive";
+import { mainWindow } from "../../";
+import { ipcMain, shell } from "electron";
 
 export const clients: any = {};
 
-const PORT = 174012;
+const PORT = 17401;
 
 const server = http.createServer();
 
@@ -24,11 +26,17 @@ wsServer.on("request", async (request) => {
       request.origin +
       "."
   );
-  // You can rewrite this part of the code to accept only the requests from allowed origin
+
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
 
+  mainWindow.webContents.send("is-drive-open", true);
+
   const userDetails: any = await db.get("userDetails");
+
+  connection.on("close", () =>
+    mainWindow.webContents.send("is-drive-open", false)
+  );
 
   connection.send(
     JSON.stringify({
@@ -39,6 +47,16 @@ wsServer.on("request", async (request) => {
 
   connection.on("message", async (message) => {
     const messageData = JSON.parse(message?.utf8Data);
+
+    if (messageData?.type === "get-drive-path") {
+      try {
+        const appData = await db.get("appData");
+
+        await db.put({ ...appData, drivePath: messageData.path });
+      } catch (error) {
+        console.log(`error`, error);
+      }
+    }
     if (messageData?.type === "upload-file") {
       try {
         const res = await createFile(messageData?.fileHash?.path);
@@ -96,4 +114,11 @@ wsServer.on("request", async (request) => {
       }
     }
   });
+});
+
+ipcMain.handle("open-drive", async () => {
+  const appData: any = await db.get("appData");
+  if (appData.drivePath) {
+    shell.openPath(appData.drivePath);
+  }
 });
