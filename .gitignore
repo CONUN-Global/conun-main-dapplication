@@ -92,6 +92,7 @@ dist
 
 parcel-build/
 parcel-dist/
+assets/
 
 env-variables.json
 

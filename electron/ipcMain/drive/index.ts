@@ -1,117 +1,99 @@
-import path from "path";
-import { ipcMain } from "electron";
-import { spawn, ChildProcess } from "child_process";
+import { server as webSocketServer } from "websocket";
+import http from "http";
 
 import db from "../../store/db";
 import { countDownload, likeContent, createFile } from "../../drive";
 
-import { mainWindow } from "../../";
+export const clients: any = {};
 
-export let drive: ChildProcess | null;
+const PORT = 174012;
 
-// @ts-expect-error
-ipcMain.handle("open-drive", async () => {
-  try {
-    drive = spawn(
-      `${path.resolve(
-        __dirname,
-        "../../"
-      )}/exe-files/Conun Drive-1.0.0.AppImage`,
-      {
-        stdio: ["pipe", "pipe", "pipe", "ipc"],
-      }
-    );
+const server = http.createServer();
 
-    mainWindow.webContents.send("is-drive-open", true);
+server.listen(PORT);
 
-    const userDetails: any = await db.get("userDetails");
+export const wsServer = new webSocketServer({
+  httpServer: server,
+});
 
-    drive.send({
+wsServer.on("request", async (request) => {
+  const userID = "conun-drive";
+  console.log(
+    new Date() +
+      " Recieved a new connection from origin " +
+      request.origin +
+      "."
+  );
+  // You can rewrite this part of the code to accept only the requests from allowed origin
+  const connection = request.accept(null, request.origin);
+  clients[userID] = connection;
+
+  const userDetails: any = await db.get("userDetails");
+
+  connection.send(
+    JSON.stringify({
       type: "send-user-details",
       walletAddress: userDetails?.walletAddress,
-    });
+    })
+  );
 
-    drive.stdout.on("data", (data) => {
-      console.log(`stdout:\n${data}`);
-    });
-
-    drive.stderr.on("data", (data) => {
-      console.log(`stdout:\n${data}`);
-    });
-
-    drive.on("error", (error) => {
-      console.error(`error: ${error.message}`);
-    });
-
-    drive.on("message", async (message: any) => {
-      if (message?.type === "upload-file") {
-        try {
-          const res = await createFile(message?.fileHash?.path);
-
-          const data = await res.json();
-
-          drive.send({
+  connection.on("message", async (message) => {
+    const messageData = JSON.parse(message?.utf8Data);
+    if (messageData?.type === "upload-file") {
+      try {
+        const res = await createFile(messageData?.fileHash?.path);
+        const data = await res.json();
+        connection.send(
+          JSON.stringify({
             type: "upload-success",
             transactionHash: data?.payload?.TxID,
             publicHash: data?.payload?.Value,
-            fileHash: message?.fileHash?.path,
-            size: message?.fileHash?.size,
-            data: message?.data,
-          });
-        } catch (error) {
-          console.log(`error`, error);
-        }
+            fileHash: messageData?.fileHash?.path,
+            size: messageData?.fileHash?.size,
+            data: messageData?.data,
+          })
+        );
+      } catch (error) {
+        console.log(`error`, error);
       }
+    }
 
-      if (message?.type === "like-content") {
-        try {
-          const res = await likeContent({
-            contentId: message?.content_id,
-            userId: message?.user_id,
-            publicHash: message?.ccid,
-          });
-
-          const data = await res.json();
-
-          console.log(`data`, data);
-
-          drive.send({
+    if (messageData?.type === "like-content") {
+      try {
+        const res = await likeContent({
+          contentId: messageData?.content_id,
+          userId: messageData?.user_id,
+          publicHash: messageData?.ccid,
+        });
+        await res.json();
+        connection.send(
+          JSON.stringify({
             type: "like-success",
-            contentId: message?.content_id,
-          });
-        } catch (error) {
-          console.log(`error`, error);
-        }
+            contentId: messageData?.content_id,
+          })
+        );
+      } catch (error) {
+        console.log(`error`, error);
       }
+    }
 
-      if (message?.type === "download-content") {
-        try {
-          const res = await countDownload({
-            contentId: message?.content_id,
-            userId: message?.user_id,
-            publicHash: message?.ccid,
-          });
-
-          await res.json();
-
-          drive.send({
+    if (messageData?.type === "download-content") {
+      try {
+        const res = await countDownload({
+          contentId: messageData?.content_id,
+          userId: messageData?.user_id,
+          publicHash: messageData?.ccid,
+        });
+        await res.json();
+        connection.send(
+          JSON.stringify({
             type: "download-success",
-            contentId: message?.content_id,
-          });
-        } catch (error) {
-          console.log(`error`, error);
-        }
+            contentId: messageData?.content_id,
+          })
+        );
+      } catch (error) {
+        console.log(`error`, error);
       }
-    });
-
-    drive.on("exit", (code) => {
-      console.log(`Child exited with code ${code}`);
-      mainWindow.webContents.send("is-drive-open", false);
-    });
-  } catch (error) {
-    return {
-      success: false,
-      error: String(error),
-    };
-  }
+    }
+  });
 });

@@ -10,8 +10,6 @@ import {
   refreshTokens,
 } from "./services/auth-service";
 
-import { drive } from "./ipcMain/drive";
-
 import { prepareDb } from "./store/db";
 
 import "./ipcMain/account";
@@ -129,9 +127,6 @@ app.on("ready", showWindow);
 // explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
-    if (drive) {
-      drive.kill();
-    }
     app.quit();
   }
 });
