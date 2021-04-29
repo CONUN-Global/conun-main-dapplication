@@ -29,17 +29,10 @@
     "directories": {
       "output": "./out"
     },
-    "appId": "conun.app",
+    "appId": "conun-manager.app",
     "mac": {
       "category": "public.app-category.productivity"
     },
-    "extraResources": [
-      {
-        "from": "./assets",
-        "to": "assets"
-      }
-    ],
-    "asar": false,
     "win": {
       "target": [
         {
