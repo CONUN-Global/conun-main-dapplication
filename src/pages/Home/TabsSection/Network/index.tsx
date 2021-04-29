@@ -28,7 +28,11 @@ function Network() {
       <div className={styles.RunningApps}>
         <span className={styles.Label}>Available Apps</span>
         <div className={styles.AppsList}>
-          <Button type="button" onClick={() => api.openDrive()} noStyle>
+          <Button
+            type="button"
+            onClick={() => (isDriveOpen ? {} : api.openDrive())}
+            noStyle
+          >
             <DriveIcon className={styles.AppIcon} />
           </Button>
         </div>

@@ -12,24 +12,9 @@ import styles from "./SettingsSidebar.module.scss";
 
 const tabs = [
   {
-    id: "profile",
-    label: "Profile",
-    to: "/profile",
-  },
-  {
-    id: "privacy",
-    label: "Privacy",
-    to: "/privacy",
-  },
-  {
-    id: "faqs",
-    label: "FAQs",
-    to: "/faqs",
-  },
-  {
     id: "dicord",
     label: "Connect to Discord",
-    to: "/dicord",
+    to: "https://discord.gg/sUBkJJTB8y",
   },
 ];
 
@@ -54,18 +39,21 @@ function SettingsSidebar() {
           <ConunLogo className={styles.ConunLogo} />
         </div>
         <div className={styles.TopButtons}>
-          <Button className={styles.TopButton} noStyle>
-            Disable Networks
-          </Button>
           <Button className={styles.TopButton} onClick={onLogout} noStyle>
             Logout
           </Button>
         </div>
         <div className={styles.Tabs}>
           {tabs.map((tab) => (
-            <Link className={styles.Tab} key={tab.id} to={tab.to}>
+            <a
+              className={styles.Tab}
+              key={tab.id}
+              href={tab.to}
+              target="_blank"
+              rel="noreferrer"
+            >
               {tab.label}
-            </Link>
+            </a>
           ))}
         </div>
       </motion.div>
