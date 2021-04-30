@@ -3,6 +3,7 @@ import { Slide } from "pure-react-carousel";
 import classNames from "classnames";
 
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
+import useCurrentToken from "../../hooks/useCurrentToken";
 
 import Conun from "../../assets/icons/conun.svg";
 import Ethereum from "../../assets/icons/ethereum.svg";
@@ -28,7 +29,7 @@ interface TokenCardProps {
 
 function TokenCard({ token, i }: TokenCardProps) {
   const { currentUser } = useAppCurrentUser();
-
+  const currentToken = useCurrentToken();
   const { balance, refetch } = token?.useBalance();
 
   useEffect(() => {
@@ -36,6 +37,10 @@ function TokenCard({ token, i }: TokenCardProps) {
       await refetch();
     });
   }, []);
+
+  useEffect(() => {
+    refetch();
+  }, [currentToken]);
 
   return (
     <Slide innerClassName={styles.CardContainer} index={i}>
