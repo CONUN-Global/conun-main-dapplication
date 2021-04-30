@@ -156,6 +156,7 @@ ipcMain.handle("logout", async () => {
 
   if (mainWindow) {
     mainWindow.close();
+    app.quit();
   }
 });
 
