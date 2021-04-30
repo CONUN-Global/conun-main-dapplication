@@ -1,6 +1,6 @@
 {
   "name": "conun-manager",
-  "productName": "conun-manager",
+  "productName": "Conun Manager",
   "version": "0.1.0-beta",
   "description": "Conun Manager",
   "homepage": "./",
@@ -15,12 +15,18 @@
     "release": "yarn build && electron-builder --publish=always",
     "lint": "eslint --ext .ts ."
   },
-  "keywords": [],
+  "keywords": [
+    "conun",
+    "ethereum",
+    "wallet"
+  ],
   "author": {
     "name": "Conun",
     "email": "ivan@conun.co.kr"
   },
+  "repository": "https://github.com/CONUN-Global/conun-main-dapplication",
   "license": "MIT",
+  "copyright": "Copyright 2020 by CONUN GROUP",
   "build": {
     "files": [
       "dist/**/*",
@@ -30,15 +36,26 @@
       "output": "./out"
     },
     "appId": "conun.manager.app",
+    "publish": {
+      "provider": "github"
+    },
     "mac": {
       "category": "public.app-category.productivity"
     },
     "win": {
       "target": [
         {
-          "target": "nsis"
+          "target": "nsis",
+          "arch": [
+            "x64",
+            "ia32"
+          ]
         }
-      ]
+      ],
+      "certificateFile": "private/conun.io.certificate.p12",
+      "certificatePassword": "",
+      "verifyUpdateCodeSignature": "false",
+      "publisherName": "conun.io.certificate"
     },
     "linux": {
       "category": "Utility",
@@ -88,7 +105,7 @@
     "date-fns": "^2.19.0",
     "electron-fetch": "^1.7.3",
     "electron-is-dev": "^2.0.0",
-    "electron-squirrel-startup": "^1.0.0",
+    "electron-updater": "^4.3.8",
     "ethereumjs-tx": "^2.1.2",
     "file-saver": "^2.0.5",
     "framer-motion": "^4.1.2",

@@ -84,6 +84,7 @@ wsServer.on("request", async (request) => {
           publicHash: messageData?.ccid,
         });
         await res.json();
+
         connection.send(
           JSON.stringify({
             type: "like-success",
@@ -102,7 +103,8 @@ wsServer.on("request", async (request) => {
           userId: messageData?.user_id,
           publicHash: messageData?.ccid,
         });
-        await res.json();
+        const data = await res.json();
+        console.log(`data`, data);
         connection.send(
           JSON.stringify({
             type: "download-success",

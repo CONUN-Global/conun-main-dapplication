@@ -1,6 +1,7 @@
 import path from "path";
 import { app, BrowserWindow, ipcMain, shell } from "electron";
 import isDev from "electron-is-dev";
+import { autoUpdater } from "electron-updater";
 
 import {
   getAuthenticationURL,
@@ -17,16 +18,12 @@ import "./ipcMain/wallet";
 import "./ipcMain/db";
 import "./ipcMain/drive";
 
+autoUpdater.checkForUpdatesAndNotify();
+
 export let mainWindow: BrowserWindow | null = null;
 let authWindow: BrowserWindow | null = null;
 let transferWindow: BrowserWindow | null = null;
 let showWindow: () => Promise<void> | null = null;
-
-// Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require("electron-squirrel-startup")) {
-  // eslint-disable-line global-require
-  app.quit();
-}
 
 function destroyAuthWin() {
   if (!authWindow) return;
