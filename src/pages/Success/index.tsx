@@ -9,6 +9,7 @@ import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 
 import Arrow from "../../assets/icons/arrow.svg";
 import SuccessIcon from "../../assets/icons/success-icon.svg";
+import JsonIcon from "../../assets/icons/json.svg";
 
 import getIdentity from "../../helpers/getIdentity";
 
@@ -50,7 +51,7 @@ function Success() {
             noStyle
             className={styles.JsonIconContainer}
           >
-            JSON
+            <JsonIcon className={styles.JsonIcon} />
           </Button>
         </div>
       </div>

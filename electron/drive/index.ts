@@ -2,11 +2,14 @@ import fetch from "electron-fetch";
 
 import db from "../store/db";
 
-import { API_URI, FcnTypes, ORG_NAME } from "../const";
+import { DEV_SERVER, FcnTypes, ORG_NAME, PROD_SERVER } from "../const";
 
 const DEFAULT_PRICE = "0";
 
 const DEFAULT_STATUS = "public";
+
+const SERVER_URL =
+  process.env.NODE_ENV === "development" ? DEV_SERVER : PROD_SERVER;
 
 export async function createFile(ipfshash: string) {
   const userDetails: any = await db.get("userDetails");
@@ -21,7 +24,7 @@ export async function createFile(ipfshash: string) {
     },
   };
 
-  const data = await fetch(`${API_URI}/drive/mychannel/ConunDrive`, {
+  const data = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
@@ -52,7 +55,7 @@ export async function likeContent({
     },
   };
 
-  const data = await fetch(`${API_URI}/drive/mychannel/ConunDrive`, {
+  const data = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
@@ -83,7 +86,7 @@ export async function countDownload({
     },
   };
 
-  const data = await fetch(`${API_URI}/drive/mychannel/ConunDrive`, {
+  const data = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
