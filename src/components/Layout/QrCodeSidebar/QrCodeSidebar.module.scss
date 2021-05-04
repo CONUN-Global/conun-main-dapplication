@@ -49,10 +49,12 @@
   overflow: hidden;
   background-color: transparent;
   position: absolute;
-  right: 29px;
-  top: 2px;
+  right: -8px;
+  top: -32px;
   cursor: pointer;
   outline: none;
+  height: 100%;
+  width: 100%;
 
   & .QrCode {
     height: 25px;
