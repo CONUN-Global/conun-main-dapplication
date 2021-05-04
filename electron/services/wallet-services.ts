@@ -6,6 +6,7 @@ import qrcode from "qrcode";
 import { dialog } from "electron";
 import fetch from "electron-fetch";
 import jimp from "jimp";
+import isDev from "electron-is-dev";
 //@ts-expect-error
 import QRReader from "qrcode-reader";
 
@@ -13,8 +14,7 @@ import envVariables from "../../env-variables.json";
 import { DEV_SERVER, ORG_NAME, PROD_SERVER } from "../const";
 import { getProfile } from "./auth-service";
 
-const SERVER_URL =
-  process.env.NODE_ENV === "development" ? DEV_SERVER : PROD_SERVER;
+const SERVER_URL = isDev ? DEV_SERVER : PROD_SERVER;
 
 const web3 = new Web3(envVariables.web3Url);
 

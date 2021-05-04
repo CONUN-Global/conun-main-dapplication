@@ -11,6 +11,8 @@ import {
   refreshTokens,
 } from "./services/auth-service";
 
+import logger from "./logger";
+
 import { prepareDb } from "./store/db";
 
 import "./ipcMain/account";
@@ -50,7 +52,7 @@ const createWindow = async (): Promise<void> => {
   try {
     await prepareDb();
   } catch (error) {
-    console.log(error);
+    logger("prepare-db", error);
   }
 
   if (isDev) {
@@ -114,6 +116,7 @@ showWindow = async () => {
     await refreshTokens();
     return createWindow();
   } catch (err) {
+    logger("show-window", err);
     return createAuthWindow();
   }
 };
@@ -161,38 +164,43 @@ ipcMain.handle("logout", async () => {
 });
 
 ipcMain.handle("open-transfer-window", async (_, args) => {
-  if (!transferWindow) {
-    transferWindow = new BrowserWindow({
-      width: 380,
-      height: 371,
-      frame: false,
-      webPreferences: {
-        nodeIntegration: false,
-        preload: path.resolve(__dirname, "preload.js"),
-      },
-    });
+  try {
+    if (!transferWindow) {
+      transferWindow = new BrowserWindow({
+        width: 380,
+        height: 371,
+        webPreferences: {
+          nodeIntegration: false,
+          preload: path.resolve(__dirname, "preload.js"),
+        },
+      });
 
-    transferWindow.removeMenu();
-    transferWindow.setResizable(false);
-    transferWindow.setAlwaysOnTop(true, "normal");
+      transferWindow.removeMenu();
+      transferWindow.setResizable(false);
 
-    if (isDev) {
-      await transferWindow.loadURL("http://localhost:1234/#transfer");
-      transferWindow.webContents.openDevTools();
-    } else {
-      await transferWindow.loadURL(
-        `file://${path.join(__dirname, "../parcel-build/index.html#transfer")}`
-      );
+      if (isDev) {
+        await transferWindow.loadURL("http://localhost:1234/#transfer");
+        transferWindow.webContents.openDevTools();
+      } else {
+        await transferWindow.loadURL(
+          `file://${path.join(
+            __dirname,
+            "../parcel-build/index.html#transfer"
+          )}`
+        );
+      }
+
+      if (transferWindow) {
+        transferWindow.webContents.send("send-transfer-data", args);
+      }
+
+      transferWindow.webContents.on("new-window", (event, url) => {
+        event.preventDefault();
+        shell.openExternal(url);
+      });
     }
-
-    if (transferWindow) {
-      transferWindow.webContents.send("send-transfer-data", args);
-    }
-
-    transferWindow.webContents.on("new-window", (event, url) => {
-      event.preventDefault();
-      shell.openExternal(url);
-    });
+  } catch (error) {
+    logger("transfer-window", error);
   }
 });
 
@@ -207,4 +215,8 @@ ipcMain.handle("check-transfer-window", () => !!transferWindow);
 
 ipcMain.handle("request-balance-refetch", async () => {
   mainWindow.webContents.send("refetch-balances");
+});
+
+process.on("uncaughtException", (uncaughtException) => {
+  logger("uncaught-exception", uncaughtException);
 });

@@ -1,4 +1,5 @@
 import fetch from "electron-fetch";
+import isDev from "electron-is-dev";
 
 import db from "../store/db";
 
@@ -8,8 +9,7 @@ const DEFAULT_PRICE = "0";
 
 const DEFAULT_STATUS = "public";
 
-const SERVER_URL =
-  process.env.NODE_ENV === "development" ? DEV_SERVER : PROD_SERVER;
+const SERVER_URL = isDev ? DEV_SERVER : PROD_SERVER;
 
 export async function createFile(ipfshash: string) {
   const userDetails: any = await db.get("userDetails");
@@ -24,11 +24,13 @@ export async function createFile(ipfshash: string) {
     },
   };
 
-  const data = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
   });
+
+  const data = await res.json();
 
   return data;
 }
@@ -55,11 +57,13 @@ export async function likeContent({
     },
   };
 
-  const data = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
+  const res = await fetch(`${DEV_SERVER}/drive/mychannel/ConunDrive`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
   });
+
+  const data = await res.json();
 
   return data;
 }
@@ -86,11 +90,13 @@ export async function countDownload({
     },
   };
 
-  const data = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
   });
+
+  const data = await res.json();
 
   return data;
 }

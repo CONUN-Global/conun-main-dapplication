@@ -1,10 +1,12 @@
+import { ipcMain, shell } from "electron";
 import { server as webSocketServer } from "websocket";
 import http from "http";
 
 import db from "../../store/db";
 import { countDownload, likeContent, createFile } from "../../drive";
 import { mainWindow } from "../../";
-import { ipcMain, shell } from "electron";
+
+import logger from "../../logger";
 
 export const clients: any = {};
 
@@ -20,12 +22,6 @@ export const wsServer = new webSocketServer({
 
 wsServer.on("request", async (request) => {
   const userID = "conun-drive";
-  console.log(
-    new Date() +
-      " Recieved a new connection from origin " +
-      request.origin +
-      "."
-  );
 
   const connection = request.accept(null, request.origin);
   clients[userID] = connection;
@@ -54,65 +50,75 @@ wsServer.on("request", async (request) => {
 
         await db.put({ ...appData, drivePath: messageData.path });
       } catch (error) {
-        console.log(`error`, error);
+        logger("get-drive-path", error);
       }
     }
     if (messageData?.type === "upload-file") {
       try {
-        const res = await createFile(messageData?.fileHash?.path);
-        const data = await res.json();
-        connection.send(
-          JSON.stringify({
-            type: "upload-success",
-            transactionHash: data?.payload?.TxID,
-            publicHash: data?.payload?.Value,
-            fileHash: messageData?.fileHash?.path,
-            size: messageData?.fileHash?.size,
-            data: messageData?.data,
-          })
-        );
+        const data = await createFile(messageData?.fileHash?.path);
+
+        if (data?.success) {
+          connection.send(
+            JSON.stringify({
+              type: "upload-success",
+              transactionHash: data?.payload?.TxID,
+              publicHash: data?.payload?.Value,
+              fileHash: messageData?.fileHash?.path,
+              size: messageData?.fileHash?.size,
+              data: messageData?.data,
+            })
+          );
+        } else {
+          logger("like-error", data);
+        }
       } catch (error) {
-        console.log(`error`, error);
+        logger("create-file", error);
       }
     }
 
     if (messageData?.type === "like-content") {
       try {
-        const res = await likeContent({
+        const data = await likeContent({
           contentId: messageData?.content_id,
           userId: messageData?.user_id,
           publicHash: messageData?.ccid,
         });
-        await res.json();
 
-        connection.send(
-          JSON.stringify({
-            type: "like-success",
-            contentId: messageData?.content_id,
-          })
-        );
+        if (data?.success) {
+          connection.send(
+            JSON.stringify({
+              type: "like-success",
+              contentId: messageData?.content_id,
+            })
+          );
+        } else {
+          logger("like-error", data);
+        }
       } catch (error) {
-        console.log(`error`, error);
+        logger("like-error", error);
       }
     }
 
     if (messageData?.type === "download-content") {
       try {
-        const res = await countDownload({
+        const data = await countDownload({
           contentId: messageData?.content_id,
           userId: messageData?.user_id,
           publicHash: messageData?.ccid,
         });
-        const data = await res.json();
-        console.log(`data`, data);
-        connection.send(
-          JSON.stringify({
-            type: "download-success",
-            contentId: messageData?.content_id,
-          })
-        );
+
+        if (data?.success) {
+          connection.send(
+            JSON.stringify({
+              type: "download-success",
+              contentId: messageData?.content_id,
+            })
+          );
+        } else {
+          logger("download-success", data);
+        }
       } catch (error) {
-        console.log(`error`, error);
+        logger("download-success", error);
       }
     }
   });

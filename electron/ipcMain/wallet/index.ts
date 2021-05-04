@@ -2,6 +2,7 @@ import { ipcMain } from "electron";
 
 import signGenerator from "../../services/sign-generator";
 import { checkTransaction } from "../../services/wallet-services";
+import logger from "../../logger";
 
 ipcMain.handle("generate-signature", async (_, args) => {
   try {
@@ -9,6 +10,7 @@ ipcMain.handle("generate-signature", async (_, args) => {
 
     return res;
   } catch (error) {
+    logger("generate-signature", error);
     return {
       success: false,
       error,
@@ -22,6 +24,7 @@ ipcMain.handle("check-transaction", async (_, args) => {
 
     return data;
   } catch (error) {
+    logger("check-transaction", error);
     return {
       success: false,
       error,
