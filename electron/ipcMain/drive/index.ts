@@ -69,9 +69,21 @@ wsServer.on("request", async (request) => {
             })
           );
         } else {
+          connection.send(
+            JSON.stringify({
+              type: "upload-failure",
+              data: data?.payload,
+            })
+          );
           logger("like-error", data);
         }
       } catch (error) {
+        connection.send(
+          JSON.stringify({
+            type: "upload-failure",
+            data: String(error),
+          })
+        );
         logger("create-file", error);
       }
     }
@@ -92,9 +104,21 @@ wsServer.on("request", async (request) => {
             })
           );
         } else {
+          connection.send(
+            JSON.stringify({
+              type: "like-failure",
+              data: data?.payload,
+            })
+          );
           logger("like-error", data);
         }
       } catch (error) {
+        connection.send(
+          JSON.stringify({
+            type: "like-failure",
+            data: String(error),
+          })
+        );
         logger("like-error", error);
       }
     }
@@ -115,9 +139,21 @@ wsServer.on("request", async (request) => {
             })
           );
         } else {
+          connection.send(
+            JSON.stringify({
+              type: "download-failure",
+              data: data?.payload,
+            })
+          );
           logger("download-success", data);
         }
       } catch (error) {
+        connection.send(
+          JSON.stringify({
+            type: "upload-failure",
+            data: String(error),
+          })
+        );
         logger("download-success", error);
       }
     }

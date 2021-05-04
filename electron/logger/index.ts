@@ -20,6 +20,7 @@ async function logger(name: string, error: any) {
   const body = {
     productName: "Conun Manager",
     companyName: "CONUN Global",
+    error_date: Date.now().toLocaleString(),
     version: app.getVersion(),
     platform: process.platform,
     process_type: process.type,
