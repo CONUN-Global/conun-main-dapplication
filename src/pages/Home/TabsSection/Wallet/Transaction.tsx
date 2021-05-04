@@ -126,6 +126,10 @@ function Transaction() {
             value: true,
             message: "Please specify an amount",
           },
+          validate: {
+            moreThanZero: (value) =>
+              Number(value) <= 0 ? "Amount should be more than 0" : "" || true,
+          },
         })}
         wrapperStyles={styles.Input}
         type="number"

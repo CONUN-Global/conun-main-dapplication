@@ -198,6 +198,11 @@ ipcMain.handle("open-transfer-window", async (_, args) => {
         event.preventDefault();
         shell.openExternal(url);
       });
+      transferWindow.on("close", () => {
+        if (transferWindow) {
+          transferWindow = null;
+        }
+      });
     }
   } catch (error) {
     logger("transfer-window", error);
