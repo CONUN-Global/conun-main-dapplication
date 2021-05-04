@@ -1,11 +1,23 @@
 import { useMutation } from "react-query";
 
+import useAppCurrentUser from "./useAppCurrentUser";
+import useSignature from "./useSignature";
+import usePass from "./usePass";
+
 import instance from "../axios/instance";
 
-import { FcnTypes, ORG_NAME, WALLET_TYPE } from "../const";
-import useAppCurrentUser from "./useAppCurrentUser";
-import usePass from "./usePass";
-import useSignature from "./useSignature";
+import {
+  FcnTypes,
+  ORG_NAME,
+  SMART_CONTRACT_DEV,
+  SMART_CONTRACT_PROD,
+  WALLET_TYPE,
+} from "../const";
+
+const SMART_CONTRACT =
+  process.env.NODE_ENV === "development"
+    ? SMART_CONTRACT_DEV
+    : SMART_CONTRACT_PROD;
 
 type Values = {
   type: string;
@@ -78,7 +90,7 @@ function useTransfer({ token }: UseTransferProps) {
     });
     if (signature) {
       const { data } = await instance.post(
-        "/con-token/channels/mychannel/chaincodes/conos",
+        `/con-token/channels/mychannel/chaincodes/${SMART_CONTRACT}`,
         {
           fcn: FcnTypes.Transfer,
           orgName: ORG_NAME,
