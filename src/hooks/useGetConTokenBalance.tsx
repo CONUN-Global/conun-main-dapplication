@@ -11,13 +11,13 @@ import {
   SMART_CONTRACT_PROD,
 } from "../const";
 
-const SMART_CONTRACT =
-  process.env.NODE_ENV === "development"
-    ? SMART_CONTRACT_DEV
-    : SMART_CONTRACT_PROD;
-
 function useGetConTokenBalance() {
   const { currentUser } = useAppCurrentUser();
+
+  const SMART_CONTRACT =
+    process.env.NODE_ENV === "development"
+      ? SMART_CONTRACT_DEV
+      : SMART_CONTRACT_PROD;
 
   const { data, isLoading, refetch, isFetching } = useQuery(
     "balance",

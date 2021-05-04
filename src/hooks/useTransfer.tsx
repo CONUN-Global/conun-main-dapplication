@@ -14,11 +14,6 @@ import {
   WALLET_TYPE,
 } from "../const";
 
-const SMART_CONTRACT =
-  process.env.NODE_ENV === "development"
-    ? SMART_CONTRACT_DEV
-    : SMART_CONTRACT_PROD;
-
 type Values = {
   type: string;
   amount: number;
@@ -74,6 +69,11 @@ function useTransfer({ token }: UseTransferProps) {
   } = useMutation((transferData: Values) =>
     transferHelper(token, transferData, currentUser?.walletAddress, pass)
   );
+
+  const SMART_CONTRACT =
+    process.env.NODE_ENV === "development"
+      ? SMART_CONTRACT_DEV
+      : SMART_CONTRACT_PROD;
 
   const {
     mutateAsync: transferLocal,
