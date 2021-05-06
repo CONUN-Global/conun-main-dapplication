@@ -17,6 +17,7 @@ async function logger(name: string, error: any) {
   }
 
   const userDetails: { walletAddress: string } = await db.get("userDetails");
+
   const body = {
     productName: "Conun Manager",
     companyName: "CONUN Global",

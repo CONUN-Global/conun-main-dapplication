@@ -107,6 +107,7 @@ wsServer.on("request", async (request) => {
           connection.send(
             JSON.stringify({
               type: "like-failure",
+              contentId: messageData?.content_id,
               data: data?.payload,
             })
           );
@@ -136,6 +137,7 @@ wsServer.on("request", async (request) => {
             JSON.stringify({
               type: "download-success",
               contentId: messageData?.content_id,
+              contentHash: messageData?.hash,
             })
           );
         } else {
