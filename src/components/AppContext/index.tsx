@@ -9,6 +9,7 @@ import React, {
 
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 import useUserCheck from "../../hooks/useUserCheck";
+import useDbUser from "../../hooks/useDbUser";
 
 import removeAllTokens from "../../helpers/removeAllTokens";
 import getWalletAddress, {
@@ -45,6 +46,10 @@ type State = {
   handleQRSidebar: (state: boolean) => void;
   isTransactionsOpen: boolean;
   handleTransactionsBar: (state: boolean) => void;
+  userDb: {
+    walletAddress: string;
+    askForPassword: boolean;
+  };
 };
 type AppProviderProps = { children: ReactNode };
 
@@ -61,6 +66,7 @@ const setAuthHeaderToken = (token: string) => {
 function AppProvider({ children }: AppProviderProps) {
   const { currentUser, refetch } = useAppCurrentUser();
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const { user } = useDbUser();
   const [isQrCodeOpen, setIsQrCodeOpen] = useState(false);
   const [isTransactionsOpen, setIsTransactionsOpen] = useState(false);
 
@@ -89,9 +95,17 @@ function AppProvider({ children }: AppProviderProps) {
     []
   );
 
-  const handleSettingsSidebar = (state: boolean) => setIsSettingsOpen(state);
+  const handleSettingsSidebar = (state: boolean) => {
+    if (isSettingsOpen !== state) {
+      setIsSettingsOpen(state);
+    }
+  };
 
-  const handleQRSidebar = (state: boolean) => setIsQrCodeOpen(state);
+  const handleQRSidebar = (state: boolean) => {
+    if (state !== isQrCodeOpen) {
+      setIsQrCodeOpen(state);
+    }
+  };
 
   const handleTransactionsBar = (state: boolean) =>
     setIsTransactionsOpen(state);
@@ -110,6 +124,7 @@ function AppProvider({ children }: AppProviderProps) {
       handleSettingsSidebar,
       isQrCodeOpen,
       handleQRSidebar,
+      userDb: user,
       isTransactionsOpen,
       handleTransactionsBar,
     }),
@@ -125,6 +140,7 @@ function AppProvider({ children }: AppProviderProps) {
       handleQRSidebar,
       isTransactionsOpen,
       handleTransactionsBar,
+      user,
     ]
   );
 

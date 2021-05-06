@@ -1,10 +1,10 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { useAppContext } from "../../AppContext";
 
 import Button from "../../Button";
 import OutsideClickHandler from "../../OutsideClickHandler";
+import PasswordSettingsModal from "./PasswordSettingsModal";
 
 import ConunLogo from "../../../assets/icons/conun-logo-letter.svg";
 
@@ -16,6 +16,11 @@ const tabs = [
     label: "Connect to Discord",
     to: "https://discord.gg/sUBkJJTB8y",
   },
+  {
+    id: "password",
+    label: "Security",
+    isOpenPasswordModal: true,
+  },
 ];
 
 const variants = {
@@ -24,6 +29,7 @@ const variants = {
 };
 
 function SettingsSidebar() {
+  const [isPasswordModalOpen, setIsPasswordModalOpen] = useState(false);
   const { handleSettingsSidebar, isSettingsOpen, onLogout } = useAppContext();
 
   return (
@@ -44,17 +50,39 @@ function SettingsSidebar() {
           </Button>
         </div>
         <div className={styles.Tabs}>
-          {tabs.map((tab) => (
-            <a
-              className={styles.Tab}
-              key={tab.id}
-              href={tab.to}
-              target="_blank"
-              rel="noreferrer"
-            >
-              {tab.label}
-            </a>
-          ))}
+          {tabs.map((tab) => {
+            if (tab.isOpenPasswordModal) {
+              return (
+                <Button
+                  className={styles.Tab}
+                  key={tab.id}
+                  onClick={() => setIsPasswordModalOpen(true)}
+                  noStyle
+                >
+                  {tab.label}
+                </Button>
+              );
+            }
+
+            return (
+              <a
+                className={styles.Tab}
+                key={tab.id}
+                href={tab.to}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {tab.label}
+              </a>
+            );
+          })}
+          <PasswordSettingsModal
+            isOpen={isPasswordModalOpen}
+            onClose={() => {
+              setIsPasswordModalOpen(false);
+              handleSettingsSidebar(true);
+            }}
+          />
         </div>
       </motion.div>
     </OutsideClickHandler>

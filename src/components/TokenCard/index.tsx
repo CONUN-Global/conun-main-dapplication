@@ -39,7 +39,9 @@ function TokenCard({ token, i }: TokenCardProps) {
   }, []);
 
   useEffect(() => {
-    refetch();
+    if (currentToken.token === token.token) {
+      refetch();
+    }
   }, [currentToken]);
 
   return (

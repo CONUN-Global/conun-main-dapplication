@@ -24,7 +24,7 @@ contextBridge.exposeInMainWorld("api", {
   setRecentTransacton: (transaction: any) =>
     ipcRenderer.invoke("set-recent-transaction", transaction),
   savePass: (data: any) => ipcRenderer.invoke("save-pass", data),
-  getPass: () => ipcRenderer.invoke("get-pass"),
+  getCurrentUser: () => ipcRenderer.invoke("get-current-user"),
   checkTransferWindow: () => ipcRenderer.invoke("check-transfer-window"),
   openDrive: () => ipcRenderer.invoke("open-drive"),
   listenIsDriveOpen: (fn: any) => {

@@ -21,6 +21,7 @@ export async function prepareDb() {
     const userDetails: any = {
       _id: "userDetails",
       pass: "",
+      askForPassword: true,
     };
     await db.put(userDetails);
   }

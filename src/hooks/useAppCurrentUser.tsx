@@ -8,7 +8,7 @@ const { api } = window;
 
 const getCurrentUser = async () => {
   const { data } = await instance.get("/users/me");
-  await api.setCurrentUser(data?.payload);
+  await api.setCurrentUser({ walletAddress: data?.payload?.walletAddress });
   return data;
 };
 

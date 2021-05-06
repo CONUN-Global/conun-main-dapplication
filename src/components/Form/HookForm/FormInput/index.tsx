@@ -11,7 +11,7 @@ interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   round?: boolean;
   label?: string;
-  error: FieldError | undefined;
+  error?: FieldError | undefined;
   wrapperStyles?: string;
 }
 

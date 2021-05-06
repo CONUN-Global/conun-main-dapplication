@@ -5,7 +5,8 @@ const TRANSACTION_LIMIT = 5;
 
 ipcMain.handle("set-current-user", async (_, info) => {
   const userDetails = await db.get("userDetails");
-  return db.put({ ...userDetails, walletAddress: info?.walletAddress });
+
+  return db.put({ ...userDetails, ...info });
 });
 
 ipcMain.handle("get-recent-transactions", async () => {
