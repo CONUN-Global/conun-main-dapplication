@@ -5,7 +5,7 @@ import classNames from "classnames";
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 import useCurrentToken from "../../hooks/useCurrentToken";
 
-import Conun from "../../assets/icons/conun.svg";
+import Conun from "../../assets/icons/conun-white.svg";
 import Ethereum from "../../assets/icons/ethereum.svg";
 
 import styles from "./TokenCard.module.scss";
