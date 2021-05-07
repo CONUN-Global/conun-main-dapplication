@@ -136,8 +136,8 @@ wsServer.on("request", async (request) => {
           connection.send(
             JSON.stringify({
               type: "download-success",
-              contentId: messageData?.content_id,
               contentHash: messageData?.hash,
+              name: messageData?.name,
             })
           );
         } else {
