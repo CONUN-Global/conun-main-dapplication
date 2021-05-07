@@ -38,4 +38,31 @@ export async function prepareDb() {
   }
 }
 
+export async function resetDb() {
+  const newTransactions: any = {
+    _id: "transactions",
+    list: [],
+  };
+
+  await db.put(newTransactions);
+
+  await db.get("userDetails");
+
+  const userDetails: any = {
+    _id: "userDetails",
+    pass: "",
+    askForPassword: true,
+  };
+  await db.put(userDetails);
+
+  await db.get("appData");
+
+  const appData: any = {
+    _id: "appData",
+    drivePath: "",
+  };
+
+  await db.put(appData);
+}
+
 export default db;

@@ -1,6 +1,8 @@
 import React from "react";
 import classNames from "classnames";
 
+import Spinner from "../Spinner";
+
 import styles from "./Button.module.scss";
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -38,7 +40,7 @@ function Button({
       })}
       {...props}
     >
-      {loading ? <span>loading...</span> : children}
+      {loading ? <Spinner className={styles.Spinner} /> : children}
     </button>
   );
 }

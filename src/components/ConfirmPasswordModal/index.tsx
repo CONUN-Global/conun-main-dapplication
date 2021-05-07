@@ -43,7 +43,6 @@ function ConfirmPasswordModal({ isOpen, onClose, onSuccess }) {
       </form>
     </Modal>
   );
-  o;
 }
 
 export default ConfirmPasswordModal;

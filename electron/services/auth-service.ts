@@ -4,7 +4,7 @@ import url from "url";
 import keytar from "keytar";
 import os from "os";
 
-import db from "../store/db";
+import { resetDb } from "../store/db";
 
 import envVariables from "../../env-variables.json";
 
@@ -39,7 +39,7 @@ function getAuthenticationURL() {
 
 async function logout() {
   await keytar.deletePassword(keytarService, keytarAccount);
-  await db.destroy();
+  await resetDb();
 
   accessToken = null;
   profile = null;

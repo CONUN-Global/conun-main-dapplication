@@ -49,6 +49,8 @@ const createWindow = async (): Promise<void> => {
   mainWindow.removeMenu();
   mainWindow.setResizable(false);
 
+  await prepareDb();
+
   if (isDev) {
     await mainWindow.loadURL("http://localhost:1234");
     mainWindow.webContents.openDevTools();
@@ -110,11 +112,6 @@ function createAuthWindow() {
 
 showWindow = async () => {
   try {
-    try {
-      await prepareDb();
-    } catch (error) {
-      logger("prepare-db", error);
-    }
     await refreshTokens();
     return createWindow();
   } catch (err) {
@@ -123,14 +120,8 @@ showWindow = async () => {
   }
 };
 
-// This method will be called when Electron has finished
-// initialization and is ready to create browser windows.
-// Some APIs can only be used after this event occurs.
 app.on("ready", showWindow);
 
-// Quit when all windows are closed, except on macOS. There, it's common
-// for applications and their menu bar to stay active until the user quits
-// explicitly with Cmd + Q.
 app.on("window-all-closed", () => {
   if (process.platform !== "darwin") {
     app.quit();
@@ -138,15 +129,11 @@ app.on("window-all-closed", () => {
 });
 
 app.on("activate", () => {
-  // On OS X it's common to re-create a window in the app when the
-  // dock icon is clicked and there are no other windows open.
   if (BrowserWindow.getAllWindows().length === 0) {
     createWindow();
   }
 });
 
-// In this file you can include the rest of your app's specific main process
-// code. You can also put them in separate files and import them here.
 ipcMain.handle("logout", async () => {
   const logoutWindow = new BrowserWindow({
     show: false,
@@ -172,6 +159,7 @@ ipcMain.handle("open-transfer-window", async (_, args) => {
       transferWindow = new BrowserWindow({
         width: 380,
         height: 371,
+        frame: false,
         webPreferences: {
           nodeIntegration: false,
           preload: path.resolve(__dirname, "preload.js"),
