@@ -3,11 +3,22 @@ import isDev from "electron-is-dev";
 
 import db from "../store/db";
 
-import { DEV_SERVER, FcnTypes, ORG_NAME, PROD_SERVER } from "../const";
+import {
+  DEV_SERVER,
+  FcnTypes,
+  ORG_NAME,
+  PROD_SERVER,
+  DRIVE_SMART_CONTRACT_DEV,
+  DRIVE_SMART_CONTRACT_PROD,
+} from "../const";
 
 const DEFAULT_PRICE = "0";
 
 const DEFAULT_STATUS = "public";
+
+const SMART_CONTRACT = isDev
+  ? DRIVE_SMART_CONTRACT_DEV
+  : DRIVE_SMART_CONTRACT_PROD;
 
 const SERVER_URL = isDev ? DEV_SERVER : PROD_SERVER;
 
@@ -24,7 +35,7 @@ export async function createFile(ipfshash: string) {
     },
   };
 
-  const res = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/${SMART_CONTRACT}`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
@@ -57,7 +68,7 @@ export async function likeContent({
     },
   };
 
-  const res = await fetch(`${DEV_SERVER}/drive/mychannel/ConunDrive`, {
+  const res = await fetch(`${DEV_SERVER}/drive/mychannel/${SMART_CONTRACT}`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
@@ -90,7 +101,7 @@ export async function countDownload({
     },
   };
 
-  const res = await fetch(`${SERVER_URL}/drive/mychannel/ConunDrive`, {
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/${SMART_CONTRACT}`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
