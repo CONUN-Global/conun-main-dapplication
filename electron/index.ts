@@ -49,7 +49,11 @@ const createWindow = async (): Promise<void> => {
   mainWindow.removeMenu();
   mainWindow.setResizable(false);
 
-  await prepareDb();
+  try {
+    await prepareDb();
+  } catch (error) {
+    logger("prepare-db", error);
+  }
 
   if (isDev) {
     await mainWindow.loadURL("http://localhost:1234");
