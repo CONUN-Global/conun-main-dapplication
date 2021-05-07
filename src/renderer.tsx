@@ -16,7 +16,7 @@ ReactDOM.render(
   <QueryClientProvider client={queryClient}>
     <Router>
       <App />
-      <ToastContainer bodyClassName={styles.ToastBody} />
+      <ToastContainer bodyClassName={styles.ToastBody} hideProgressBar />
     </Router>
   </QueryClientProvider>,
   document.getElementById("app")

@@ -47,16 +47,14 @@ function ExistingWallet() {
 
       if (data?.success) {
         setIndentity(idFile);
+        const loginData = await login({ password, email: currentUser.email });
 
-        const data = await login({ password, email: currentUser.email });
-
-        onLogin(data?.payload?.["x-auth-token"]);
+        onLogin(loginData?.payload?.["x-auth-token"]);
       }
     } catch (error) {
       toast.error(error?.response?.data?.payload ?? "An error happened", {
         position: "top-center",
         autoClose: 1000,
-        hideProgressBar: true,
       });
     }
   };

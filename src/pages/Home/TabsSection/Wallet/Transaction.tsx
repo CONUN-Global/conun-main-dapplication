@@ -41,6 +41,8 @@ function Transaction() {
 
   const token = useCurrentToken();
 
+  const { balance } = token.useBalance();
+
   const { user } = useDbUser();
 
   const { checkTransferWindow } = useCheckTransferWindow();
@@ -97,7 +99,6 @@ function Transaction() {
         {
           position: "bottom-center",
           autoClose: 2000,
-          hideProgressBar: true,
         }
       );
     } else {
@@ -140,6 +141,10 @@ function Transaction() {
               moreThanZero: (value) =>
                 Number(value) <= 0
                   ? "Amount should be more than 0"
+                  : "" || true,
+              lessThanTotalBalance: (value) =>
+                Number(value) > Number(balance.payload)
+                  ? "You don't have enough balance"
                   : "" || true,
             },
           })}

@@ -49,12 +49,6 @@ const createWindow = async (): Promise<void> => {
   mainWindow.removeMenu();
   mainWindow.setResizable(false);
 
-  try {
-    await prepareDb();
-  } catch (error) {
-    logger("prepare-db", error);
-  }
-
   if (isDev) {
     await mainWindow.loadURL("http://localhost:1234");
     mainWindow.webContents.openDevTools();
@@ -95,6 +89,9 @@ function createAuthWindow() {
     },
   });
 
+  authWindow.removeMenu();
+  authWindow.setResizable(false);
+
   authWindow.loadURL(getAuthenticationURL(), { userAgent: "Chrome" });
 
   const {
@@ -113,6 +110,11 @@ function createAuthWindow() {
 
 showWindow = async () => {
   try {
+    try {
+      await prepareDb();
+    } catch (error) {
+      logger("prepare-db", error);
+    }
     await refreshTokens();
     return createWindow();
   } catch (err) {
@@ -159,7 +161,8 @@ ipcMain.handle("logout", async () => {
 
   if (mainWindow) {
     mainWindow.close();
-    app.quit();
+    mainWindow = null;
+    showWindow();
   }
 });
 

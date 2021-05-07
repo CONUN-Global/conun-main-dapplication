@@ -43,7 +43,6 @@ function PasswordSettingsModal({ isOpen, onClose }) {
     toast.success("Changes saved", {
       position: "bottom-center",
       autoClose: 1000,
-      hideProgressBar: true,
     });
 
     onClose();
