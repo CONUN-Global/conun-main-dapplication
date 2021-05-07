@@ -33,7 +33,6 @@
       "package.json"
     ],
     "directories": {
-      "buildResources": "./icons",
       "output": "./out"
     },
     "appId": "conun.manager.app",
