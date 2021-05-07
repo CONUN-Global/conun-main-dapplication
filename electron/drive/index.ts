@@ -68,7 +68,7 @@ export async function likeContent({
     },
   };
 
-  const res = await fetch(`${DEV_SERVER}/drive/mychannel/${SMART_CONTRACT}`, {
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/${SMART_CONTRACT}`, {
     method: "POST",
     body: JSON.stringify(body),
     headers: { "Content-Type": "application/json" },
