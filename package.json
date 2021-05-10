@@ -12,7 +12,7 @@
     "copy-assets": "copyfiles -f \"electron/assets/**/*\" \"dist/assets\"",
     "electron": "wait-on tcp:1234 && tsc && yarn copy-assets && electron .",
     "make": "yarn build && tsc && yarn copy-assets && electron-builder",
-    "release": "yarn build && electron-builder --publish=always",
+    "release": "yarn build && tsc && yarn copy-assets && electron-builder --publish=always",
     "lint": "eslint --ext .ts ."
   },
   "keywords": [
