@@ -9,7 +9,7 @@ autoUpdater.setFeedURL({
   provider: "github",
   repo: release.repo,
   owner: release.owner,
-  token: release.token,
+  token: process.env.GITHUB_TOKEN,
 });
 
 function showUpdateNotification(info: any = {}) {
