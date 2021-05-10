@@ -1,7 +1,6 @@
 import path from "path";
 import { app, BrowserWindow, ipcMain, shell } from "electron";
 import isDev from "electron-is-dev";
-import { autoUpdater } from "electron-updater";
 
 import {
   getAuthenticationURL,
@@ -15,12 +14,21 @@ import logger from "./logger";
 
 import { prepareDb } from "./store/db";
 
+import initAutoUpdate from "./updater";
+
 import "./ipcMain/account";
 import "./ipcMain/wallet";
 import "./ipcMain/db";
 import "./ipcMain/drive";
+import "./ipcMain/app";
 
-autoUpdater.checkForUpdatesAndNotify();
+if (!isDev && process.platform === "win32") {
+  try {
+    initAutoUpdate();
+  } catch (error) {
+    logger("init-auto-update", error);
+  }
+}
 
 export let mainWindow: BrowserWindow | null = null;
 let authWindow: BrowserWindow | null = null;
