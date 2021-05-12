@@ -1,7 +1,5 @@
 import { ipcMain } from "electron";
 
-import logger from "../../logger";
-
 import { getProfile } from "../../services/auth-service";
 
 import {
@@ -9,8 +7,6 @@ import {
   saveKeyStoreJson,
   createQrCode,
   saveQrCode,
-  validateKeystoreFile,
-  validateQrCode,
 } from "../../services/wallet-services";
 
 import db from "../../store/db";
@@ -37,30 +33,6 @@ ipcMain.handle("create-qr-code", async (_, args) => {
 ipcMain.handle("download-qr-code", async (_, args) => {
   const res = await saveQrCode(args.qrCode);
   return res;
-});
-
-ipcMain.handle("validate-keystore-file", async (_, args) => {
-  try {
-    const res = await validateKeystoreFile(args);
-    return res;
-  } catch (error) {
-    logger("validate-keystore-file", error);
-    return {
-      success: false,
-    };
-  }
-});
-
-ipcMain.handle("validate-qr-code", async (_, args) => {
-  try {
-    const res = await validateQrCode(args);
-    return res;
-  } catch (error) {
-    logger("validate-qr-code", error);
-    return {
-      success: false,
-    };
-  }
 });
 
 ipcMain.handle("save-pass", async (_, args) => {
