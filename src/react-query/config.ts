@@ -1,4 +1,4 @@
-import { QueryClient, QueryCache } from 'react-query';
+import { QueryClient, QueryCache } from "react-query";
 
 export const cache = new QueryCache();
 

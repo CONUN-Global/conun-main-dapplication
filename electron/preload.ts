@@ -33,4 +33,5 @@ contextBridge.exposeInMainWorld("api", {
   setCurrentUser: (currentUser: any) =>
     ipcRenderer.invoke("set-current-user", currentUser),
   getAppVersion: () => ipcRenderer.invoke("get-app-version"),
+  startWebSocket: () => ipcRenderer.invoke("start-websocket"),
 });

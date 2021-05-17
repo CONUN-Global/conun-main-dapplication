@@ -26,7 +26,7 @@ if (!isDev && process.platform === "win32") {
   try {
     initAutoUpdate();
   } catch (error) {
-    logger("init-auto-update", error);
+    logger("init-auto-update", error, "error");
   }
 }
 
@@ -60,7 +60,7 @@ const createWindow = async (): Promise<void> => {
   try {
     await prepareDb();
   } catch (error) {
-    logger("prepare-db", error);
+    logger("prepare-db", error, "error");
   }
 
   if (isDev) {
@@ -127,7 +127,7 @@ showWindow = async () => {
     await refreshTokens();
     return createWindow();
   } catch (err) {
-    logger("show-window", err);
+    logger("show-window", err, "error");
     return createAuthWindow();
   }
 };
@@ -208,7 +208,7 @@ ipcMain.handle("open-transfer-window", async (_, args) => {
       });
     }
   } catch (error) {
-    logger("transfer-window", error);
+    logger("transfer-window", error, "error");
   }
 });
 
@@ -226,5 +226,5 @@ ipcMain.handle("request-balance-refetch", async () => {
 });
 
 process.on("uncaughtException", (uncaughtException) => {
-  logger("uncaught-exception", uncaughtException);
+  logger("uncaught-exception", uncaughtException, "error");
 });

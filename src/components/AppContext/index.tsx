@@ -3,6 +3,7 @@ import React, {
   ReactNode,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react";
@@ -71,6 +72,12 @@ function AppProvider({ children }: AppProviderProps) {
   const [isTransactionsOpen, setIsTransactionsOpen] = useState(false);
 
   const { isAlreadyUser } = useUserCheck();
+
+  useEffect(() => {
+    if (currentUser) {
+      api.startWebSocket();
+    }
+  }, [currentUser]);
 
   const handleLogout = useCallback(async () => {
     removeAllTokens();

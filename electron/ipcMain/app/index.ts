@@ -8,7 +8,7 @@ ipcMain.handle("get-app-version", async () => {
 
     return version;
   } catch (error) {
-    logger("get-app-version", error);
+    logger("get-app-version", error, "error");
     return {
       success: false,
       error,

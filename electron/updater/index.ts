@@ -51,7 +51,7 @@ function showUpdateAvailableNotification() {
 
 function initAutoUpdate() {
   autoUpdater.on("checking-for-update", () =>
-    logger("updater", "checking for update")
+    logger("updater", "checking for update", "info")
   );
 
   autoUpdater.on("update-available", () => showUpdateAvailableNotification());
@@ -61,22 +61,22 @@ function initAutoUpdate() {
       let msg = `Download speed: ${progressObj.bytesPerSecond}`;
       msg += ` - Downloaded ${progressObj.percent}%`;
       msg += ` (${progressObj.transferred}/${progressObj.total})`;
-      logger("update-progress", msg);
+      logger("update-progress", msg, "info");
     } catch (err) {
-      logger("on-download-update", err);
+      logger("on-download-update", err, "info");
     }
   });
 
   autoUpdater.on("update-downloaded", (info) => showUpdateNotification(info));
 
   autoUpdater.on("update-not-available", () =>
-    logger("update-not-available", "Update not available.")
+    logger("update-not-available", "Update not available.", "error")
   );
 
-  autoUpdater.on("error", (err) => logger("auto-updater", err));
+  autoUpdater.on("error", (err) => logger("auto-updater", err, "error"));
 
   autoUpdater.checkForUpdates().catch((err) => {
-    logger("no-updates-found", err.message);
+    logger("no-updates-found", err.message, "error");
   });
 }
 

@@ -1,4 +1,6 @@
 import { app } from "electron";
+import { createLogger, format, transports } from "winston";
+
 import isDev from "electron-is-dev";
 import fetch from "electron-fetch";
 
@@ -8,33 +10,61 @@ import { LOG_SERVER_DEV, LOG_SERVER_PROD } from "../const";
 
 const LOG_URL = isDev ? LOG_SERVER_DEV : LOG_SERVER_PROD;
 
-async function logger(name: string, error: any) {
-  let formattedError;
-  if (typeof error === "object") {
-    formattedError = JSON.stringify(error);
+const { combine, splat, timestamp, printf } = format;
+
+const localLogger = createLogger({
+  format: combine(
+    timestamp(),
+    splat(),
+    printf((info) => `${info.timestamp} ${info.level}: ${info.message}`)
+  ),
+  transports: [
+    new transports.Console({
+      level: "debug",
+      silent: !isDev,
+    }),
+  ],
+});
+
+async function logger(name: string, message: any, type: "info" | "error") {
+  let formattedMessage;
+  if (typeof message === "object") {
+    formattedMessage = JSON.stringify(message);
   } else {
-    formattedError = String(error);
+    formattedMessage = String(message);
   }
 
-  const userDetails: { walletAddress: string } = await db.get("userDetails");
+  if (type === "info") {
+    localLogger.info(formattedMessage);
+  } else {
+    localLogger.error(formattedMessage);
+  }
 
-  const body = {
-    product_name: "Conun Manager",
-    company_name: "CONUN Global",
-    version: app.getVersion(),
-    platform: process.platform,
-    process_type: process.type,
-    wallet_address: userDetails?.walletAddress,
-    app_location: app.getPath("exe"),
-    error_name: name,
-    error_message: formattedError,
-  };
+  try {
+    const userDetails: { walletAddress: string } = await db.get(
+      "userDetailsDrive"
+    );
 
-  await fetch(LOG_URL, {
-    method: "POST",
-    body: JSON.stringify(body),
-    headers: { "Content-Type": "application/json" },
-  });
+    const body = {
+      product_name: "Conun Drive",
+      company_name: "CONUN Global",
+      version: app.getVersion(),
+      platform: process.platform,
+      process_type: process.type,
+      wallet_address: userDetails?.walletAddress,
+      app_location: app.getPath("exe"),
+      error_name: name,
+      error_message: formattedMessage,
+    };
+
+    await fetch(LOG_URL, {
+      method: "POST",
+      body: JSON.stringify(body),
+      headers: { "Content-Type": "application/json" },
+    });
+  } catch (error) {
+    // no one can save us now
+  }
 }
 
 export default logger;
