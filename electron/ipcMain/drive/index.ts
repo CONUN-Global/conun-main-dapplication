@@ -169,6 +169,7 @@ export function startWebSocket() {
                 type: "download-success",
                 contentHash: messageData?.hash,
                 name: messageData?.name,
+                data: messageData,
               })
             );
 
