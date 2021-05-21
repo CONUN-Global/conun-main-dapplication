@@ -4,11 +4,6 @@ on: [push]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  LOG_SERVER: ${{ secrets.LOG_SERVER }}
-  SERVER: ${{ secrets.SERVER }}
-  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-  CLIENT_ID: ${{ secrets.CLIENT_ID }}
-  WEB3URL: ${{ secrets.WEB3URL }}
 
 jobs:
   linux:
@@ -21,6 +16,13 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        LOG_SERVER: ${{ secrets.LOG_SERVER }}
+        SERVER: ${{ secrets.SERVER }}
+        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        WEB3URL: ${{ secrets.WEB3URL }}
       - name: Setup node
         uses: actions/setup-node@v1
         with:
@@ -35,50 +37,50 @@ jobs:
         with:
           name: linux-exec
           path: out/
-  win:
-    environment: PRODUCTION
-    runs-on: windows-latest
+  # win:
+  #   environment: PRODUCTION
+  #   runs-on: windows-latest
 
-    strategy:
-      matrix:
-        node-version: [15.x]
+  #   strategy:
+  #     matrix:
+  #       node-version: [15.x]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15.x
-      - name: install deps
-        run: yarn install
-      - name: package
-        run: yarn make
-      - name: Upload Executable
-        uses: actions/upload-artifact@v2
-        with:
-          name: win-exec
-          path: out/
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 15.x
+  #     - name: install deps
+  #       run: yarn install
+  #     - name: package
+  #       run: yarn make
+  #     - name: Upload Executable
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: win-exec
+  #         path: out/
 
-  mac:
-    environment: PRODUCTION
-    runs-on: macos-latest
+  # mac:
+  #   environment: PRODUCTION
+  #   runs-on: macos-latest
 
-    strategy:
-      matrix:
-        node-version: [15.x]
+  #   strategy:
+  #     matrix:
+  #       node-version: [15.x]
 
-    steps:
-      - uses: actions/checkout@v2
-      - name: Setup node
-        uses: actions/setup-node@v1
-        with:
-          node-version: 15.x
-      - name: install deps
-        run: yarn install
-      - name: package
-        run: yarn make
-      - name: upload executable
-        uses: actions/upload-artifact@v2
-        with:
-          name: mac-exec
-          path: out/
+  #   steps:
+  #     - uses: actions/checkout@v2
+  #     - name: Setup node
+  #       uses: actions/setup-node@v1
+  #       with:
+  #         node-version: 15.x
+  #     - name: install deps
+  #       run: yarn install
+  #     - name: package
+  #       run: yarn make
+  #     - name: upload executable
+  #       uses: actions/upload-artifact@v2
+  #       with:
+  #         name: mac-exec
+  #         path: out/
