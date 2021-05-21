@@ -12,6 +12,7 @@ env:
 
 jobs:
   linux:
+    environment: PRODUCTION
     runs-on: ubuntu-latest
 
     strategy:
@@ -35,6 +36,7 @@ jobs:
           name: linux-exec
           path: out/
   win:
+    environment: PRODUCTION
     runs-on: windows-latest
 
     strategy:
@@ -58,6 +60,7 @@ jobs:
           path: out/
 
   mac:
+    environment: PRODUCTION
     runs-on: macos-latest
 
     strategy:
