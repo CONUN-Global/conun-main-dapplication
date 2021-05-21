@@ -4,11 +4,11 @@ on: [push]
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  LOG_SERVER: ${{ env.LOG_SERVER }}
-  SERVER: ${{ env.SERVER }}
-  AUTH0_DOMAIN: ${{ env.AUTH0_DOMAIN }}
-  CLIENT_ID: ${{ env.CLIENT_ID }}
-  WEB3URL: ${{ env.WEB3URL }}
+  LOG_SERVER: ${{ secrets.LOG_SERVER }}
+  SERVER: ${{ secrets.SERVER }}
+  AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+  CLIENT_ID: ${{ secrets.CLIENT_ID }}
+  WEB3URL: ${{ secrets.WEB3URL }}
 
 jobs:
   linux:
