@@ -20,7 +20,6 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
-      - name: set env variables
       - name: install deps
         run: yarn install
       - name: package
