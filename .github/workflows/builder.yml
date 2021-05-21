@@ -19,9 +19,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
-      - run: |
-          yarn install
-          yarn make
+      - name: install deps
+        run: yarn install
+      - name: package
+        run: yarn make
       - name: Upload Executable
         uses: actions/upload-artifact@v2
         with:
@@ -40,10 +41,10 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
-      - name: Install deps and package
-        run: |
-          yarn install
-          yarn make
+      - name: install deps
+        run: yarn install
+      - name: package
+        run: yarn make
       - name: Upload Executable
         uses: actions/upload-artifact@v2
         with:
@@ -63,10 +64,11 @@ jobs:
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
-      - run: |
-          yarn install
-          yarn make
-      - name: Upload Executable
+      - name: install deps
+        run: yarn install
+      - name: package
+        run: yarn make
+      - name: upload executable
         uses: actions/upload-artifact@v2
         with:
           name: mac-exec
