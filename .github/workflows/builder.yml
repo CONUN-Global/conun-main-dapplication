@@ -21,16 +21,15 @@ jobs:
         with:
           node-version: 15.x
       - name: set env variables
-        run: |
-          echo "GITHUB_TOKEN=${{ secrets.GITHUB_TOKEN }}" >> $GITHUB_ENV
-          echo "LOG_SERVER=${{ secrets.LOG_SERVER }}" >> $GITHUB_ENV
-          echo "SERVER=${{ secrets.SERVER }}" >> $GITHUB_ENV
-          echo "AUTH0_DOMAIN=${{ secrets.AUTH0_DOMAIN }}" >> $GITHUB_ENV
-          echo "CLIENT_ID=${{ secrets.CLIENT_ID }}" >> $GITHUB_ENV
-          echo "WEB3URL=${{ secrets.WEB3URL }}" >> $GITHUB_ENV
       - name: install deps
         run: yarn install
       - name: package
+        env:
+        LOG_SERVER: ${{ secrets.LOG_SERVER }}
+        SERVER: ${{ secrets.SERVER }}
+        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+        CLIENT_ID: ${{ secrets.CLIENT_ID }}
+        WEB3URL: ${{ secrets.WEB3URL }}
         run: yarn make
       - name: Upload Executable
         uses: actions/upload-artifact@v2
