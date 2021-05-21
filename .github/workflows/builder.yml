@@ -25,11 +25,11 @@ jobs:
         run: yarn install
       - name: package
         env:
-        LOG_SERVER: ${{ secrets.LOG_SERVER }}
-        SERVER: ${{ secrets.SERVER }}
-        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        WEB3URL: ${{ secrets.WEB3URL }}
+          LOG_SERVER: ${{ secrets.LOG_SERVER }}
+          SERVER: ${{ secrets.SERVER }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          WEB3URL: ${{ secrets.WEB3URL }}
         run: yarn make
       - name: Upload Executable
         uses: actions/upload-artifact@v2
