@@ -52,7 +52,7 @@
           ]
         }
       ],
-      "certificateFile": "../private/conun.io.certificate.pfx",
+      "certificateFile": "private/conun.io.certificate.pfx",
       "certificatePassword": "",
       "verifyUpdateCodeSignature": "false",
       "publisherName": "conun.io.certificate"

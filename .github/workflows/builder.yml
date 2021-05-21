@@ -2,6 +2,9 @@ name: Build Executables
 
 on: [push]
 
+environment:
+  name: PRODUCTION
+
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
