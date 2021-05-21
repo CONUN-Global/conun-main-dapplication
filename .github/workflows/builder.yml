@@ -35,29 +35,29 @@ jobs:
         with:
           name: linux-exec
           path: out/
-  # win:
-  #   environment: PRODUCTION
-  #   runs-on: windows-latest
+  win:
+    environment: PRODUCTION
+    runs-on: windows-latest
 
-  #   strategy:
-  #     matrix:
-  #       node-version: [15.x]
+    strategy:
+      matrix:
+        node-version: [15.x]
 
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Setup node
-  #       uses: actions/setup-node@v1
-  #       with:
-  #         node-version: 15.x
-  #     - name: install deps
-  #       run: yarn install
-  #     - name: package
-  #       run: yarn make
-  #     - name: Upload Executable
-  #       uses: actions/upload-artifact@v2
-  #       with:
-  #         name: win-exec
-  #         path: out/
+    steps:
+      - uses: actions/checkout@v2
+      - name: Setup node
+        uses: actions/setup-node@v1
+        with:
+          node-version: 15.x
+      - name: install deps
+        run: yarn install
+      - name: package
+        run: yarn make
+      - name: Upload Executable
+        uses: actions/upload-artifact@v2
+        with:
+          name: win-exec
+          path: out/
 
   # mac:
   #   environment: PRODUCTION
