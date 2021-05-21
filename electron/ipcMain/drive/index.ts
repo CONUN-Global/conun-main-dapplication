@@ -10,6 +10,8 @@ import logger from "../../logger";
 
 export const clients: any = {};
 
+let wsServer: webSocketServer | null;
+
 const PORT = 17401;
 
 export function startWebSocket() {
@@ -17,7 +19,7 @@ export function startWebSocket() {
 
   server.listen(PORT);
 
-  const wsServer = new webSocketServer({
+  wsServer = new webSocketServer({
     httpServer: server,
   });
 
@@ -69,8 +71,7 @@ export function startWebSocket() {
               JSON.stringify({
                 type: "upload-success",
                 transactionHash: data?.payload?.TxID,
-                publicHash: data?.payload?.Value,
-                fileHash: messageData?.fileHash?.path,
+                wsServer,
                 size: messageData?.fileHash?.size,
                 data: messageData?.data,
               })
@@ -202,7 +203,9 @@ export function startWebSocket() {
 }
 
 ipcMain.handle("start-websocket", () => {
-  startWebSocket();
+  if (!wsServer) {
+    startWebSocket();
+  }
 });
 
 ipcMain.handle("open-drive", async () => {

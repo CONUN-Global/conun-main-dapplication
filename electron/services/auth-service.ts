@@ -6,10 +6,6 @@ import os from "os";
 
 import { resetDb } from "../store/db";
 
-import envVariables from "../../env-variables.json";
-
-const { auth0Domain, clientId } = envVariables;
-
 const redirectUri = "http://localhost/callback";
 
 const keytarService = "electron-openid-oauth";
@@ -34,7 +30,7 @@ function getProfile() {
 }
 
 function getAuthenticationURL() {
-  return `https://${auth0Domain}/authorize?scope=openid profile email email_verified offline_access&response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
+  return `https://${process.env.AUTH0_DOMAIN}/authorize?scope=openid profile email email_verified offline_access&response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirectUri}`;
 }
 
 async function logout() {
@@ -47,7 +43,7 @@ async function logout() {
 }
 
 function getLogOutUrl() {
-  return `https://${auth0Domain}/v2/logout?federated`;
+  return `https://${process.env.AUTH0_DOMAIN}/v2/logout?federated`;
 }
 
 async function refreshTokens() {
@@ -59,11 +55,11 @@ async function refreshTokens() {
   if (newRefreshToken) {
     const refreshOptions: AxiosRequestConfig = {
       method: "POST",
-      url: `https://${auth0Domain}/oauth/token`,
+      url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
       headers: { "content-type": "application/json" },
       data: {
         grant_type: "refresh_token",
-        client_id: clientId,
+        client_id: process.env.CLIENT_ID,
         refresh_token: newRefreshToken,
       },
     };
@@ -89,14 +85,14 @@ async function loadTokens(callbackURL: string) {
 
   const exchangeOptions = {
     grant_type: "authorization_code",
-    client_id: clientId,
+    client_id: process.env.CLIENT_ID,
     code: query.code,
     redirect_uri: redirectUri,
   };
 
   const options: AxiosRequestConfig = {
     method: "POST",
-    url: `https://${auth0Domain}/oauth/token`,
+    url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
     headers: {
       "content-type": "application/json",
     },

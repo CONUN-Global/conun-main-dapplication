@@ -4,15 +4,11 @@ import path from "path";
 import qrcode from "qrcode";
 import { dialog } from "electron";
 import fetch from "electron-fetch";
-import isDev from "electron-is-dev";
 
-import envVariables from "../../env-variables.json";
-import { DEV_SERVER, ORG_NAME, PROD_SERVER } from "../const";
+import { ORG_NAME } from "../const";
 import { getProfile } from "./auth-service";
 
-const SERVER_URL = isDev ? DEV_SERVER : PROD_SERVER;
-
-const web3 = new Web3(envVariables.web3Url);
+const web3 = new Web3(process.env.WEB3URL);
 
 export async function createWallet(args: {
   password: string;
@@ -29,7 +25,7 @@ export async function createWallet(args: {
       walletType: args?.walletType,
     };
 
-    const res = await fetch(`${SERVER_URL}/users/create`, {
+    const res = await fetch(`${process.env.SERVER}/users/create`, {
       method: "POST",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },

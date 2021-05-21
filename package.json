@@ -4,13 +4,13 @@
   "version": "0.1.2-beta",
   "description": "Conun Manager",
   "homepage": "./",
-  "main": "dist/electron/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "parcel src/index.html --out-dir parcel-dist",
     "build": "parcel build src/index.html --out-dir dist/parcel-build --public-url ./",
     "dev": "concurrently -k \"yarn start\" \"yarn:electron\"",
     "copy-assets": "copyfiles -f \"electron/assets/**/*\" \"dist/assets\"",
-    "electron": "wait-on tcp:1234 && tsc && yarn copy-assets && electron .",
+    "electron": "wait-on tcp:1234 && tsc && electron .",
     "make": "yarn build && tsc && yarn copy-assets && electron-builder",
     "release": "yarn build && tsc && yarn copy-assets && electron-builder --publish=always",
     "lint": "eslint --ext .ts ."
@@ -103,6 +103,7 @@
     "axios": "^0.21.1",
     "classnames": "^2.2.6",
     "date-fns": "^2.19.0",
+    "dotenv": "^9.0.2",
     "electron-fetch": "^1.7.3",
     "electron-is-dev": "^2.0.0",
     "electron-updater": "^4.3.8",
