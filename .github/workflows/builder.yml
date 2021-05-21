@@ -16,22 +16,21 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        LOG_SERVER: ${{ secrets.LOG_SERVER }}
-        SERVER: ${{ secrets.SERVER }}
-        AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
-        CLIENT_ID: ${{ secrets.CLIENT_ID }}
-        WEB3URL: ${{ secrets.WEB3URL }}
       - name: Setup node
         uses: actions/setup-node@v1
         with:
           node-version: 15.x
-      - run: echo ${LOG_SERVER}
       - name: install deps
         run: yarn install
       - name: package
         run: yarn make
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          LOG_SERVER: ${{ secrets.LOG_SERVER }}
+          SERVER: ${{ secrets.SERVER }}
+          AUTH0_DOMAIN: ${{ secrets.AUTH0_DOMAIN }}
+          CLIENT_ID: ${{ secrets.CLIENT_ID }}
+          WEB3URL: ${{ secrets.WEB3URL }}
       - name: Upload Executable
         uses: actions/upload-artifact@v2
         with:
