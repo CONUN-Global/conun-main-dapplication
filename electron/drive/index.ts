@@ -4,8 +4,10 @@ import isDev from "electron-is-dev";
 import db from "../store/db";
 
 import {
+  DEV_SERVER,
   FcnTypes,
   ORG_NAME,
+  PROD_SERVER,
   DRIVE_SMART_CONTRACT_DEV,
   DRIVE_SMART_CONTRACT_PROD,
 } from "../const";
@@ -17,6 +19,8 @@ const DEFAULT_STATUS = "public";
 const SMART_CONTRACT = isDev
   ? DRIVE_SMART_CONTRACT_DEV
   : DRIVE_SMART_CONTRACT_PROD;
+
+const SERVER_URL = isDev ? DEV_SERVER : PROD_SERVER;
 
 export async function createFile(ipfshash: string) {
   const userDetails: any = await db.get("userDetails");
@@ -31,14 +35,11 @@ export async function createFile(ipfshash: string) {
     },
   };
 
-  const res = await fetch(
-    `${process.env.SERVER}/drive/mychannel/${SMART_CONTRACT}`,
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/${SMART_CONTRACT}`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  });
 
   const data = await res.json();
 
@@ -67,14 +68,11 @@ export async function likeContent({
     },
   };
 
-  const res = await fetch(
-    `${process.env.SERVER}/drive/mychannel/${SMART_CONTRACT}`,
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/${SMART_CONTRACT}`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  });
 
   const data = await res.json();
 
@@ -103,14 +101,11 @@ export async function countDownload({
     },
   };
 
-  const res = await fetch(
-    `${process.env.SERVER}/drive/mychannel/${SMART_CONTRACT}`,
-    {
-      method: "POST",
-      body: JSON.stringify(body),
-      headers: { "Content-Type": "application/json" },
-    }
-  );
+  const res = await fetch(`${SERVER_URL}/drive/mychannel/${SMART_CONTRACT}`, {
+    method: "POST",
+    body: JSON.stringify(body),
+    headers: { "Content-Type": "application/json" },
+  });
 
   const data = await res.json();
 

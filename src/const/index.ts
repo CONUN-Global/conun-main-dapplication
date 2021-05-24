@@ -2,6 +2,9 @@ import useGetConBalance from "../hooks/useGetConBalance";
 import useGetConTokenBalance from "../hooks/useGetConTokenBalance";
 import useGetEthBalance from "../hooks/useGetEthBalance";
 
+export const PROD_SERVER = "https://blockchainmiddleware.conun.io/api/v1";
+export const DEV_SERVER = "http://192.168.100.54:4000/api/v1/";
+
 export const AUTH_TOKEN = "conun-auth-token";
 
 export const PUBLIC_KEY_TOKEN = "conun-public-key";

@@ -71,7 +71,8 @@ export function startWebSocket() {
               JSON.stringify({
                 type: "upload-success",
                 transactionHash: data?.payload?.TxID,
-                wsServer,
+                publicHash: data?.payload?.Value,
+                fileHash: messageData?.fileHash?.path,
                 size: messageData?.fileHash?.size,
                 data: messageData?.data,
               })

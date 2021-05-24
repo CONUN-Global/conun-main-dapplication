@@ -35,6 +35,10 @@ out/
 
 dist/
 
+const/
+
+env-variables.json
+
 parcel-build/
 parcel-dist/
 

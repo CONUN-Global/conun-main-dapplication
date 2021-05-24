@@ -1,9 +1,6 @@
 import path from "path";
 import { app, BrowserWindow, ipcMain, shell } from "electron";
 import isDev from "electron-is-dev";
-import dotenv from "dotenv";
-
-dotenv.config();
 
 import {
   getAuthenticationURL,

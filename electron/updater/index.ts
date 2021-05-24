@@ -3,10 +3,7 @@ import { autoUpdater } from "electron-updater";
 
 import logger from "../logger";
 
-const release = {
-  repo: "conun-main-dapplication",
-  owner: "CONUN-Global",
-};
+import { release } from "../../env-variables.json";
 
 autoUpdater.setFeedURL({
   provider: "github",

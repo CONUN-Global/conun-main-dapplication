@@ -6,6 +6,10 @@ import fetch from "electron-fetch";
 
 import db from "../store/db";
 
+import { LOG_SERVER_DEV, LOG_SERVER_PROD } from "../const";
+
+const LOG_URL = isDev ? LOG_SERVER_DEV : LOG_SERVER_PROD;
+
 const { combine, splat, timestamp, printf } = format;
 
 const localLogger = createLogger({
@@ -53,7 +57,7 @@ async function logger(name: string, message: any, type: "info" | "error") {
       error_message: formattedMessage,
     };
 
-    await fetch(process.env.LOG_SERVER, {
+    await fetch(LOG_URL, {
       method: "POST",
       body: JSON.stringify(body),
       headers: { "Content-Type": "application/json" },

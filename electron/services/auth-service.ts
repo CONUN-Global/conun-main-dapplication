@@ -7,6 +7,10 @@ import os from "os";
 import { resetDb } from "../store/db";
 import logger from "../logger";
 
+import envVariables from "../../env-variables.json";
+
+const { auth0Domain, clientId } = envVariables;
+
 const redirectUri = "http://localhost/callback";
 
 const keytarService = "electron-openid-oauth";
@@ -31,7 +35,7 @@ function getProfile() {
 }
 
 function getAuthenticationURL() {
-  return `https://${process.env.AUTH0_DOMAIN}/authorize?scope=openid profile email email_verified offline_access&response_type=code&client_id=${process.env.CLIENT_ID}&redirect_uri=${redirectUri}`;
+  return `https://${auth0Domain}/authorize?scope=openid profile email email_verified offline_access&response_type=code&client_id=${clientId}&redirect_uri=${redirectUri}`;
 }
 
 async function logout() {
@@ -44,7 +48,7 @@ async function logout() {
 }
 
 function getLogOutUrl() {
-  return `https://${process.env.AUTH0_DOMAIN}/v2/logout?federated`;
+  return `https://${auth0Domain}/v2/logout?federated`;
 }
 
 async function refreshTokens() {
@@ -56,11 +60,11 @@ async function refreshTokens() {
   if (newRefreshToken) {
     const refreshOptions: AxiosRequestConfig = {
       method: "POST",
-      url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
+      url: `https://${auth0Domain}/oauth/token`,
       headers: { "content-type": "application/json" },
       data: {
         grant_type: "refresh_token",
-        client_id: process.env.CLIENT_ID,
+        client_id: clientId,
         refresh_token: newRefreshToken,
       },
     };
@@ -71,7 +75,6 @@ async function refreshTokens() {
       accessToken = response.data.access_token;
       profile = jwtDecode(response.data.id_token);
     } catch (error) {
-      logger("refresh-token-error", error, "error");
       await logout();
 
       throw error;
@@ -87,14 +90,14 @@ async function loadTokens(callbackURL: string) {
 
   const exchangeOptions = {
     grant_type: "authorization_code",
-    client_id: process.env.CLIENT_ID,
+    client_id: clientId,
     code: query.code,
     redirect_uri: redirectUri,
   };
 
   const options: AxiosRequestConfig = {
     method: "POST",
-    url: `https://${process.env.AUTH0_DOMAIN}/oauth/token`,
+    url: `https://${auth0Domain}/oauth/token`,
     headers: {
       "content-type": "application/json",
     },
