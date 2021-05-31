@@ -4,7 +4,7 @@
   "version": "0.1.2-beta",
   "description": "Conun Manager",
   "homepage": "./",
-  "main": "dist/index.js",
+  "main": "dist/electron/index.js",
   "scripts": {
     "start": "parcel src/index.html --out-dir parcel-dist",
     "build": "parcel build src/index.html --out-dir dist/parcel-build --public-url ./",

@@ -10,7 +10,7 @@ ipcMain.handle("generate-signature", async (_, args) => {
 
     return res;
   } catch (error) {
-    logger("generate-signature", error, "error");
+    logger("generate-signature", error?.message, "error");
     return {
       success: false,
       error,
@@ -24,7 +24,7 @@ ipcMain.handle("check-transaction", async (_, args) => {
 
     return data;
   } catch (error) {
-    logger("check-transaction", error, "error");
+    logger("check-transaction", error?.message, "error");
     return {
       success: false,
       error,

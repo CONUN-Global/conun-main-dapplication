@@ -75,6 +75,7 @@ async function refreshTokens() {
       accessToken = response.data.access_token;
       profile = jwtDecode(response.data.id_token);
     } catch (error) {
+      logger("refresh-token", error?.message, "error");
       await logout();
 
       throw error;
@@ -114,9 +115,8 @@ async function loadTokens(callbackURL: string) {
       await keytar.setPassword(keytarService, keytarAccount, refreshToken);
     }
   } catch (error) {
-    logger("load-token-error", error, "error");
     await logout();
-
+    logger("load-token-error", error?.message, "error");
     throw error;
   }
 }

@@ -1,4 +1,4 @@
-import { ipcMain, shell } from "electron";
+import { app, ipcMain, shell } from "electron";
 import { server as webSocketServer } from "websocket";
 import http from "http";
 
@@ -41,6 +41,7 @@ export function startWebSocket() {
       JSON.stringify({
         type: "send-user-details",
         walletAddress: userDetails?.walletAddress,
+        managerVersion: app.getVersion(),
       })
     );
 
@@ -99,7 +100,7 @@ export function startWebSocket() {
               data: String(error),
             })
           );
-          logger("create-file", error, "error");
+          logger("create-file", error.message, "error");
         }
       }
 

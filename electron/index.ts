@@ -60,7 +60,7 @@ const createWindow = async (): Promise<void> => {
   try {
     await prepareDb();
   } catch (error) {
-    logger("prepare-db", error, "error");
+    logger("prepare-db", error?.message, "error");
   }
 
   if (isDev) {
@@ -208,7 +208,7 @@ ipcMain.handle("open-transfer-window", async (_, args) => {
       });
     }
   } catch (error) {
-    logger("transfer-window", error, "error");
+    logger("transfer-window", error?.message, "error");
   }
 });
 
