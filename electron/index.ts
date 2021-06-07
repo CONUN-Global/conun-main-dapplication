@@ -22,11 +22,14 @@ import "./ipcMain/db";
 import "./ipcMain/drive";
 import "./ipcMain/app";
 
+const APP_HEIGHT = process.platform === "win32" ? 762 : 736;
+const TRANSFER_WINDOW_HEIGHT = process.platform === "win32" ? 397 : 371;
+
 if (!isDev && process.platform === "win32") {
   try {
     initAutoUpdate();
   } catch (error) {
-    logger("init-auto-update", error, "error");
+    logger("init-auto-update", error?.message, "error");
   }
 }
 
@@ -46,7 +49,7 @@ const createWindow = async (): Promise<void> => {
   mainWindow = new BrowserWindow({
     title: "Conun Manager",
     width: 414,
-    height: 736,
+    height: APP_HEIGHT,
     webPreferences: {
       nodeIntegration: false,
       preload: path.resolve(__dirname, "preload.js"),
@@ -127,7 +130,7 @@ showWindow = async () => {
     await refreshTokens();
     return createWindow();
   } catch (err) {
-    logger("show-window", err, "error");
+    logger("show-window", err?.message, "error");
     return createAuthWindow();
   }
 };
@@ -170,7 +173,7 @@ ipcMain.handle("open-transfer-window", async (_, args) => {
     if (!transferWindow) {
       transferWindow = new BrowserWindow({
         width: 380,
-        height: 371,
+        height: TRANSFER_WINDOW_HEIGHT,
         frame: false,
         webPreferences: {
           nodeIntegration: false,

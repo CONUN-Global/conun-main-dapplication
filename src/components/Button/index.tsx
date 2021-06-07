@@ -1,4 +1,5 @@
 import React from "react";
+import { motion } from "framer-motion";
 import classNames from "classnames";
 
 import Spinner from "../Spinner";
@@ -24,24 +25,26 @@ function Button({
 }: ButtonProps) {
   if (noStyle) {
     return (
-      <button
+      <motion.button
+        whileTap={{ y: "1px" }}
         className={classNames(styles.NoStyleButton, className)}
         {...props}
       >
         {children}
-      </button>
+      </motion.button>
     );
   }
 
   return (
-    <button
+    <motion.button
+      whileTap={{ y: "1px" }}
       className={classNames(styles.Button, className, styles[variant], {
         [styles.round]: round,
       })}
       {...props}
     >
       {loading ? <Spinner className={styles.Spinner} /> : children}
-    </button>
+    </motion.button>
   );
 }
 

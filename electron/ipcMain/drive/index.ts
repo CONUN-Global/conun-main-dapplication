@@ -54,7 +54,7 @@ export function startWebSocket() {
 
           await db.put({ ...appData, drivePath: messageData.path });
         } catch (error) {
-          logger("get-drive-path", error, "error");
+          logger("get-drive-path", error?.message, "error");
         }
       }
       if (messageData?.type === "upload-file") {
@@ -100,7 +100,7 @@ export function startWebSocket() {
               data: String(error),
             })
           );
-          logger("create-file", error.message, "error");
+          logger("create-file", error?.message, "error");
         }
       }
 
@@ -145,10 +145,10 @@ export function startWebSocket() {
           connection.send(
             JSON.stringify({
               type: "like-failure",
-              data: String(error),
+              data: error?.message,
             })
           );
-          logger("like-error", error, "error");
+          logger("like-error", error?.message, "error");
         }
       }
 
@@ -194,10 +194,10 @@ export function startWebSocket() {
           connection.send(
             JSON.stringify({
               type: "upload-failure",
-              data: String(error),
+              data: error?.message,
             })
           );
-          logger("download-success", error, "error");
+          logger("download-success", error?.message, "error");
         }
       }
     });

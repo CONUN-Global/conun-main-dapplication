@@ -2,11 +2,14 @@ import React, { useEffect } from "react";
 import { Slide } from "pure-react-carousel";
 import classNames from "classnames";
 
+import Button from "../Button";
+
 import useAppCurrentUser from "../../hooks/useAppCurrentUser";
 import useCurrentToken from "../../hooks/useCurrentToken";
 
 import Conun from "../../assets/icons/conun-white.svg";
 import Ethereum from "../../assets/icons/ethereum.svg";
+import RefreshIcon from "../../assets/icons/refresh.svg";
 
 import styles from "./TokenCard.module.scss";
 
@@ -39,7 +42,7 @@ function TokenCard({ token, i }: TokenCardProps) {
   }, []);
 
   useEffect(() => {
-    if (currentToken.token === token.token) {
+    if (currentToken?.token === token?.token) {
       refetch();
     }
   }, [currentToken]);
@@ -47,11 +50,20 @@ function TokenCard({ token, i }: TokenCardProps) {
   return (
     <Slide innerClassName={styles.CardContainer} index={i}>
       <div className={classNames(styles.Card, styles[token?.token])}>
-        {token?.token === "conx" ? (
-          <span className={styles.Network}>Conun Network</span>
-        ) : (
-          <span className={styles.Network}>Ethereum Network</span>
-        )}
+        <div className={styles.Header}>
+          {token?.token === "conx" ? (
+            <span className={styles.Network}>Conun Network</span>
+          ) : (
+            <span className={styles.Network}>Ethereum Network</span>
+          )}
+          <Button
+            noStyle
+            className={styles.RefreshButton}
+            onClick={() => refetch()}
+          >
+            <RefreshIcon className={styles.RefreshIcon} />
+          </Button>
+        </div>
         <div className={styles.BalanceContainer}>
           <div className={styles.Balance}>
             {token?.token === "eth" ? (

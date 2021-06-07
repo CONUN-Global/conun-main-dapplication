@@ -37,10 +37,22 @@
     background: linear-gradient(244.5deg, #c95f72 12.9%, #792721 85.63%);
   }
 
-  & .Network {
-    text-transform: uppercase;
-    font-size: 14px;
-    font-weight: bold;
+  & .Header {
+    display: flex;
+    justify-content: space-between;
+
+    & .Network {
+      text-transform: uppercase;
+      font-size: 14px;
+      font-weight: bold;
+    }
+
+    & .RefreshButton {
+      & .RefreshIcon {
+        width: 15px;
+        fill: #fff;
+      }
+    }
   }
 
   & .BalanceContainer {
