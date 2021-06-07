@@ -1,7 +1,7 @@
 {
   "name": "conun-manager",
   "productName": "Conun Manager",
-  "version": "1.0.0-beta",
+  "version": "1.0.1-beta",
   "description": "Conun Manager",
   "homepage": "./",
   "main": "dist/electron/index.js",
