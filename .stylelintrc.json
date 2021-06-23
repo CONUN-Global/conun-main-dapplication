@@ -1,0 +1,12 @@
+{
+  "extends": ["stylelint-config-standard", "stylelint-prettier/recommended"],
+  "plugins": ["stylelint-order", "stylelint-prettier"],
+  "rules": {
+    "order/properties-alphabetical-order": true,
+    "prettier/prettier": true,
+    "selector-pseudo-class-no-unknown": [
+      true,
+      { "ignorePseudoClasses": ["global"] }
+    ]
+  }
+}

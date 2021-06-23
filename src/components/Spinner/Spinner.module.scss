@@ -1,13 +1,13 @@
 .Spinner {
-  font-size: 3rem;
-  border: 0.4em solid #fff;
-  border-top-color: var(--primary-color);
-  border-radius: 50%;
-  width: 2em;
-  height: 2em;
   animation: loading-spinner 2s linear infinite;
-  margin: 0 auto;
+  border: 0.4em solid #fff;
+  border-radius: 50%;
+  border-top-color: var(--primary-color);
   box-sizing: border-box;
+  font-size: 3rem;
+  height: 2em;
+  margin: 0 auto;
+  width: 2em;
 }
 
 @keyframes loading-spinner {
