@@ -35,9 +35,8 @@ type FormData = {
 };
 
 function Transaction() {
-  const [isConfirmPasswordModalOpen, setIsConfirmPasswordModalOpen] = useState(
-    false
-  );
+  const [isConfirmPasswordModalOpen, setIsConfirmPasswordModalOpen] =
+    useState(false);
 
   const token = useCurrentToken();
 
@@ -51,7 +50,7 @@ function Transaction() {
     register,
     handleSubmit,
     watch,
-    errors,
+    formState: { errors },
     control,
     reset,
     trigger,
@@ -130,9 +129,8 @@ function Transaction() {
     <>
       <form onSubmit={handleSubmit(onSubmit)} className={styles.Transaction}>
         <FormInput
-          name="amount"
           autoComplete="amount"
-          formRef={register({
+          register={register("amount", {
             required: {
               value: true,
               message: "Please specify an amount",
@@ -156,9 +154,8 @@ function Transaction() {
           error={errors.amount}
         />
         <FormInput
-          name="to"
           autoComplete="to"
-          formRef={register({
+          register={register("to", {
             required: {
               value: true,
               message: "Please specify an address",
@@ -178,7 +175,7 @@ function Transaction() {
               name="isAdvanced"
               control={control}
               defaultValue={!!watchIsAdvanced}
-              render={({ value, onChange }) => (
+              render={({ field: { value, onChange } }) => (
                 <Switch
                   id="advanced-switch"
                   label="Advanced Options"
@@ -191,11 +188,11 @@ function Transaction() {
             {watchIsAdvanced ? (
               <div className={styles.AdvancedOptions}>
                 <FormInput
-                  name="gasLimit"
                   wrapperStyles={styles.GasInput}
                   defaultValue={data?.payload?.average?.gas_limit}
+                  type="number"
                   label="Gas Limit"
-                  formRef={register({
+                  register={register("gasLimit", {
                     required: {
                       value: watchIsAdvanced,
                       message: "Gas limit is required",
@@ -205,11 +202,10 @@ function Transaction() {
                 />
 
                 <FormInput
-                  name="gasPrice"
                   wrapperStyles={styles.GasInput}
                   defaultValue={data?.payload?.average?.gas_price}
                   type="number"
-                  formRef={register({
+                  register={register("gasPrice", {
                     required: {
                       value: watchIsAdvanced,
                       message: "Gas price is required",
@@ -223,11 +219,16 @@ function Transaction() {
                   wrapperStyles={styles.GasInput}
                   label="Gas Fee"
                   type="number"
+                  defaultValue={
+                    (data?.payload?.average?.gas_price *
+                      data?.payload?.average?.gas_limit) /
+                    1000000000
+                  }
                   readOnly
                   value={
-                    watchGasFee.gasLimit &&
-                    watchGasFee.gasPrice &&
-                    (watchGasFee?.gasPrice * watchGasFee?.gasLimit) / 1000000000
+                    watchGasFee?.[0] &&
+                    watchGasFee?.[1] &&
+                    (watchGasFee?.[1] * watchGasFee?.[0]) / 1000000000
                   }
                 />
               </div>
@@ -236,7 +237,7 @@ function Transaction() {
                 control={control}
                 name="fee"
                 defaultValue="average"
-                render={({ onChange, value }) => (
+                render={({ field: { onChange, value } }) => (
                   <div className={styles.SpeedPicker}>
                     {speeds.map((speed) => (
                       <button

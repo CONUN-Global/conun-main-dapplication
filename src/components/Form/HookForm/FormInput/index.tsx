@@ -7,8 +7,8 @@ import styles from "./FormInput.module.scss";
 import inputStyles from "../../Input/Input.module.scss";
 
 interface FormInputProps extends InputHTMLAttributes<HTMLInputElement> {
-  formRef: any;
-  name: string;
+  register: any;
+  name?: string;
   round?: boolean;
   label?: string;
   error?: FieldError | undefined;
@@ -21,7 +21,7 @@ function FormInput({
   type = "text",
   label,
   error,
-  formRef,
+  register,
   className,
   wrapperStyles,
   round,
@@ -47,8 +47,7 @@ function FormInput({
       )}
       <input
         id={id}
-        ref={formRef}
-        name={name}
+        {...register}
         type={type}
         className={classNames(inputStyles.Input, className)}
         {...props}

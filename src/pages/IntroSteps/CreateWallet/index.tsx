@@ -34,7 +34,12 @@ interface FormData {
 
 function CreateWallet({ setCurrentStep }: StepProps) {
   const { onLogin } = useAppContext();
-  const { register, getValues, errors, handleSubmit } = useForm<FormData>();
+  const {
+    register,
+    getValues,
+    formState: { errors },
+    handleSubmit,
+  } = useForm<FormData>();
 
   const { mutateAsync: create, isLoading } = useMutation((password: string) =>
     createWallet(password)
@@ -73,8 +78,7 @@ function CreateWallet({ setCurrentStep }: StepProps) {
       </div>
       <form onSubmit={handleSubmit(onSubmit)}>
         <FormInput
-          name="password"
-          formRef={register({
+          register={register("password", {
             required: { value: true, message: "Password is required" },
             minLength: {
               value: 5,
@@ -87,8 +91,7 @@ function CreateWallet({ setCurrentStep }: StepProps) {
           label="Create a Password"
         />
         <FormInput
-          name="confirmPassword"
-          formRef={register({
+          register={register("confirmPassword", {
             required: { value: true, message: "Confirm your password" },
             validate: {
               passwordMatch: (value) =>

@@ -12,7 +12,11 @@ import styles from "./ConfirmPasswordModal.module.scss";
 
 function ConfirmPasswordModal({ isOpen, onClose, onSuccess }) {
   const { user } = useDbUser();
-  const { register, errors, handleSubmit } = useForm();
+  const {
+    register,
+    formState: { errors },
+    handleSubmit,
+  } = useForm();
 
   const onSubmit = () => {
     onSuccess();
@@ -26,7 +30,7 @@ function ConfirmPasswordModal({ isOpen, onClose, onSuccess }) {
         <FormInput
           name="password"
           type="password"
-          formRef={register({
+          register={register("password", {
             required: {
               value: true,
               message: "Password is required",
