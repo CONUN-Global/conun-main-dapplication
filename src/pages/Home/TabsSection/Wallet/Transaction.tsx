@@ -93,13 +93,7 @@ function Transaction() {
     const isAlreadyOpen = await checkTransferWindow();
 
     if (isAlreadyOpen) {
-      toast.warning(
-        "Only one transaction window can be open at the same time",
-        {
-          position: "bottom-center",
-          autoClose: 2000,
-        }
-      );
+      toast.warning("Only one transaction window can be open at the same time");
     } else {
       const fee = values.isAdvanced
         ? (values.gasPrice * values.gasLimit) / 1000000000

@@ -53,7 +53,6 @@ function ExistingWallet() {
       }
     } catch (error) {
       toast.error(error?.response?.data?.payload ?? "An error happened", {
-        position: "top-center",
         autoClose: 1000,
       });
     }

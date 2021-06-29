@@ -19,6 +19,8 @@ ReactDOM.render(
       <ToastContainer
         bodyClassName={styles.ToastBody}
         hideProgressBar
+        position="bottom-center"
+        autoClose={2000}
         limit={1}
       />
     </Router>

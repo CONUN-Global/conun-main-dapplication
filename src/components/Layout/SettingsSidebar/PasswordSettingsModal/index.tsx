@@ -47,7 +47,6 @@ function PasswordSettingsModal({ isOpen, onClose }) {
     refetch();
 
     toast.success("Changes saved", {
-      position: "bottom-center",
       autoClose: 1000,
     });
 

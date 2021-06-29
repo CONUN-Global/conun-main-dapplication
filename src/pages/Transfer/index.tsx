@@ -43,11 +43,7 @@ function Tranfer() {
       setTransactionStarted(data?.payload);
       api.requestBalanceRefetch();
     } catch (error) {
-      toast.error("An error happened", {
-        position: "top-center",
-        autoClose: 2000,
-        hideProgressBar: true,
-      });
+      toast.error("An error happened");
     }
   };
 
