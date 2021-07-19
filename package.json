@@ -73,7 +73,7 @@
   },
   "devDependencies": {
     "@babel/core": "^7.14.6",
-    "@babel/preset-env": "^7.13.9",
+    "@babel/preset-env": "^7.14.7",
     "@babel/preset-react": "^7.12.13",
     "@types/classnames": "^2.3.1",
     "@types/jsonwebtoken": "^8.5.1",
